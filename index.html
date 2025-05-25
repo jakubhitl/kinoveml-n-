@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soukromá stránka</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(to right, #83a4d4, #b6fbff);
+      text-align: center;
+      padding-top: 100px;
+    }
+    #content {
+      display: none;
+    }
+    .box {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      max-width: 400px;
+      margin: auto;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
+    input[type="password"] {
+      padding: 10px;
+      width: 80%;
+      margin-top: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 10px 20px;
+      margin-top: 15px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="login" class="box">
+    <h2>Vstup chráněn heslem</h2>
+    <input type="password" id="password" placeholder="Zadej heslo">
+    <br>
+    <button onclick="checkPassword()">Pokračovat</button>
+    <p id="error" style="color: red;"></p>
+  </div>
+
+  <div id="content" class="box">
+    <h1>Vítej na soukromé stránce!</h1>
+    <p>Tato stránka je chráněna jednoduchým heslem.</p>
+  </div>
+
+  <script>
+    function checkPassword() {
+      const pass = document.getElementById('password').value;
+      if (pass === 'dhdbfh12mlynkino') {
+        document.getElementById('login').style.display = 'none';
+        document.getElementById('content').style.display = 'block';
+      } else {
+        document.getElementById('error').textContent = 'Nesprávné heslo.';
+      }
+    }
+  </script>
+</body>
+</html>
