@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Soukromá stránka</title>
+  <title>Kino — Soukromá stránka</title>
   <style>
     body {
       font-family: Arial, sans-serif;
       background: linear-gradient(to right, #83a4d4, #b6fbff);
       text-align: center;
-      padding-top: 100px;
+      padding-top: 50px;
     }
     #content {
       display: none;
@@ -18,8 +18,8 @@
       background: white;
       padding: 30px;
       border-radius: 15px;
-      max-width: 400px;
-      margin: auto;
+      max-width: 600px;
+      margin: 20px auto;
       box-shadow: 0 0 15px rgba(0,0,0,0.2);
     }
     input[type="password"] {
@@ -38,6 +38,9 @@
       border-radius: 5px;
       cursor: pointer;
     }
+    h2 {
+      margin-top: 0;
+    }
   </style>
 </head>
 <body>
@@ -50,9 +53,16 @@
     <p id="error" style="color: red;"></p>
   </div>
 
-  <div id="content" class="box">
-    <h1>Vítej na soukromé stránce!</h1>
-    <p>Tato stránka je chráněna jednoduchým heslem.</p>
+  <div id="content">
+    <div class="box">
+      <h2>Informace o kině</h2>
+      <p><strong>Kino je prozatím uzavřeno</strong>, protože je ve výstavbě.</p>
+    </div>
+
+    <div class="box">
+      <h2>Vlastnictví</h2>
+      <p>Majitel kina: <strong>Jakub Hitl</strong></p>
+    </div>
   </div>
 
   <script>
