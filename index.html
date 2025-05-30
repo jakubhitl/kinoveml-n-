@@ -6,26 +6,22 @@
   <title>Kino Jarvin</title>
   <style>
     * { box-sizing: border-box; }
-
     body {
       margin: 0;
       font-family: sans-serif;
-      background-color: #d6ebff; /* světle modré pozadí sekcí */
+      background: linear-gradient(to bottom, #b3d9ff, #cce6ff);
       color: black;
     }
-
     header, section {
       padding: 20px;
-    }
-
-    h1, h2 {
       text-align: center;
     }
-
-    p {
-      font-size: 1.1em;
+    h1, h2 {
+      margin: 10px 0;
     }
-
+    p {
+      font-size: 1.2em;
+    }
     #passwordScreen {
       position: fixed;
       top: 0;
@@ -40,7 +36,6 @@
       justify-content: center;
       z-index: 1000;
     }
-
     #passwordScreen input {
       padding: 10px;
       font-size: 16px;
@@ -48,7 +43,6 @@
       border-radius: 8px;
       border: none;
     }
-
     #openChatBtn {
       position: fixed;
       bottom: 20px;
@@ -57,12 +51,11 @@
       color: white;
       border: none;
       border-radius: 20px;
-      padding: 10px 20px;
+      padding: 12px 18px;
       cursor: pointer;
-      font-size: 16px;
+      font-size: 1.1em;
       z-index: 999;
     }
-
     #chatContainer {
       display: none;
       position: fixed;
@@ -75,7 +68,6 @@
       flex-direction: column;
       justify-content: space-between;
     }
-
     #chatBox {
       flex-grow: 1;
       overflow-y: auto;
@@ -83,157 +75,147 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
+      font-size: 1.2em;
     }
-
     .bubble {
       max-width: 75%;
-      padding: 12px;
+      padding: 14px;
       margin: 5px;
-      border-radius: 14px;
-      font-size: 1.1em;
+      border-radius: 16px;
       word-wrap: break-word;
     }
-
     .user {
       background-color: #ff69b4;
       align-self: flex-end;
       color: white;
     }
-
     .jarvin {
       background-color: #ba55d3;
       align-self: flex-start;
       color: white;
     }
-
     .chatInputArea {
       display: flex;
       gap: 10px;
-      padding: 10px;
+      padding: 12px;
       background-color: rgba(0,0,0,0.2);
     }
-
     .chatInputArea input {
       flex-grow: 1;
-      padding: 12px;
-      border-radius: 10px;
+      padding: 14px;
+      border-radius: 12px;
       border: none;
-      font-size: 1em;
+      font-size: 1.2em;
     }
-
     .chatInputArea button {
-      padding: 12px;
-      border-radius: 10px;
+      padding: 14px;
+      border-radius: 12px;
       border: none;
       background-color: white;
       color: black;
-      font-size: 1em;
+      font-size: 1.1em;
       cursor: pointer;
+    }
+
+    /* Zákaz pravého kliknutí */
+    body {
+      -webkit-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
     }
   </style>
 </head>
-<body>
+<body oncontextmenu="return false">
 
-  <!-- Přihlašovací obrazovka -->
-  <div id="passwordScreen">
-    <h2>Zadejte heslo pro vstup</h2>
-    <input type="password" id="passwordInput" placeholder="Zadejte heslo" />
-    <button onclick="checkPassword()">Pokračovat</button>
-  </div>
+<!-- Přihlašovací obrazovka -->
+<div id="passwordScreen">
+  <h2>Zadejte heslo pro vstup</h2>
+  <input type="password" id="passwordInput" placeholder="Zadejte heslo" />
+  <button onclick="checkPassword()">Pokračovat</button>
+</div>
 
-  <!-- Obsah stránky -->
-  <div id="mainContent" style="display:none;">
-    <header>
-      <h1>Vítejte v našem kině!</h1>
-    </header>
+<!-- Obsah stránky -->
+<div id="mainContent" style="display:none;">
+  <header>
+    <h1>Vítejte v našem kině!</h1>
+  </header>
 
-    <section>
-      <h2>Informace o kině</h2>
-      <p>Kino je prozatím uzavřeno, protože je ve výstavbě.</p>
-    </section>
+  <section>
+    <h2>Informace o kině</h2>
+    <p>Kino je prozatím uzavřeno, protože je ve výstavbě.</p>
+  </section>
 
-    <section>
-      <h2>Vlastnictví</h2>
-      <p>Majitel kina: Jakub Hitl</p>
-    </section>
+  <section>
+    <h2>Vlastnictví</h2>
+    <p>Majitel kina: <strong>Jakub Hitl</strong></p>
+  </section>
 
-    <!-- TLAČÍTKO CHAT -->
-    <button id="openChatBtn">Zeptejte se Jarvina</button>
+  <!-- TLAČÍTKO CHAT -->
+  <button id="openChatBtn">Zeptejte se Jarvina</button>
 
-    <!-- CHAT OKNO -->
-    <div id="chatContainer">
-      <div id="chatBox"></div>
-      <div class="chatInputArea">
-        <input type="text" id="userInput" placeholder="Napište Jarvinovi...">
-        <button onclick="sendMessage()">Odeslat</button>
-      </div>
+  <!-- CHAT OKNO -->
+  <div id="chatContainer">
+    <div id="chatBox"></div>
+    <div class="chatInputArea">
+      <input type="text" id="userInput" placeholder="Napište Jarvinovi...">
+      <button onclick="sendMessage()">Odeslat</button>
     </div>
   </div>
+</div>
 
-  <!-- SCRIPT -->
-  <script>
-    const passwordScreen = document.getElementById("passwordScreen");
-    const mainContent = document.getElementById("mainContent");
+<script>
+  const passwordScreen = document.getElementById("passwordScreen");
+  const mainContent = document.getElementById("mainContent");
+  const openBtn = document.getElementById("openChatBtn");
+  const chatContainer = document.getElementById("chatContainer");
+  const chatBox = document.getElementById("chatBox");
+  const userInput = document.getElementById("userInput");
 
-    function checkPassword() {
-      const input = document.getElementById("passwordInput").value;
-      const correctPassword = "jarvinheslohost123458"; // tvoje správné heslo
-      if (input === correctPassword) {
-        passwordScreen.style.display = "none";
-        mainContent.style.display = "block";
-      } else {
-        alert("Nesprávné heslo.");
-      }
+  function checkPassword() {
+    const input = document.getElementById("passwordInput").value;
+    const correctPassword = "jarvinheslohost123458";
+    if (input === correctPassword) {
+      passwordScreen.style.display = "none";
+      mainContent.style.display = "block";
+    } else {
+      alert("Nesprávné heslo.");
+    }
+  }
+
+  let conversation = [];
+
+  openBtn.onclick = () => {
+    chatContainer.style.display = "flex";
+    openBtn.style.display = "none"; // Skryje tlačítko
+    chatBox.innerHTML = "";
+    conversation = [];
+  };
+
+  function sendMessage() {
+    const text = userInput.value.trim();
+    if (!text) return;
+    addMessage(text, "user");
+    userInput.value = "";
+
+    let response = "Omlouvám se, ale informace vám zatím nemůžu poskytnout, protože kino je ve výstavbě.";
+    if (text.toLowerCase().includes("majitel")) {
+      response = "Majitel kina je Jakub Hitl.";
     }
 
-    const openBtn = document.getElementById("openChatBtn");
-    const chatContainer = document.getElementById("chatContainer");
-    const chatBox = document.getElementById("chatBox");
-    const userInput = document.getElementById("userInput");
+    setTimeout(() => {
+      addMessage(response, "jarvin");
+    }, 500);
+  }
 
-    let conversation = [];
+  function addMessage(msg, sender) {
+    const bubble = document.createElement("div");
+    bubble.className = "bubble " + sender;
+    bubble.innerText = msg;
+    chatBox.appendChild(bubble);
+    chatBox.scrollTop = chatBox.scrollHeight;
+    conversation.push({ sender, msg });
+  }
+</script>
 
-    openBtn.onclick = () => {
-      chatContainer.style.display = "flex";
-      chatBox.innerHTML = "";
-      conversation = [];
-    };
-
-    function sendMessage() {
-      const text = userInput.value.trim();
-      if (!text) return;
-      addMessage(text, "user");
-      userInput.value = "";
-
-      let response = "Omlouvám se, ale informace vám zatím nemůžu poskytnout, protože kino je ve výstavbě.";
-      if (text.toLowerCase().includes("majitel")) {
-        response = "Majitel kina je Jakub Hitl.";
-      }
-
-      setTimeout(() => {
-        addMessage(response, "jarvin");
-        speak(response);
-      }, 500);
-    }
-
-    function addMessage(msg, sender) {
-      const bubble = document.createElement("div");
-      bubble.className = "bubble " + sender;
-      bubble.innerText = msg;
-      chatBox.appendChild(bubble);
-      chatBox.scrollTop = chatBox.scrollHeight;
-      conversation.push({ sender, msg });
-    }
-
-    function speak(text) {
-      const synth = window.speechSynthesis;
-      const utter = new SpeechSynthesisUtterance(text);
-      utter.lang = "cs-CZ";
-      synth.speak(utter);
-    }
-  </script>
 </body>
 </html>
-
-
-
