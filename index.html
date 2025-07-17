@@ -80,6 +80,14 @@
     #chat-log div {
       margin-bottom: 10px;
     }
+    #info {
+      max-width: 600px;
+      margin: 40px auto;
+      background: white;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    }
   </style>
 </head>
 <body>
@@ -98,6 +106,13 @@
     <p class="small">Majitel kina: Jakub Hitl<br>Tel.: +420 774 954 263</p>
   </div>
 
+  <!-- NOVÁ SEKCE s informacemi -->
+  <div id="info" style="display:none;">
+    <h3>Informace o kině</h3>
+    <p>Kino ve mlýně je malé soukromé kino v srdci Vémyslic. V současné době prochází kompletní rekonstrukcí, aby nabídlo moderní technologie i pohodlné posezení. Po dokončení bude k dispozici útulný sál s kapacitou 15–22 diváků. Naším cílem je přinášet nejen nejnovější filmy, ale také tematické večery pro milovníky kvalitní kinematografie. Kino chce být místem, kde si lidé mohou vychutnat příjemnou atmosféru a uniknout na chvíli z každodenní reality.</p>
+  </div>
+
+  <!-- TLAČÍTKO A OKNO JARVINA -->
   <button id="jarvin-button" onclick="toggleJarvin()">Zeptej se Jarvina</button>
 
   <div id="jarvin-window">
@@ -113,6 +128,7 @@
       if (pass === '12345') {
         document.getElementById('login').style.display = 'none';
         document.getElementById('content').style.display = 'block';
+        document.getElementById('info').style.display = 'block';
       } else {
         document.getElementById('error').textContent = 'Nesprávné heslo.';
       }
