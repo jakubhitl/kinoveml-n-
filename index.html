@@ -10,6 +10,8 @@
       background: linear-gradient(to right, #83a4d4, #b6fbff);
       text-align: center;
       padding-top: 100px;
+      position: relative;
+      min-height: 100vh;
     }
     #content {
       display: none;
@@ -22,7 +24,7 @@
       margin: auto;
       box-shadow: 0 0 15px rgba(0,0,0,0.2);
     }
-    input[type="password"] {
+    input[type="password"], input[type="text"] {
       padding: 10px;
       width: 80%;
       margin-top: 10px;
@@ -43,6 +45,41 @@
       color: #333;
       margin-top: 10px;
     }
+    #jarvin-button {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      padding: 10px 15px;
+      background-color: #4CAF50;
+      color: white;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    #jarvin-window {
+      display: none;
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      width: 300px;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      padding: 20px;
+      text-align: left;
+    }
+    #chat-log {
+      height: 150px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+    #chat-log div {
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 <body>
@@ -61,6 +98,15 @@
     <p class="small">Majitel kina: Jakub Hitl<br>Tel.: +420 774 954 263</p>
   </div>
 
+  <button id="jarvin-button" onclick="toggleJarvin()">Zeptej se Jarvina</button>
+
+  <div id="jarvin-window">
+    <h3>Jarvin</h3>
+    <div id="chat-log"></div>
+    <input type="text" id="user-input" placeholder="Napiš dotaz...">
+    <button onclick="jarvinReply()">Odeslat</button>
+  </div>
+
   <script>
     function checkPassword() {
       const pass = document.getElementById('password').value;
@@ -70,6 +116,27 @@
       } else {
         document.getElementById('error').textContent = 'Nesprávné heslo.';
       }
+    }
+
+    function toggleJarvin() {
+      const jarvin = document.getElementById('jarvin-window');
+      jarvin.style.display = jarvin.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function jarvinReply() {
+      const input = document.getElementById('user-input').value;
+      if (!input) return;
+      const chat = document.getElementById('chat-log');
+      const userMessage = document.createElement('div');
+      userMessage.textContent = 'Vy: ' + input;
+      chat.appendChild(userMessage);
+
+      const jarvinMessage = document.createElement('div');
+      jarvinMessage.textContent = 'Jarvin: Omlouvám se, ale bohužel je kino ve výstavbě, a proto nemohu odpovídat na vaše otázky. Pokud se chcete na něco zeptat, obraťte se na telefonní číslo +420 774 954 263.';
+      chat.appendChild(jarvinMessage);
+
+      document.getElementById('user-input').value = '';
+      chat.scrollTop = chat.scrollHeight;
     }
   </script>
 </body>
