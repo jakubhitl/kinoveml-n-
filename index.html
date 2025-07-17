@@ -87,15 +87,25 @@
       padding: 20px;
       border-radius: 15px;
       box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      text-align: left;
+    }
+    /* Styl mapy */
+    #map {
+      width: 100%;
+      height: 250px;
+      border-radius: 15px;
+      margin-top: 20px;
     }
   </style>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 <body>
 
   <div id="login" class="box">
     <h2>Vstup chráněn heslem</h2>
-    <input type="password" id="password" placeholder="Zadej heslo">
-    <br>
+    <input type="password" id="password" placeholder="Zadej heslo" />
+    <br />
     <button onclick="checkPassword()">Pokračovat</button>
     <p id="error" style="color: red;"></p>
   </div>
@@ -103,55 +113,77 @@
   <div id="content" class="box">
     <h1>Kino ve mlýně</h1>
     <p class="small">Kino je uzavřeno protože je ve výstavbě</p>
-    <p class="small">Majitel kina: Jakub Hitl<br>Tel.: +420 774 954 263</p>
+    <p class="small">
+      Majitel kina: Jakub Hitl<br />Tel.: +420 774 954 263
+    </p>
   </div>
 
-  <!-- NOVÁ SEKCE s informacemi -->
   <div id="info" style="display:none;">
     <h3>Informace o kině</h3>
-    <p>Kino ve mlýně je malé soukromé kino v srdci Vémyslic. V současné době prochází kompletní rekonstrukcí, aby nabídlo moderní technologie i pohodlné posezení. Po dokončení bude k dispozici útulný sál s kapacitou 15–22 diváků. Naším cílem je přinášet nejen nejnovější filmy, ale také tematické večery pro milovníky kvalitní kinematografie. Kino chce být místem, kde si lidé mohou vychutnat příjemnou atmosféru a uniknout na chvíli z každodenní reality.</p>
+    <p>
+      Kino ve mlýně je malé soukromé kino v srdci Vémyslic. V současné době
+      prochází kompletní rekonstrukcí, aby nabídlo moderní technologie i
+      pohodlné posezení. Po dokončení bude k dispozici útulný sál s kapacitou
+      15–22 diváků. Naším cílem je přinášet nejen nejnovější filmy, ale také
+      tematické večery pro milovníky kvalitní kinematografie. Kino chce být
+      místem, kde si lidé mohou vychutnat příjemnou atmosféru a uniknout na
+      chvíli z každodenní reality.
+    </p>
+    <div id="map"></div>
   </div>
 
-  <!-- TLAČÍTKO A OKNO JARVINA -->
   <button id="jarvin-button" onclick="toggleJarvin()">Zeptej se Jarvina</button>
 
   <div id="jarvin-window">
     <h3>Jarvin</h3>
     <div id="chat-log"></div>
-    <input type="text" id="user-input" placeholder="Napiš dotaz...">
+    <input type="text" id="user-input" placeholder="Napiš dotaz..." />
     <button onclick="jarvinReply()">Odeslat</button>
   </div>
 
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
   <script>
     function checkPassword() {
-      const pass = document.getElementById('password').value;
-      if (pass === '12345') {
-        document.getElementById('login').style.display = 'none';
-        document.getElementById('content').style.display = 'block';
-        document.getElementById('info').style.display = 'block';
+      const pass = document.getElementById("password").value;
+      if (pass === "12345") {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("content").style.display = "block";
+        document.getElementById("info").style.display = "block";
+
+        var map = L.map("map").setView([49.0239, 16.2558], 16);
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+          attribution:
+            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        }).addTo(map);
+        L.marker([49.0239, 16.2558])
+          .addTo(map)
+          .bindPopup("Kino ve mlýně - Vémyslice 36")
+          .openPopup();
       } else {
-        document.getElementById('error').textContent = 'Nesprávné heslo.';
+        document.getElementById("error").textContent = "Nesprávné heslo.";
       }
     }
 
     function toggleJarvin() {
-      const jarvin = document.getElementById('jarvin-window');
-      jarvin.style.display = jarvin.style.display === 'block' ? 'none' : 'block';
+      const jarvin = document.getElementById("jarvin-window");
+      jarvin.style.display = jarvin.style.display === "block" ? "none" : "block";
     }
 
     function jarvinReply() {
-      const input = document.getElementById('user-input').value;
+      const input = document.getElementById("user-input").value;
       if (!input) return;
-      const chat = document.getElementById('chat-log');
-      const userMessage = document.createElement('div');
-      userMessage.textContent = 'Vy: ' + input;
+      const chat = document.getElementById("chat-log");
+      const userMessage = document.createElement("div");
+      userMessage.textContent = "Vy: " + input;
       chat.appendChild(userMessage);
 
-      const jarvinMessage = document.createElement('div');
-      jarvinMessage.textContent = 'Jarvin: Omlouvám se, ale bohužel je kino ve výstavbě, a proto nemohu odpovídat na vaše otázky. Pokud se chcete na něco zeptat, obraťte se na telefonní číslo +420 774 954 263.';
+      const jarvinMessage = document.createElement("div");
+      jarvinMessage.textContent =
+        "Jarvin: Omlouvám se, ale bohužel je kino ve výstavbě, a proto nemohu odpovídat na vaše otázky. Pokud se chcete na něco zeptat, obraťte se na telefonní číslo +420 774 954 263.";
       chat.appendChild(jarvinMessage);
 
-      document.getElementById('user-input').value = '';
+      document.getElementById("user-input").value = "";
       chat.scrollTop = chat.scrollHeight;
     }
   </script>
