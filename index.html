@@ -38,6 +38,11 @@
       border-radius: 5px;
       cursor: pointer;
     }
+    .small {
+      font-size: 14px;
+      color: #333;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
@@ -51,14 +56,15 @@
   </div>
 
   <div id="content" class="box">
-    <h1>Vítej na soukromé stránce!</h1>
-    <p>Tato stránka je chráněna jednoduchým heslem.</p>
+    <h1>Kino ve mlýně</h1>
+    <p class="small">Kino je uzavřeno protože je ve výstavbě</p>
+    <p class="small">Majitel kina: Jakub Hitl<br>Tel.: +420 774 954 263</p>
   </div>
 
   <script>
     function checkPassword() {
       const pass = document.getElementById('password').value;
-      if (pass === 'dhdbfh12mlynkino') {
+      if (pass === '12345') {
         document.getElementById('login').style.display = 'none';
         document.getElementById('content').style.display = 'block';
       } else {
