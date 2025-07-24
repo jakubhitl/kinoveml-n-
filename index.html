@@ -16,7 +16,8 @@
     }
 
     #content {
-      display: none;
+      /* zobrazíme rovnou, ne skryjeme */
+      display: block;
     }
 
     .box {
@@ -158,19 +159,21 @@
       border-radius: 15px;
       margin-top: 20px;
     }
+
+    #error-contact {
+      max-width: 400px;
+      margin: 20px auto;
+      font-size: 13px;
+      color: #555;
+      font-style: italic;
+    }
   </style>
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 <body>
 
-  <div id="login" class="box">
-    <h2>Vstup chráněn heslem</h2>
-    <input type="password" id="password" placeholder="Zadej heslo" />
-    <br />
-    <button onclick="checkPassword()">Pokračovat</button>
-    <p id="error" style="color: red;"></p>
-  </div>
+  <!-- Odstraněný login, rovnou obsah -->
 
   <div id="content" class="box">
     <h1>Kino ve mlýně</h1>
@@ -180,7 +183,7 @@
     </p>
   </div>
 
-  <div id="info" style="display:none;">
+  <div id="info" style="display:block;">
     <h3>Informace o kině</h3>
     <p>
       Kino ve mlýně je malé soukromé kino v srdci Vémyslic. V současné době
@@ -193,6 +196,8 @@
     </p>
     <div id="map"></div>
   </div>
+
+  <p id="error-contact">Pokud byste našli chybu na tomto webu, kontaktujte nás na telefonním čísle +420 774 954 263.</p>
 
   <button id="jarvin-button" onclick="toggleJarvin()">Zeptej se Jarvina</button>
 
@@ -207,26 +212,19 @@
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
   <script>
-    function checkPassword() {
-      const pass = document.getElementById("password").value;
-      if (pass === "12345") {
-        document.getElementById("login").style.display = "none";
-        document.getElementById("content").style.display = "block";
-        document.getElementById("info").style.display = "block";
+    // Už není potřeba checkPassword, protože vstup není chráněný
 
-        var map = L.map("map").setView([49.0239, 16.2558], 16);
-        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-          attribution:
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        }).addTo(map);
-        L.marker([49.0239, 16.2558])
-          .addTo(map)
-          .bindPopup("Kino ve mlýně - Vémyslice 36")
-          .openPopup();
-      } else {
-        document.getElementById("error").textContent = "Nesprávné heslo.";
-      }
-    }
+    window.onload = function () {
+      var map = L.map("map").setView([49.0239, 16.2558], 16);
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(map);
+      L.marker([49.0239, 16.2558])
+        .addTo(map)
+        .bindPopup("Kino ve mlýně - Vémyslice 36")
+        .openPopup();
+    };
 
     function toggleJarvin() {
       const jarvin = document.getElementById("jarvin-window");
