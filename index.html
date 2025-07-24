@@ -16,7 +16,6 @@
     }
 
     #content {
-      /* zobrazíme rovnou, ne skryjeme */
       display: block;
     }
 
@@ -58,12 +57,18 @@
       right: 20px;
       bottom: 20px;
       padding: 10px 15px;
-      background-color: #4CAF50;
+      background-color: #ff4081; /* Změna barvy na růžovou */
       color: white;
       border-radius: 50px;
       border: none;
       cursor: pointer;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      box-shadow: 0 0 10px rgba(255, 64, 129, 0.6);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    #jarvin-button:hover {
+      background-color: #e040fb;
+      box-shadow: 0 0 15px rgba(224, 64, 251, 0.8);
     }
 
     #jarvin-window {
@@ -167,16 +172,33 @@
       color: #555;
       font-style: italic;
     }
+
+    /* Nový styl pro box s informací o rekonstrukci */
+    #rekonstrukce-info {
+      background: white;
+      padding: 20px;
+      max-width: 400px;
+      margin: 20px auto;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.15);
+      font-weight: bold;
+      font-size: 1.1rem;
+      color: #444;
+    }
+
   </style>
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
 <body>
 
-  <!-- Odstraněný login, rovnou obsah -->
-
   <div id="content" class="box">
     <h1>Kino ve mlýně</h1>
+    <!-- Přidaný box s rekonstrukcí -->
+    <div id="rekonstrukce-info">
+      Rekonstrukce dokončena z 37%
+    </div>
+
     <p class="small">Kino je uzavřeno protože je ve výstavbě</p>
     <p class="small">
       Majitel kina: Jakub Hitl<br />Tel.: +420 774 954 263
@@ -212,8 +234,6 @@
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 
   <script>
-    // Už není potřeba checkPassword, protože vstup není chráněný
-
     window.onload = function () {
       var map = L.map("map").setView([49.0239, 16.2558], 16);
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
