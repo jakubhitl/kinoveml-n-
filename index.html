@@ -57,7 +57,7 @@
       right: 20px;
       bottom: 20px;
       padding: 10px 15px;
-      background-color: #ff4081;
+      background-color: #ff4081; /* Změna barvy na růžovou */
       color: white;
       border-radius: 50px;
       border: none;
@@ -173,6 +173,7 @@
       font-style: italic;
     }
 
+    /* Nový styl pro box s informací o rekonstrukci */
     #rekonstrukce-info {
       background: white;
       padding: 20px;
@@ -185,64 +186,6 @@
       color: #444;
     }
 
-    /* 📱 MOBILNÍ VERZE */
-    @media (max-width: 600px) {
-      body {
-        padding-top: 60px;
-      }
-
-      .box, #rekonstrukce-info, #info, #jarvin-window {
-        max-width: 90%;
-        padding: 15px;
-        margin: 10px auto;
-      }
-
-      input[type="password"], input[type="text"] {
-        width: 100%;
-      }
-
-      button {
-        width: 100%;
-        padding: 12px;
-      }
-
-      #jarvin-button {
-        right: 10px;
-        bottom: 10px;
-        padding: 10px;
-        font-size: 14px;
-      }
-
-      #jarvin-window {
-        bottom: 70px;
-        right: 10px;
-        width: 90%;
-      }
-
-      #chat-log {
-        height: 120px;
-        font-size: 13px;
-      }
-
-      .bubble {
-        max-width: 100%;
-      }
-
-      #theme-toggle {
-        top: 5px;
-        right: 5px;
-        font-size: 18px;
-      }
-
-      #map {
-        height: 180px;
-      }
-
-      #error-contact {
-        padding: 0 10px;
-        text-align: center;
-      }
-    }
   </style>
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -251,6 +194,7 @@
 
   <div id="content" class="box">
     <h1>Kino ve mlýně</h1>
+    <!-- Přidaný box s rekonstrukcí -->
     <div id="rekonstrukce-info">
       Rekonstrukce dokončena z 37%
     </div>
