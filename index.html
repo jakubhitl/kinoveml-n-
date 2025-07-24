@@ -12,10 +12,13 @@
       padding-top: 100px;
       position: relative;
       min-height: 100vh;
+      transition: background 0.3s;
     }
+
     #content {
       display: none;
     }
+
     .box {
       background: white;
       padding: 30px;
@@ -24,6 +27,7 @@
       margin: auto;
       box-shadow: 0 0 15px rgba(0,0,0,0.2);
     }
+
     input[type="password"], input[type="text"] {
       padding: 10px;
       width: 80%;
@@ -31,6 +35,7 @@
       border-radius: 5px;
       border: 1px solid #ccc;
     }
+
     button {
       padding: 10px 20px;
       margin-top: 15px;
@@ -40,11 +45,13 @@
       border-radius: 5px;
       cursor: pointer;
     }
+
     .small {
       font-size: 14px;
       color: #333;
       margin-top: 10px;
     }
+
     #jarvin-button {
       position: fixed;
       right: 20px;
@@ -57,6 +64,7 @@
       cursor: pointer;
       box-shadow: 0 0 10px rgba(0,0,0,0.3);
     }
+
     #jarvin-window {
       display: none;
       position: fixed;
@@ -68,7 +76,14 @@
       box-shadow: 0 0 15px rgba(0,0,0,0.2);
       padding: 20px;
       text-align: left;
+      z-index: 999;
     }
+
+    #jarvin-window.dark {
+      background: #2f2f2f;
+      color: white;
+    }
+
     #chat-log {
       height: 150px;
       overflow-y: auto;
@@ -76,10 +91,57 @@
       padding: 10px;
       margin-bottom: 10px;
       font-size: 14px;
+      background: #f9f9f9;
+      border-radius: 5px;
     }
-    #chat-log div {
-      margin-bottom: 10px;
+
+    #jarvin-window.dark #chat-log {
+      background: #444;
+      border-color: #666;
     }
+
+    .bubble {
+      max-width: 80%;
+      padding: 8px 12px;
+      border-radius: 12px;
+      margin-bottom: 8px;
+      clear: both;
+      display: inline-block;
+    }
+
+    .user {
+      background-color: #d4f8d4;
+      float: right;
+    }
+
+    .jarvin {
+      background-color: #eee;
+      float: left;
+    }
+
+    #jarvin-window.dark .jarvin {
+      background-color: #555;
+    }
+
+    #jarvin-window.dark .user {
+      background-color: #66bb6a;
+    }
+
+    #theme-toggle {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: #333;
+    }
+
+    #jarvin-window.dark #theme-toggle {
+      color: white;
+    }
+
     #info {
       max-width: 600px;
       margin: 40px auto;
@@ -89,7 +151,7 @@
       box-shadow: 0 0 15px rgba(0,0,0,0.2);
       text-align: left;
     }
-    /* Styl mapy */
+
     #map {
       width: 100%;
       height: 250px;
@@ -135,9 +197,10 @@
   <button id="jarvin-button" onclick="toggleJarvin()">Zeptej se Jarvina</button>
 
   <div id="jarvin-window">
+    <button id="theme-toggle">🌓</button>
     <h3>Jarvin</h3>
     <div id="chat-log"></div>
-    <input type="text" id="user-input" placeholder="Napiš dotaz..." />
+    <input type="text" id="user-input" placeholder="Napiš dotaz..." onkeydown="if(event.key==='Enter') jarvinReply()" />
     <button onclick="jarvinReply()">Odeslat</button>
   </div>
 
@@ -171,21 +234,29 @@
     }
 
     function jarvinReply() {
-      const input = document.getElementById("user-input").value;
+      const inputElem = document.getElementById("user-input");
+      const input = inputElem.value.trim();
       if (!input) return;
       const chat = document.getElementById("chat-log");
-      const userMessage = document.createElement("div");
-      userMessage.textContent = "Vy: " + input;
-      chat.appendChild(userMessage);
 
-      const jarvinMessage = document.createElement("div");
-      jarvinMessage.textContent =
-        "Jarvin: Omlouvám se, ale bohužel je kino ve výstavbě, a proto nemohu odpovídat na vaše otázky. Pokud se chcete na něco zeptat, obraťte se na telefonní číslo +420 774 954 263.";
-      chat.appendChild(jarvinMessage);
+      const userBubble = document.createElement("div");
+      userBubble.className = "bubble user";
+      userBubble.textContent = input;
+      chat.appendChild(userBubble);
 
-      document.getElementById("user-input").value = "";
+      const jarvinBubble = document.createElement("div");
+      jarvinBubble.className = "bubble jarvin";
+      jarvinBubble.textContent = "Ahoj! Kino je momentálně ve výstavbě, proto není možné rezervovat vstupenky ani zobrazit program. Plánujeme otevření brzy s útulným sálem pro 15–22 lidí a novou technologií. Pro více informací kontaktuj majitele Jakuba Hitla na čísle +420 774 954 263. Těšíme se na tebe!";
+      chat.appendChild(jarvinBubble);
+
+      inputElem.value = "";
       chat.scrollTop = chat.scrollHeight;
     }
+
+    document.getElementById('theme-toggle').onclick = () => {
+      const jarvinWindow = document.getElementById("jarvin-window");
+      jarvinWindow.classList.toggle("dark");
+    };
   </script>
 </body>
 </html>
