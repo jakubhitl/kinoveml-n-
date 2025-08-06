@@ -6,7 +6,6 @@
   <meta name="google-site-verification" content="oRwdVFgd0x_dI-rTIbsnG1TN0KkX5m2UyOzJxkYy-aA" />
   <title>Kino ve mlýně</title>
 
-  <!-- Moderní font -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
   <style>
@@ -49,6 +48,19 @@
 
     nav a:hover {
       text-decoration: underline;
+    }
+
+    /* RESPONSIVE FIX for mobile menu cut-off */
+    @media (max-width: 600px) {
+      nav ul {
+        gap: 12px;
+        flex-wrap: wrap;
+        padding: 0 10px;
+      }
+
+      nav a {
+        font-size: 14px;
+      }
     }
 
     #content {
@@ -249,7 +261,6 @@
     <div id="rekonstrukce-info">
       Rekonstrukce dokončena z 37%
     </div>
-
     <p class="small">Kino je uzavřeno protože je ve výstavbě</p>
     <p class="small">
       Majitel kina: Jakub Hitl<br />Tel.: +420 774 954 263
@@ -264,9 +275,7 @@
         prochází kompletní rekonstrukcí, aby nabídlo moderní technologie i
         pohodlné posezení. Po dokončení bude k dispozici útulný sál s kapacitou
         15–22 diváků. Naším cílem je přinášet nejen nejnovější filmy, ale také
-        tematické večery pro milovníky kvalitní kinematografie. Kino chce být
-        místem, kde si lidé mohou vychutnat příjemnou atmosféru a uniknout na
-        chvíli z každodenní reality.
+        tematické večery pro milovníky kvalitní kinematografie.
       </p>
       <div id="map"></div>
     </div>
@@ -276,7 +285,7 @@
     <div id="info">
       <h3>Informace o rekonstrukci kina</h3>
       <p>
-        Kino ve mlýně právě prochází rozsáhlou rekonstrukcí, která přinese moderní vybavení, vylepšenou akustiku a komfortní prostředí pro všechny návštěvníky. Pracujeme na pohodlných sedadlech a inovativním promítacím systému, aby sledování filmů bylo co nejpříjemnější. Díky rekonstrukci se návštěvníci mohou těšit na útulný a stylový sál, který ještě více umocní zážitek z každého filmu. Naším cílem je vytvořit místo, kde si každý najde svůj oblíbený film v příjemné a přátelské atmosféře. Pokud máte zájem být informováni o dokončení kina, napište nám na email <a href="mailto:kinovemlyne@seznam.cz">kinovemlyne@seznam.cz</a> a rádi vás budeme kontaktovat.
+        Kino ve mlýně právě prochází rozsáhlou rekonstrukcí, která přinese moderní vybavení, vylepšenou akustiku a komfortní prostředí pro všechny návštěvníky. Pracujeme na pohodlných sedadlech a inovativním promítacím systému, aby sledování filmů bylo co nejpříjemnější.
       </p>
     </div>
   </div>
@@ -285,7 +294,7 @@
     <div id="info">
       <h3>Kdo je to Jarvin?</h3>
       <p>
-        Momentálně Jarvin ještě nezná detaily o kině a stále opakuje stejnou odpověď – po spuštění ale zvládne odpovědět na každou vaši otázku. Pracujeme na tom, aby Jarvin co nejdřív získal všechny informace a mohl vám tak co nejlépe pomoci. Brzy bude Jarvin vaším spolehlivým průvodcem světem filmů a programem našeho kina. Děkujeme za trpělivost – už se na vás těší!
+        Momentálně Jarvin ještě nezná detaily o kině a stále opakuje stejnou odpověď – po spuštění ale zvládne odpovědět na každou vaši otázku.
       </p>
     </div>
   </div>
