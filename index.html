@@ -11,7 +11,8 @@
   <style>
     body {
       font-family: 'Poppins', sans-serif;
-      background-color: #52B788;
+      background: url('https://static.vecteezy.com/system/resources/previews/028/541/542/non_2x/popcorn-stand-cinema-shot-movie-theatre-popcorn-free-photo.jpg') no-repeat center center fixed;
+      background-size: cover;
       text-align: center;
       padding-top: 140px;
       position: relative;
@@ -50,7 +51,6 @@
       text-decoration: underline;
     }
 
-    /* RESPONSIVE FIX for mobile menu cut-off */
     @media (max-width: 600px) {
       nav ul {
         gap: 12px;
@@ -312,7 +312,6 @@
   </div>
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-
   <script>
     window.onload = function () {
       var map = L.map("map").setView([49.0239, 16.2558], 16);
