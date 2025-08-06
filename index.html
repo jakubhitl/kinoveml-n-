@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="google-site-verification" content="oRwdVFgd0x_dI-rTIbsnG1TN0KkX5m2UyOzJxkYy-aA" />
-  <title>Soukromá stránka</title>
+  <title>Kino ve mlýně</title>
 
   <!-- Moderní font -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
@@ -14,10 +14,41 @@
       font-family: 'Poppins', sans-serif;
       background-color: #52B788;
       text-align: center;
-      padding-top: 100px;
+      padding-top: 140px;
       position: relative;
       min-height: 100vh;
       transition: background 0.3s;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: #40916C;
+      padding: 15px 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+
+    nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      font-weight: 600;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-size: 16px;
+    }
+
+    nav a:hover {
+      text-decoration: underline;
     }
 
     #content {
@@ -204,7 +235,16 @@
 </head>
 <body>
 
-  <div id="content" class="box">
+  <nav>
+    <ul>
+      <li><a href="#uvod">Úvodní strana</a></li>
+      <li><a href="#kino">Informace o kině</a></li>
+      <li><a href="#rekonstrukce">Informace o rekonstrukci</a></li>
+      <li><a href="#jarvin">Kdo je to Jarvin?</a></li>
+    </ul>
+  </nav>
+
+  <div id="uvod" class="box">
     <h1>Kino ve mlýně</h1>
     <div id="rekonstrukce-info">
       Rekonstrukce dokončena z 37%
@@ -216,33 +256,38 @@
     </p>
   </div>
 
-  <div id="info" style="display:block;">
-    <h3>Informace o kině</h3>
-    <p>
-      Kino ve mlýně je malé soukromé kino v srdci Vémyslic. V současné době
-      prochází kompletní rekonstrukcí, aby nabídlo moderní technologie i
-      pohodlné posezení. Po dokončení bude k dispozici útulný sál s kapacitou
-      15–22 diváků. Naším cílem je přinášet nejen nejnovější filmy, ale také
-      tematické večery pro milovníky kvalitní kinematografie. Kino chce být
-      místem, kde si lidé mohou vychutnat příjemnou atmosféru a uniknout na
-      chvíli z každodenní reality.
-    </p>
-    <div id="map"></div>
+  <div id="kino" class="info">
+    <div id="info">
+      <h3>Informace o kině</h3>
+      <p>
+        Kino ve mlýně je malé soukromé kino v srdci Vémyslic. V současné době
+        prochází kompletní rekonstrukcí, aby nabídlo moderní technologie i
+        pohodlné posezení. Po dokončení bude k dispozici útulný sál s kapacitou
+        15–22 diváků. Naším cílem je přinášet nejen nejnovější filmy, ale také
+        tematické večery pro milovníky kvalitní kinematografie. Kino chce být
+        místem, kde si lidé mohou vychutnat příjemnou atmosféru a uniknout na
+        chvíli z každodenní reality.
+      </p>
+      <div id="map"></div>
+    </div>
   </div>
 
-  <div id="info" style="display:block; margin-top: 40px;">
-    <h3>Informace o rekonstrukci kina</h3>
-    <p>
-      Kino ve mlýně právě prochází rozsáhlou rekonstrukcí, která přinese moderní vybavení, vylepšenou akustiku a komfortní prostředí pro všechny návštěvníky. Pracujeme na pohodlných sedadlech a inovativním promítacím systému, aby sledování filmů bylo co nejpříjemnější. Díky rekonstrukci se návštěvníci mohou těšit na útulný a stylový sál, který ještě více umocní zážitek z každého filmu. Naším cílem je vytvořit místo, kde si každý najde svůj oblíbený film v příjemné a přátelské atmosféře. Pokud máte zájem být informováni o dokončení kina, napište nám na email <a href="mailto:kinovemlyne@seznam.cz">kinovemlyne@seznam.cz</a> a rádi vás budeme kontaktovat.
-    </p>
+  <div id="rekonstrukce" class="info">
+    <div id="info">
+      <h3>Informace o rekonstrukci kina</h3>
+      <p>
+        Kino ve mlýně právě prochází rozsáhlou rekonstrukcí, která přinese moderní vybavení, vylepšenou akustiku a komfortní prostředí pro všechny návštěvníky. Pracujeme na pohodlných sedadlech a inovativním promítacím systému, aby sledování filmů bylo co nejpříjemnější. Díky rekonstrukci se návštěvníci mohou těšit na útulný a stylový sál, který ještě více umocní zážitek z každého filmu. Naším cílem je vytvořit místo, kde si každý najde svůj oblíbený film v příjemné a přátelské atmosféře. Pokud máte zájem být informováni o dokončení kina, napište nám na email <a href="mailto:kinovemlyne@seznam.cz">kinovemlyne@seznam.cz</a> a rádi vás budeme kontaktovat.
+      </p>
+    </div>
   </div>
 
-  <!-- Nová sekce Kdo je to Jarvin? -->
-  <div id="info" style="display:block; margin-top: 40px;">
-    <h3>Kdo je to Jarvin?</h3>
-    <p>
-      Momentálně Jarvin ještě nezná detaily o kině a stále opakuje stejnou odpověď – po spuštění ale zvládne odpovědět na každou vaši otázku. Pracujeme na tom, aby Jarvin co nejdřív získal všechny informace a mohl vám tak co nejlépe pomoci. Brzy bude Jarvin vaším spolehlivým průvodcem světem filmů a programem našeho kina. Děkujeme za trpělivost – už se na vás těší!
-    </p>
+  <div id="jarvin" class="info">
+    <div id="info">
+      <h3>Kdo je to Jarvin?</h3>
+      <p>
+        Momentálně Jarvin ještě nezná detaily o kině a stále opakuje stejnou odpověď – po spuštění ale zvládne odpovědět na každou vaši otázku. Pracujeme na tom, aby Jarvin co nejdřív získal všechny informace a mohl vám tak co nejlépe pomoci. Brzy bude Jarvin vaším spolehlivým průvodcem světem filmů a programem našeho kina. Děkujeme za trpělivost – už se na vás těší!
+      </p>
+    </div>
   </div>
 
   <p id="error-contact">Pokud byste našli chybu na tomto webu, kontaktujte nás na telefonním čísle +420 774 954 263.</p>
