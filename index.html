@@ -250,9 +250,10 @@
   <nav>
     <ul>
       <li><a href="#uvod">Domov</a></li>
-      <li><a href="#kino">Informace</a></li>
-      <li><a href="#rekonstrukce">Rekonstrukce</a></li>
-      <li><a href="#jarvin">Jarvin</a></li>
+      <li><a href="#kino">Info.</a></li>
+      <li><a href="#rekonstrukce">Rekonst.</a></li>
+      <li><a href="#cojekinoid">info. ID</a></li>  
+      <li><a href="#kinoid">ID</a></li>
     </ul>
   </nav>
 
@@ -291,14 +292,32 @@
     </div>
   </div>
 
-  <div id="jarvin" class="info">
+<div id="cojekinoid" class="info">
     <div id="info">
-      <h3>Kdo je to Jarvin?</h3>
+      <h3>Nemáte KinoID?</h3>
       <p>
-        Jarvin je chytrý ai asistent, který se teprve učí detaily o našem kině – zatím odpovídá stručně, ale po spuštění vám zodpoví každou otázku, rychle a s přehledem.
+        Nemáte KinoID tak si ho založte u nás na webu zdarma. Jaké jsou výhody dostanete 10% zdarma na první vstupenku a nákup u nás v Kině nad 150 Kč s 25% slevou. Když se zaregistrujete tak se vám objeví stránka Tento web není dostupný to znamená že jste se správně zaregistrovaly a do 30 minut vám přijde email s vaším ID je to chyba kterou brzy opravíme. 
       </p>
     </div>
   </div>
+
+ <!-- 🔽 ZAČÁTEK ÚPRAVENÉ SEKCE místo "Kdo je to Jarvin?" -->
+<div id="kinoid" class="info">
+  <div id="info">
+    <h3>Registrace na KinoID</h3>
+    <form action="https://formsubmit.co/kinovemlyne@seznam.cz" method="POST">
+      <input type="text" name="Jméno" placeholder="Vaše jméno" required><br><br>
+      <input type="text" name="Příjmení" placeholder="Vaše příjmení" required><br><br>
+      <input type="email" name="Email" placeholder="Váš e-mail" required><br><br>
+      <input type="text" name="Telefon" placeholder="Telefon (nepovinné)"><br><br>
+      <button type="submit">Zaregistrovat se</button>
+      <input type="hidden" name="_next" value="https://kinovemlyne.cz/diky.html">
+      <input type="hidden" name="_captcha" value="false">
+    </form>
+  </div>
+</div>
+<!-- 🔼 KONEC ÚPRAVENÉ SEKCE -->
+
 
   <p id="error-contact">Pokud byste našli chybu na tomto webu, kontaktujte nás na emailu kinovemlyne@seznam.cz</p>
 
@@ -358,4 +377,3 @@
   </script>
 </body>
 </html>
-
