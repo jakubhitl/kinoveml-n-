@@ -107,103 +107,49 @@
       margin-top: 10px;
     }
 
-    #jarvin-button {
-      position: fixed;
-      right: 20px;
-      bottom: 20px;
-      padding: 12px 18px;
-      background-color: #ff4081;
-      color: white;
-      border-radius: 30px;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 0 15px rgba(255, 64, 129, 0.6);
-      font-weight: 600;
-      font-size: 14px;
-    }
+/* --- tlačítko Jarvina moderní gradient --- */
+#jarvin-button {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  padding: 14px 22px;
+  background: linear-gradient(135deg, #a18cd1, #fbc2eb, #8ec5fc);
+  background-size: 200% 200%;
+  color: white;
+  border-radius: 40px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.25);
+  font-weight: 600;
+  font-size: 15px;
+  animation: gradientShift 5s ease infinite;
+  transition: transform 0.2s ease;
+}
+#jarvin-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+}
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
-    #jarvin-button:hover {
-      background-color: #e040fb;
-      box-shadow: 0 0 20px rgba(224, 64, 251, 0.8);
-    }
+/* --- chat okno modernější --- */
+#jarvin-window { display: none; position: fixed; bottom: 80px; right: 20px; width: 300px; background: white; border-radius: 15px; box-shadow: 0 0 20px rgba(0,0,0,0.2); padding: 20px; text-align: left; z-index: 999; } #jarvin-window.dark { background: #2f2f2f; color: white; } #chat-log { height: 150px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; font-size: 14px; background: #f1f1f1; border-radius: 10px; } #jarvin-window.dark #chat-log { background: #444; border-color: #666; } .bubble { max-width: 80%; padding: 10px 14px; border-radius: 15px; margin-bottom: 8px; clear: both; display: inline-block; font-size: 14px; } .user { background-color: #d4f8d4; float: right; } .jarvin { background-color: #eee; float: left; } #jarvin-window.dark .jarvin { background-color: #555; } #jarvin-window.dark .user { background-color: #66bb6a; }
 
-    #jarvin-window {
-      display: none;
-      position: fixed;
-      bottom: 80px;
-      right: 20px;
-      width: 300px;
-      background: white;
-      border-radius: 15px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.2);
-      padding: 20px;
-      text-align: left;
-      z-index: 999;
-    }
+/* efekt náběhu */
+@keyframes fadeIn {
+  from {opacity: 0; transform: translateY(10px);}
+  to {opacity: 1; transform: translateY(0);}
 
-    #jarvin-window.dark {
-      background: #2f2f2f;
-      color: white;
-    }
+}
 
-    #chat-log {
-      height: 150px;
-      overflow-y: auto;
-      border: 1px solid #ccc;
-      padding: 10px;
-      margin-bottom: 10px;
-      font-size: 14px;
-      background: #f1f1f1;
-      border-radius: 10px;
-    }
-
-    #jarvin-window.dark #chat-log {
-      background: #444;
-      border-color: #666;
-    }
-
-    .bubble {
-      max-width: 80%;
-      padding: 10px 14px;
-      border-radius: 15px;
-      margin-bottom: 8px;
-      clear: both;
-      display: inline-block;
-      font-size: 14px;
-    }
-
-    .user {
-      background-color: #d4f8d4;
-      float: right;
-    }
-
-    .jarvin {
-      background-color: #eee;
-      float: left;
-    }
-
-    #jarvin-window.dark .jarvin {
-      background-color: #555;
-    }
-
-    #jarvin-window.dark .user {
-      background-color: #66bb6a;
-    }
-
-    #theme-toggle {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: none;
-      border: none;
-      font-size: 20px;
-      cursor: pointer;
-      color: #333;
-    }
-
-    #jarvin-window.dark #theme-toggle {
-      color: white;
-    }
 
     #info {
       max-width: 600px;
@@ -327,11 +273,11 @@
 
   <p id="error-contact">Pokud byste našli chybu na tomto webu, kontaktujte nás na emailu kinovemlyne@seznam.cz</p>
 
-  <button id="jarvin-button" onclick="toggleJarvin()">Zeptej se Jarvina</button>
+  <button id="jarvin-button" onclick="toggleJarvin()">Zeptej se Visiona</button>
 
   <div id="jarvin-window">
     <button id="theme-toggle">🌓</button>
-    <h3>Jarvin</h3>
+    <h3>Vision</h3>
     <div id="chat-log"></div>
     <input type="text" id="user-input" placeholder="Napiš dotaz..." onkeydown="if(event.key==='Enter') jarvinReply()" />
     <button onclick="jarvinReply()">Odeslat</button>
@@ -383,4 +329,3 @@
   </script>
 </body>
 </html>
-
