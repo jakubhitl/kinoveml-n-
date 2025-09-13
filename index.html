@@ -1,191 +1,366 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="cs">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="google-site-verification" content="oRwdVFgd0x_dI-rTIbsnG1TN0KkX5m2UyOzJxkYy-aA" />
   <title>Kino ve mlýně</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
   <style>
+    * {margin:0; padding:0; box-sizing:border-box;}
     body {
       font-family: 'Poppins', sans-serif;
-      background: url('https://static.vecteezy.com/system/resources/previews/028/541/542/non_2x/popcorn-stand-cinema-shot-movie-theatre-popcorn-free-photo.jpg') no-repeat center center fixed;
-      background-size: cover;
-      text-align: center;
-      padding-top: 140px;
-      position: relative;
-      min-height: 100vh;
-      transition: background 0.3s;
+      background: #0c0c0c;
+      color: #f1f1f1;
+      overflow-x: hidden;
     }
 
+    /* Navigace */
     nav {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background: #40916C;
-      padding: 15px 0;
-      z-index: 1000;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      top:0; left:0;
+      width:100%;
+      padding:20px 60px;
+      display:flex; justify-content:space-between; align-items:center;
+      background: rgba(15,15,15,0.7);
+      backdrop-filter: blur(12px);
+      z-index:1000;
     }
-
-    nav ul {
-      list-style: none;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      font-weight: 600;
+    nav h1 {
+      font-size:1.4rem; font-weight:700;
+      color:#d4af37;
+      letter-spacing:1px;
     }
-
+    nav ul {list-style:none; display:flex; gap:30px;}
     nav a {
-      color: white;
-      text-decoration: none;
-      font-size: 16px;
+      color:#f1f1f1; text-decoration:none; font-weight:500;
+      transition: color 0.3s;
+    }
+    nav a:hover {color:#d4af37;}
+
+    /* Hero */
+    header {
+      height:100vh;
+      background: url('https://static.vecteezy.com/system/resources/previews/028/541/542/non_2x/popcorn-stand-cinema-shot-movie-theatre-popcorn-free-photo.jpg') center/cover no-repeat;
+      display:flex; align-items:center; justify-content:center;
+      position:relative; text-align:center;
+    }
+    header::after {
+      content:""; position:absolute; top:0; left:0; width:100%; height:100%;
+      background: rgba(0,0,0,0.6);
+    }
+    header .content {
+      position:relative; z-index:1;
+      color:white;
+    }
+    header h1 {
+      font-size:3.8rem; margin-bottom:20px; color:#d4af37;
+      animation: fadeInDown 1.2s ease;
+    }
+    header p {font-size:1.2rem; max-width:600px; margin:auto; animation: fadeInUp 1.5s ease;}
+
+    @keyframes fadeInDown {
+      from {opacity:0; transform:translateY(-40px);}
+      to {opacity:1; transform:translateY(0);}
+    }
+    @keyframes fadeInUp {
+      from {opacity:0; transform:translateY(40px);}
+      to {opacity:1; transform:translateY(0);}
     }
 
-    nav a:hover {
-      text-decoration: underline;
+    /* Sekce */
+    section {padding:100px 60px;}
+    section h2 {
+      font-size:2.2rem;
+      color:#d4af37;
+      margin-bottom:30px;
+      text-align:center;
     }
 
-    @media (max-width: 600px) {
-      nav ul {
-        gap: 12px;
-        flex-wrap: wrap;
-        padding: 0 10px;
-      }
+    /* O kině */
+    #kino {display:flex; gap:40px; flex-wrap:wrap; align-items:center;}
+    #kino .text {flex:1; min-width:280px;}
+    #kino #map {flex:1; height:400px; border-radius:20px; overflow:hidden;}
 
-      nav a {
-        font-size: 14px;
-      }
+    /* Rekonstrukce - timeline styl */
+    #rekonstrukce {background:#111;}
+    .timeline {
+      position:relative;
+      max-width:800px;
+      margin:auto;
     }
-
-    #content {
-      display: block;
+    .timeline::before {
+      content:""; position:absolute; top:0; bottom:0; left:50%;
+      width:4px; background:#d4af37;
+      transform:translateX(-50%);
     }
-
-    .box {
-      background: white;
-      padding: 30px;
-      border-radius: 20px;
-      max-width: 400px;
-      margin: auto;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    .event {
+      position:relative;
+      width:50%;
+      padding:20px 40px;
+      opacity:0; transform:translateY(40px);
+      transition: all 0.6s ease;
     }
-
-    input[type="password"], input[type="text"] {
-      padding: 12px;
-      width: 80%;
-      margin-top: 10px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      font-size: 15px;
+    .event.visible {opacity:1; transform:translateY(0);}
+    .event:nth-child(odd) {left:0; text-align:right;}
+    .event:nth-child(even) {left:50%;}
+    .event::before {
+      content:""; position:absolute; top:20px;
+      width:20px; height:20px;
+      border-radius:50%;
+      background:#d4af37;
+      border:3px solid #111;
+      z-index:1;
     }
+    .event:nth-child(odd)::before {right:-12px;}
+    .event:nth-child(even)::before {left:-12px;}
+    .event p {background:rgba(255,255,255,0.05); padding:15px; border-radius:12px;}
 
-    button {
-      padding: 12px 24px;
-      margin-top: 15px;
-      background-color: #40916C;
-      color: white;
+    /* KinoID - glassmorphism card */
+    #kinoid {
+      display:flex; justify-content:center;
+      background: url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1500&q=80') center/cover no-repeat;
+      position:relative;
+    }
+    #kinoid::after {
+      content:""; position:absolute; top:0; left:0; width:100%; height:100%;
+      background:rgba(0,0,0,0.7);
+    }
+    #kinoid .card {
+      position:relative; z-index:1;
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(15px);
+      padding:40px;
+      border-radius:20px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.4);
+      max-width:500px;
+      width:100%;
+      text-align:center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    #kinoid .card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 40px rgba(212,175,55,0.5);
+    }
+    #kinoid form input, #kinoid form button {
+      width:100%; padding:14px; margin-bottom:15px;
+      border-radius:10px; border:none; font-size:15px;
+    }
+    #kinoid form input {
+      background:rgba(255,255,255,0.15); color:white;
+    }
+    #kinoid form input::placeholder {color:#ccc;}
+    #kinoid form button {
+      background:#d4af37; color:#111; font-weight:600;
+      cursor:pointer; transition:background 0.3s, transform 0.2s;
+    }
+    #kinoid form button:hover {background:#b9962e; transform:scale(1.05);}
+
+    /* Chat */
+    #jarvin-button {
+      position: fixed;
+      right: 25px; bottom: 25px;
+      width: 60px; height: 60px;
+      border-radius: 50%;
       border: none;
-      border-radius: 10px;
+      background: #d4af37;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+      color: #111;
       cursor: pointer;
-      font-size: 15px;
-      transition: background-color 0.3s ease;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+      transition: transform 0.25s, box-shadow 0.25s;
+      z-index: 1001;
+    }
+    #jarvin-button:hover {
+      transform: scale(1.12);
+      box-shadow: 0 0 20px #d4af37;
     }
 
-    button:hover {
-      background-color: #2D6A4F;
+    #jarvin-window {
+      display:none;
+      position:fixed;
+      bottom:90px; right:25px;
+      width:320px;
+      background:rgba(15,15,15,0.95);
+      backdrop-filter: blur(12px);
+      border-radius:15px;
+      box-shadow:0 0 25px rgba(0,0,0,0.4);
+      padding:20px;
+      z-index:1001;
+      transform: translateY(30px);
+      opacity:0;
+      transition: all 0.3s ease;
+    }
+    #jarvin-window.active {
+      display:block;
+      transform: translateY(0);
+      opacity:1;
+    }
+    #jarvin-window h3 {color:#d4af37; margin-bottom:10px;}
+    #chat-log {
+      height:150px; overflow-y:auto;
+      background:rgba(255,255,255,0.05);
+      padding:10px; border-radius:10px;
+      margin-bottom:10px;
+    }
+    .bubble {
+      padding:10px 14px;
+      border-radius:15px; margin-bottom:8px;
+      font-size:14px; max-width:80%;
+    }
+    .user {background:#d4af37; color:#111; margin-left:auto; display:block;}
+    .jarvin {background:#333; margin-right:auto; display:block;}
+
+    #chat-input-box {
+      display:flex; gap:8px;
+    }
+    #user-input {
+      flex:1;
+      padding:10px;
+      border-radius:20px;
+      border:none;
+      background:rgba(255,255,255,0.1);
+      color:#fff;
+    }
+    #user-input::placeholder {color:#bbb;}
+    #send-btn {
+      background:#d4af37;
+      border:none;
+      border-radius:50%;
+      width:40px; height:40px;
+      cursor:pointer;
+      display:flex; align-items:center; justify-content:center;
+      transition:background 0.3s;
+    }
+    #send-btn:hover {background:#b9962e;}
+
+    footer {
+      text-align:center;
+      padding:30px;
+      background:#0c0c0c;
+      color:#777;
+      font-size:14px;
+    }
+    footer a {color:#d4af37; text-decoration:none;}
+    footer a:hover {text-decoration:underline;}
+
+    /* ✅ Mobilní verze */
+    @media (max-width: 768px) {
+      nav {
+        padding: 15px 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      nav ul {
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+      }
+      nav ul li {
+        width: 100%;
+      }
+      nav a {
+        display: block;
+        width: 100%;
+        padding: 8px 0;
+      }
+
+      /* Zkratky v menu */
+      nav a[href="#rekonstrukce"]::after {
+        content: "Rekon.";
+      }
+      nav a[href="#rekonstrukce"] {
+        font-size: 0; /* schová původní text */
+      }
+      nav a[href="#kinoid"]::after {
+        content: "ID";
+      }
+      nav a[href="#kinoid"] {
+        font-size: 0;
+      }
+
+      header h1 {
+        font-size: 2rem;
+      }
+      header p {
+        font-size: 1rem;
+        padding: 0 15px;
+      }
+
+      section {
+        padding: 60px 20px;
+      }
+      section h2 {
+        font-size: 1.6rem;
+      }
+
+      #kino {
+        flex-direction: column;
+        gap: 20px;
+      }
+      #kino .text {
+        text-align: center;
+      }
+      #kino #map {
+        height: 250px;
+        width: 100%;
+      }
+
+      .timeline::before {
+        left: 10px;
+      }
+      .event {
+        width: 100%;
+        padding: 20px;
+        text-align: left !important;
+        left: 0 !important;
+      }
+      .event::before {
+        left: -2px !important;
+        right: auto !important;
+      }
+
+      #kinoid .card {
+        padding: 25px 20px;
+        max-width: 90%;
+      }
+
+      #jarvin-window {
+        right: 10px;
+        bottom: 80px;
+        width: 90%;
+        max-width: 300px;
+      }
+      #jarvin-button {
+        right: 15px;
+        bottom: 15px;
+        width: 50px;
+        height: 50px;
+        font-size: 20px;
+      }
+
+      footer {
+        font-size: 12px;
+        padding: 20px 10px;
+      }
     }
 
-    .small {
-      font-size: 14px;
-      color: #333;
-      margin-top: 10px;
-    }
-
-/* --- tlačítko Jarvina moderní gradient --- */
-#jarvin-button {
-  position: fixed;
-  right: 20px;
-  bottom: 20px;
-  padding: 14px 22px;
-  background: linear-gradient(135deg, #a18cd1, #fbc2eb, #8ec5fc);
-  background-size: 200% 200%;
-  color: white;
-  border-radius: 40px;
-  border: none;
-  cursor: pointer;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.25);
-  font-weight: 600;
-  font-size: 15px;
-  animation: gradientShift 5s ease infinite;
-  transition: transform 0.2s ease;
-}
-#jarvin-button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-}
-@keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-@keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-/* --- chat okno modernější --- */
-#jarvin-window { display: none; position: fixed; bottom: 80px; right: 20px; width: 300px; background: white; border-radius: 15px; box-shadow: 0 0 20px rgba(0,0,0,0.2); padding: 20px; text-align: left; z-index: 999; } #jarvin-window.dark { background: #2f2f2f; color: white; } #chat-log { height: 150px; overflow-y: auto; border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; font-size: 14px; background: #f1f1f1; border-radius: 10px; } #jarvin-window.dark #chat-log { background: #444; border-color: #666; } .bubble { max-width: 80%; padding: 10px 14px; border-radius: 15px; margin-bottom: 8px; clear: both; display: inline-block; font-size: 14px; } .user { background-color: #d4f8d4; float: right; } .jarvin { background-color: #eee; float: left; } #jarvin-window.dark .jarvin { background-color: #555; } #jarvin-window.dark .user { background-color: #66bb6a; }
-
-/* efekt náběhu */
-@keyframes fadeIn {
-  from {opacity: 0; transform: translateY(10px);}
-  to {opacity: 1; transform: translateY(0);}
-
-}
-
-
-    #info {
-      max-width: 600px;
-      margin: 40px auto;
-      background: white;
-      padding: 30px;
-      border-radius: 20px;
-      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-      text-align: left;
-    }
-
-    #map {
-      width: 100%;
-      height: 250px;
-      border-radius: 15px;
-      margin-top: 20px;
-    }
-
-    #error-contact {
-      max-width: 400px;
-      margin: 20px auto;
-      font-size: 13px;
-      color: #555;
-      font-style: italic;
-    }
-
-    #rekonstrukce-info {
-      background: white;
-      padding: 20px;
-      max-width: 400px;
-      margin: 20px auto;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.15);
-      font-weight: bold;
-      font-size: 1.1rem;
-      color: #444;
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 1.6rem;
+      }
+      header p {
+        font-size: 0.9rem;
+      }
+      section h2 {
+        font-size: 1.4rem;
+      }
+      #kinoid .card {
+        padding: 20px 15px;
+      }
     }
   </style>
 
@@ -194,112 +369,109 @@
 <body>
 
   <nav>
+    <h1>Kino ve mlýně</h1>
     <ul>
       <li><a href="#uvod">Domov</a></li>
-      <li><a href="#kino">Info.</a></li>
-      <li><a href="#rekonstrukce">Rekonst.</a></li>
-      <li><a href="#cojekinoid">info. ID</a></li>  
+      <li><a href="#kino">O kině</a></li>
+      <li><a href="#rekonstrukce">Rekons.</a></li>
       <li><a href="#kinoid">ID</a></li>
     </ul>
   </nav>
 
-  <div id="uvod" class="box">
-    <h1>Kino ve mlýně</h1>
-    <div id="rekonstrukce-info">
-      Rekonstrukce dokončena z 37%
+  <header id="uvod">
+    <div class="content">
+      <h1>Kino ve mlýně</h1>
+      <p>Soukromé kino ve Vémyslicích – právě v rekonstrukci. Už brzy otevřeme moderní sál jen pro vás!</p>
     </div>
-    <p class="small">Kino je uzavřeno protože je ve výstavbě.</p>
-    <p class="small">Napište nám na e-mail kinovemlyne@seznam.cz, jaký film byste si přáli vidět jako první po otevření.</p>
-<p class="small">
-      Majitel a ředitel kina: Jakub Hitl<br />Tel.: +420 774 954 263
-    </p>
-  </div>
+  </header>
 
-  <div id="kino" class="info">
-    <div id="info">
-      <h3>Informace o kině</h3>
-      <p>
-        Kino ve mlýně je malé soukromé kino v srdci Vémyslic. V současné době
-        prochází kompletní rekonstrukcí, aby nabídlo moderní technologie i
-        pohodlné posezení. Po dokončení bude k dispozici útulný sál s kapacitou
-        15–22 diváků. Naším cílem je přinášet nejen nejnovější filmy, ale také
-        tematické večery pro milovníky kvalitní kinematografie.
-      </p>
-      <div id="map"></div>
+  <section id="kino">
+    <div class="text">
+      <h2>O kině</h2>
+      <p>Kino ve mlýně je malé soukromé kino v srdci Vémyslic. Po rekonstrukci nabídne moderní technologie, pohodlná sedadla a atmosféru jen pro 15–22 diváků. Chceme přinášet nejen nové filmy, ale i tematické večery pro filmové nadšence.</p>
     </div>
-  </div>
+    <div id="map"></div>
+  </section>
 
-  <div id="rekonstrukce" class="info">
-    <div id="info">
-      <h3>Informace o rekonstrukci kina</h3>
-      <p>
-        Kino ve mlýně právě prochází rozsáhlou rekonstrukcí, která přinese moderní vybavení, vylepšenou akustiku a komfortní prostředí pro všechny návštěvníky. Pracujeme na pohodlných sedadlech a inovativním promítacím systému, aby sledování filmů bylo co nejpříjemnější.
-      </p>
+  <section id="rekonstrukce">
+    <h2>Rekonstrukce</h2>
+    <div class="timeline">
+      <div class="event"><p>Začátek prací – uklízení starého prostoru bourání staré podlahy.</p></div>
+      <div class="event"><p>Dodělávaní nové podlahy.</p></div>
+      <div class="event"><p><strong>Aktuální stav: 37 % dokončeno</strong></p></div>
+      <div class="event"><p>Plánované dokončení a otevření sálu se plánuje roku 2026</p></div>
     </div>
-  </div>
+  </section>
 
-<div id="cojekinoid" class="info">
-    <div id="info">
-      <h3>Nemáte KinoID?</h3>
-      <p>
-        Nemáte ještě své KinoID? Založte si ho zdarma na našem webu! Jaké jsou výhody? Získáte 10% slevu na první vstupenku a při nákupu nad 150 Kč v našem kině navíc 25% slevu. Do budoucna se můžete těšit na další speciální akce a exkluzivní výhody. 
+  <section id="kinoid">
+    <div class="card">
+      <h2>KinoID registrace</h2>
+      <p>Získejte 10% slevu na první vstupenku a další výhody s naším KinoID!</p>
+      <form action="https://formsubmit.co/kinovemlyne@seznam.cz" method="POST">
+        <input type="text" name="Jméno" placeholder="Vaše jméno" required>
+        <input type="text" name="Příjmení" placeholder="Vaše příjmení" required>
+        <input type="email" name="Email" placeholder="Váš e-mail" required>
+        <input type="text" name="Telefon" placeholder="Telefon (nepovinné)">
+        <button type="submit">Zaregistrovat se</button>
+        <input type="hidden" name="_next" value="https://jakubhitl.github.io/kinoveml-n-/diky.html">
+        <input type="hidden" name="_captcha" value="false">
+      </form>
+      <p style="font-size:12px; margin-top:10px; color:#ccc;">🔒 Všechna data jsou šifrována</p>
     </div>
-  </div>
+  </section>
 
- <!-- 🔽 ZAČÁTEK ÚPRAVENÉ SEKCE místo "Kdo je to Jarvin?" -->
-<div id="kinoid" class="info">
-  <div id="info" style="position: relative; padding-bottom: 30px;">
-    <h3>Registrace na KinoID</h3>
-    <form action="https://formsubmit.co/kinovemlyne@seznam.cz" method="POST">
-      <input type="text" name="Jméno" placeholder="Vaše jméno" required><br><br>
-      <input type="text" name="Příjmení" placeholder="Vaše příjmení" required><br><br>
-      <input type="email" name="Email" placeholder="Váš e-mail" required><br><br>
-      <input type="text" name="Telefon" placeholder="Telefon (nepovinné)"><br><br>
-      <button type="submit">Zaregistrovat se</button>
-      <input type="hidden" name="_next" value="https://jakubhitl.github.io/kinoveml-n-/diky.html">
-      <input type="hidden" name="_captcha" value="false">
-    </form>
+  <footer>
+    <p>Máte dotaz nebo jste našli chybu? Kontaktujte nás na <a href="mailto:kinovemlyne@seznam.cz">kinovemlyne@seznam.cz</a></p>
+    <p>&copy; 2025 Kino ve mlýně</p>
+  </footer>
 
-    <!-- Přidaný text dole vpravo uvnitř sekce -->
-    <div style="position: absolute; bottom: 5px; right: 10px; font-size: 11px; color: #666;">
-      🔒 Všechna data jsou šifrována
-    </div>
-  </div>
-</div>
-
-
-<!-- 🔼 KONEC ÚPRAVENÉ SEKCE -->
-
-
-  <p id="error-contact">Pokud byste našli chybu na tomto webu, kontaktujte nás na emailu kinovemlyne@seznam.cz</p>
-
-  <button id="jarvin-button" onclick="toggleJarvin()">Zeptej se Visiona</button>
+  <!-- Chat -->
+  <button id="jarvin-button" onclick="toggleJarvin()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M21 11.5a8.38 8.38 0 0 1-1.9 5.3l2.3 2.3a1 1 0 0 1-1.4 1.4l-2.3-2.3a8.5 8.5 0 1 1 3.3-6.7zM4 11.5a7.5 7.5 0 1 0 15 0a7.5 7.5 0 0 0-15 0z"/>
+    </svg>
+  </button>
 
   <div id="jarvin-window">
-    <button id="theme-toggle">🌓</button>
     <h3>Vision</h3>
     <div id="chat-log"></div>
-    <input type="text" id="user-input" placeholder="Napiš dotaz..." onkeydown="if(event.key==='Enter') jarvinReply()" />
-    <button onclick="jarvinReply()">Odeslat</button>
+    <div id="chat-input-box">
+      <input type="text" id="user-input" placeholder="Napište dotaz..." onkeydown="if(event.key==='Enter') jarvinReply()" />
+      <button id="send-btn" onclick="jarvinReply()">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="#111" viewBox="0 0 24 24"><path d="M2.01 21l20.99-9L2.01 3 2 10l15 2-15 2z"/></svg>
+      </button>
+    </div>
   </div>
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
+    // mapa
     window.onload = function () {
-      var map = L.map("map").setView([49.0239, 16.2558], 16);
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      var map = L.map('map').setView([48.9916, 16.3441], 15);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> přispěvatelé'
       }).addTo(map);
-      L.marker([49.0239, 16.2558])
-        .addTo(map)
-        .bindPopup("Kino ve mlýně - Vémyslice 36")
-        .openPopup();
+      L.marker([48.9916, 16.3441]).addTo(map)
+        .bindPopup("Kino ve mlýně - Vémyslice 36");
     };
 
+    // timeline animace
+    const events = document.querySelectorAll('.event');
+    function checkEvents() {
+      events.forEach(e => {
+        const rect = e.getBoundingClientRect();
+        if(rect.top < window.innerHeight - 100) {
+          e.classList.add('visible');
+        }
+      });
+    }
+    window.addEventListener('scroll', checkEvents);
+    checkEvents();
+
+    // chat
     function toggleJarvin() {
       const jarvin = document.getElementById("jarvin-window");
-      jarvin.style.display = jarvin.style.display === "block" ? "none" : "block";
+      jarvin.classList.toggle("active");
     }
 
     function jarvinReply() {
@@ -315,17 +487,17 @@
 
       const jarvinBubble = document.createElement("div");
       jarvinBubble.className = "bubble jarvin";
-      jarvinBubble.textContent = "Ahoj! Kino je momentálně ve výstavbě, proto není možné rezervovat vstupenky ani zobrazit program. Plánujeme otevření brzy s útulným sálem pro 15–22 lidí a novou technologií. Pro více informací kontaktuj majitele Jakuba Hitla na čísle +420 774 954 263. Těšíme se na tebe!";
+      const responses = [
+        "🎬 Kino je momentálně v rekonstrukci. Brzy otevřeme moderní sál pro 15–22 diváků.",
+        "🍿 Už se těšíme na první promítání! Sledujte naše stránky pro novinky.",
+        "📞 Pro více informací nás můžete kontaktovat na čísle +420 774 954 263."
+      ];
+      jarvinBubble.textContent = responses[Math.floor(Math.random() * responses.length)];
       chat.appendChild(jarvinBubble);
 
       inputElem.value = "";
       chat.scrollTop = chat.scrollHeight;
     }
-
-    document.getElementById('theme-toggle').onclick = () => {
-      const jarvinWindow = document.getElementById("jarvin-window");
-      jarvinWindow.classList.toggle("dark");
-    };
   </script>
 </body>
 </html>
