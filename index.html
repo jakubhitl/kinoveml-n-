@@ -22,15 +22,10 @@
       top:0; left:0;
       width:100%;
       padding:20px 60px;
-      display:flex; justify-content:space-between; align-items:center;
+      display:flex; justify-content:center; align-items:center;
       background: rgba(15,15,15,0.7);
       backdrop-filter: blur(12px);
       z-index:1000;
-    }
-    nav h1 {
-      font-size:1.4rem; font-weight:700;
-      color:#d4af37;
-      letter-spacing:1px;
     }
     nav ul {list-style:none; display:flex; gap:30px;}
     nav a {
@@ -245,123 +240,6 @@
     }
     footer a {color:#d4af37; text-decoration:none;}
     footer a:hover {text-decoration:underline;}
-
-    /* ✅ Mobilní verze */
-    @media (max-width: 768px) {
-      nav {
-        padding: 15px 20px;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
-      }
-      nav ul {
-        flex-direction: column;
-        gap: 15px;
-        width: 100%;
-      }
-      nav ul li {
-        width: 100%;
-      }
-      nav a {
-        display: block;
-        width: 100%;
-        padding: 8px 0;
-      }
-
-      /* Zkratky v menu */
-      nav a[href="#rekonstrukce"]::after {
-        content: "Rekon.";
-      }
-      nav a[href="#rekonstrukce"] {
-        font-size: 0; /* schová původní text */
-      }
-      nav a[href="#kinoid"]::after {
-        content: "ID";
-      }
-      nav a[href="#kinoid"] {
-        font-size: 0;
-      }
-
-      header h1 {
-        font-size: 2rem;
-      }
-      header p {
-        font-size: 1rem;
-        padding: 0 15px;
-      }
-
-      section {
-        padding: 60px 20px;
-      }
-      section h2 {
-        font-size: 1.6rem;
-      }
-
-      #kino {
-        flex-direction: column;
-        gap: 20px;
-      }
-      #kino .text {
-        text-align: center;
-      }
-      #kino #map {
-        height: 250px;
-        width: 100%;
-      }
-
-      .timeline::before {
-        left: 10px;
-      }
-      .event {
-        width: 100%;
-        padding: 20px;
-        text-align: left !important;
-        left: 0 !important;
-      }
-      .event::before {
-        left: -2px !important;
-        right: auto !important;
-      }
-
-      #kinoid .card {
-        padding: 25px 20px;
-        max-width: 90%;
-      }
-
-      #jarvin-window {
-        right: 10px;
-        bottom: 80px;
-        width: 90%;
-        max-width: 300px;
-      }
-      #jarvin-button {
-        right: 15px;
-        bottom: 15px;
-        width: 50px;
-        height: 50px;
-        font-size: 20px;
-      }
-
-      footer {
-        font-size: 12px;
-        padding: 20px 10px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      header h1 {
-        font-size: 1.6rem;
-      }
-      header p {
-        font-size: 0.9rem;
-      }
-      section h2 {
-        font-size: 1.4rem;
-      }
-      #kinoid .card {
-        padding: 20px 15px;
-      }
-    }
   </style>
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -369,11 +247,10 @@
 <body>
 
   <nav>
-    <h1>Kino ve mlýně</h1>
     <ul>
       <li><a href="#uvod">Domov</a></li>
       <li><a href="#kino">O kině</a></li>
-      <li><a href="#rekonstrukce">Rekons.</a></li>
+      <li><a href="#rekonstrukce">Rekon.</a></li>
       <li><a href="#kinoid">ID</a></li>
     </ul>
   </nav>
@@ -447,11 +324,12 @@
   <script>
     // mapa
     window.onload = function () {
-      var map = L.map('map').setView([48.9916, 16.3441], 15);
-      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> přispěvatelé'
+      var map = L.map("map").setView([49.0239, 16.2558], 16);
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution: '&copy; OpenStreetMap contributors',
       }).addTo(map);
-      L.marker([48.9916, 16.3441]).addTo(map)
+      L.marker([49.0239, 16.2558])
+        .addTo(map)
         .bindPopup("Kino ve mlýně - Vémyslice 36");
     };
 
