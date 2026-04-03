@@ -240,7 +240,77 @@
     }
     footer a {color:#d4af37; text-decoration:none;}
     footer a:hover {text-decoration:underline;}
-  </style>
+  
+
+#vstupenky {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background: url(https://media.istockphoto.com/id/1494642262/cs/fotografie/lid%C3%A9-v-hledi%C5%A1ti-kina-s-pr%C3%A1zdnou-b%C3%ADlou-obrazovkou.jpg?s=612x612&w=0&k=20&c=EKSqFF6wySFvBBocFSqANEq8SOlBlxYXcfWfuPOh-c4=) center/cover no-repeat;
+  position:relative;
+}
+
+#vstupenky::after {
+  content:"";
+  position:absolute;
+  top:0; left:0;
+  width:100%; height:100%;
+  background:rgba(0,0,0,0.7);
+}
+
+#vstupenky .card {
+  position:relative;
+  z-index:1;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(15px);
+  padding:40px;
+  border-radius:20px;
+  box-shadow: 0 0 30px rgba(0,0,0,0.4);
+  max-width:500px;
+  width:100%;
+  text-align:center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+#vstupenky .card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 40px rgba(212,175,55,0.5);
+}
+
+#vstupenky input,
+#vstupenky select,
+#vstupenky button {
+  width:100%;
+  padding:14px;
+  margin-bottom:15px;
+  border-radius:10px;
+  border:none;
+  font-size:15px;
+}
+
+#vstupenky input,
+#vstupenky select {
+  background:rgba(255,255,255,0.15);
+  color:white;
+}
+
+#vstupenky button {
+  background:#d4af37;
+  color:#111;
+  font-weight:600;
+  cursor:pointer;
+  transition:background 0.3s, transform 0.2s;
+}
+
+#vstupenky button:hover {
+  background:#b9962e;
+  transform:scale(1.05);
+}
+ 
+#vstupenky input::placeholder {
+  color:#ccc;
+}
+</style>
 
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 </head>
@@ -285,7 +355,7 @@
       <h2>KinoID registrace</h2>
       <p>Získejte 10% slevu na první vstupenku a další výhody s naším KinoID!</p>
       <form action="https://formsubmit.co/kinovemlyne@seznam.cz" method="POST">
-        <input type="text" name="Jméno" placeholder="Vaše jméno" required>
+        <input type="text" name="vaše Jméno" placeholder="Vaše jméno" required>
         <input type="text" name="Příjmení" placeholder="Vaše příjmení" required>
         <input type="email" name="Email" placeholder="Váš e-mail" required>
         <input type="text" name="Telefon" placeholder="Telefon (nepovinné)">
@@ -297,7 +367,44 @@
     </div>
   </section>
 
-  <footer>
+<section id="vstupenky">
+  <div class="card">
+    <h2>Objednání vstupenky</h2>
+
+    <p>
+      Objednejte si vstupenku na premiéru kina.<br>
+      Vstupenka stojí <strong>50 Kč</strong>.
+    </p>
+
+    <form action="https://formsubmit.co/kinovemlyne@seznam.cz" method="POST">
+      <input type="text" name="Jméno" placeholder="Vaše jméno" required>
+      <input type="email" name="Email" placeholder="Váš e-mail" required>
+
+      <select name="Typ vstupenky" required>
+        <option>Standard</option>
+      </select>
+
+ <select name="Platba" required>
+  <option value="">Způsob platby</option>
+  <option>QR kód</option>
+  <option>Na místě</option>
+</select>
+      <button type="submit">Objednat vstupenku</button>
+
+      <!-- email -->
+      <input type="hidden" name="_subject" value="Objednávka vstupenky">
+      <input type="hidden" name="_autoresponse" value="Děkujeme za objednávku! Vaše vstupenka na premiéru je rezervována.">
+      <input type="hidden" name="_next" value="https://jakubhitl.github.io/kinoveml-n-/diky.html">
+      <input type="hidden" name="_captcha" value="false">
+    </form>
+
+   <p style="font-size:12px; margin-top:10px; color:#ccc;">
+  🔒 Všechna data jsou šifrována
+</p>
+  </div>
+</section>
+  
+<footer>
     <p>Máte dotaz nebo jste našli chybu? Kontaktujte nás na <a href="mailto:kinovemlyne@seznam.cz">kinovemlyne@seznam.cz</a></p>
     <p>&copy; 2025 Kino ve mlýně</p>
   </footer>
@@ -379,5 +486,4 @@
   </script>
 </body>
 </html>
-
 
