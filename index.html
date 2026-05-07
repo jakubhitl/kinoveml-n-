@@ -24,7 +24,7 @@
       top:0; left:0;
       width:100%;
       padding:20px 60px;
-      display:flex; justify-content:center; align-items:center;
+      display:flex; justify-content:space-between; align-items:center;
       background: rgba(10, 10, 10, 0.85);
       backdrop-filter: blur(15px);
       z-index:1000;
@@ -32,6 +32,9 @@
       border-bottom: 1px solid rgba(212, 175, 55, 0.2);
     }
     
+    .nav-left { display: flex; align-items: center; }
+    .nav-center { flex-grow: 1; display: flex; justify-content: center; }
+
     nav ul {list-style:none; display:flex; gap:30px;}
     nav a {
       color:#f1f1f1; text-decoration:none; font-weight:500;
@@ -39,8 +42,23 @@
       font-size: 0.95rem;
       text-transform: uppercase;
       letter-spacing: 1px;
+      cursor: pointer;
     }
     nav a:hover {color:#d4af37;}
+
+    /* Tlačítko přihlášení v navigaci */
+    #nav-auth-btn {
+      color: #d4af37;
+      border: 1px solid #d4af37;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      transition: 0.3s;
+    }
+    #nav-auth-btn:hover {
+      background: #d4af37;
+      color: #111;
+    }
 
     /* Hamburger menu ikona */
     .menu-btn {
@@ -60,9 +78,9 @@
 
     /* Responzivní navigace pro mobil */
     @media (max-width: 850px) {
-      nav { padding: 15px 30px; justify-content: flex-end; }
+      nav { padding: 15px 30px; }
       .menu-btn { display: flex; }
-      nav ul {
+      .nav-center ul {
         position: fixed;
         right: -100%;
         top: 0;
@@ -75,7 +93,7 @@
         transition: 0.5s ease-in-out;
         box-shadow: -10px 0 30px rgba(0,0,0,0.5);
       }
-      nav ul.active { right: 0; }
+      .nav-center ul.active { right: 0; }
       nav ul li { margin: 15px 0; }
       nav a { font-size: 1.2rem; }
     }
@@ -190,6 +208,24 @@
     }
     form button:hover { background:#fff; transform: scale(1.02); }
 
+    /* Login okno (Modal) */
+    #login-modal {
+      display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+      background: rgba(0,0,0,0.8); backdrop-filter: blur(8px);
+      z-index:2000; justify-content:center; align-items:center;
+    }
+    #login-modal.active { display:flex; }
+    .modal-content {
+      background: rgba(20,20,20,0.95);
+      border: 1px solid #d4af37;
+      padding: 40px; border-radius: 20px; width: 320px;
+      text-align: center; position: relative;
+    }
+    .close-modal {
+      position: absolute; top: 10px; right: 15px;
+      font-size: 20px; color: #aaa; cursor: pointer;
+    }
+
     /* Chat Vision */
     #jarvin-button {
       position: fixed; right: 30px; bottom: 30px;
@@ -225,20 +261,34 @@
 </head>
 <body>
 
+  <div id="login-modal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="toggleModal()">&times;</span>
+      <h2 style="color:#d4af37; margin-bottom:20px;">Přihlášení</h2>
+      <input type="text" id="login-name" placeholder="Vaše jméno" style="width:100%; padding:12px; margin-bottom:15px; background:#222; border:1px solid #333; color:white; border-radius:10px;">
+      <button onclick="saveLogin()" style="width:100%; padding:12px; background:#d4af37; color:#111; border:none; border-radius:10px; font-weight:700; cursor:pointer;">PŘIHLÁSIT</button>
+    </div>
+  </div>
+
   <nav>
+    <div class="nav-left">
+      <a onclick="toggleModal()" id="nav-auth-btn">Přihlásit se</a>
+    </div>
+    <div class="nav-center">
+      <ul id="nav-list">
+        <li><a href="#uvod" onclick="toggleMenu()">Domov</a></li>
+        <li><a href="#kino" onclick="toggleMenu()">O kině</a></li>
+        <li><a href="#rekonstrukce" onclick="toggleMenu()">Rekonstrukce</a></li>
+        <li><a href="#kinoid" onclick="toggleMenu()">KinoID</a></li>
+        <li><a href="#vstupenky" onclick="toggleMenu()">Vstupenky</a></li>
+        <li><a href="#podpora" onclick="toggleMenu()">Podpora</a></li>
+      </ul>
+    </div>
     <div class="menu-btn" onclick="toggleMenu()">
       <span></span>
       <span></span>
       <span></span>
     </div>
-    <ul id="nav-list">
-      <li><a href="#uvod" onclick="toggleMenu()">Domov</a></li>
-      <li><a href="#kino" onclick="toggleMenu()">O kině</a></li>
-      <li><a href="#rekonstrukce" onclick="toggleMenu()">Rekonstrukce</a></li>
-      <li><a href="#kinoid" onclick="toggleMenu()">KinoID</a></li>
-      <li><a href="#vstupenky" onclick="toggleMenu()">Vstupenky</a></li>
-      <li><a href="#podpora" onclick="toggleMenu()">Podpora</a></li>
-    </ul>
   </nav>
 
   <header id="uvod">
@@ -270,25 +320,19 @@
   <section id="kinoid">
     <div class="overlay"></div>
     <div class="glass-card">
-      <div id="logged-out-view">
+      <div id="kinoid-status">
         <h2>KinoID Registrace</h2>
         <p style="margin-bottom: 25px;">Získejte 10% slevu na první vstupenku a další exkluzivní výhody zdarma!</p>
-        <form id="registration-form" action="https://formsubmit.co/kinovemlyne@seznam.cz" method="POST">
-          <input type="text" id="user-name-input" name="Jméno" placeholder="Jméno" required>
+        <form action="https://formsubmit.co/kinovemlyne@seznam.cz" method="POST" onsubmit="return syncName(this)">
+          <input type="text" name="Jméno" id="form-name" placeholder="Jméno" required>
           <input type="text" name="Příjmení" placeholder="Příjmení" required>
           <input type="email" name="Email" placeholder="E-mail" required>
           <button type="submit">Vytvořit KinoID</button>
           <input type="hidden" name="_next" value="https://jakubhitl.github.io/kinoveml-n-/diky.html">
           <input type="hidden" name="_captcha" value="false">
         </form>
-        <p style="font-size:12px; color:#aaa; margin-top:10px;">🔒 Vaše údaje jsou u nás v bezpečí.</p>
       </div>
-
-      <div id="logged-in-view" style="display: none;">
-        <h2 id="welcome-message">Vítejte!</h2>
-        <p style="margin-bottom: 25px;">Vaše KinoID je aktivní. Máte nárok na 10% slevu na první vstupenku.</p>
-        <button onclick="odhlasit()" style="background:#555; width: auto; padding: 10px 25px;">Odhlásit se</button>
-      </div>
+      <p style="font-size:12px; color:#aaa; margin-top:10px;">🔒 Vaše údaje jsou u nás v bezpečí.</p>
     </div>
   </section>
 
@@ -298,7 +342,7 @@
       <h2>Rezervace</h2>
       <p style="margin-bottom: 25px;">Objednejte si vstupenku na premiéru kina ještě dnes. Cena vstupenky je <strong>50 Kč</strong>.</p>
       <form action="https://formsubmit.co/kinovemlyne@seznam.cz" method="POST">
-        <input type="text" name="Jméno" placeholder="Vaše jméno" required>
+        <input type="text" name="Jméno" id="res-name" placeholder="Vaše jméno" required>
         <input type="email" name="Email" placeholder="Váš e-mail" required>
          <select name="Platba" required>
           <option value="" disabled selected>Způsob platby</option>
@@ -347,31 +391,46 @@
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
-    // Logika přihlášení a pamatování si uživatele
-    document.addEventListener('DOMContentLoaded', () => {
-      const ulozeneJmeno = localStorage.getItem('prihlaseneJmeno');
-      const neregistrovanyDiv = document.getElementById('logged-out-view');
-      const registrovanyDiv = document.getElementById('logged-in-view');
-      const zprava = document.getElementById('welcome-message');
+    // Správa přihlášení a okna
+    function toggleModal() {
+        document.getElementById('login-modal').classList.toggle('active');
+    }
 
-      if (ulozeneJmeno) {
-        neregistrovanyDiv.style.display = 'none';
-        registrovanyDiv.style.display = 'block';
-        zprava.innerText = 'Vítejte zpět, ' + ulozeneJmeno + '!';
-      }
+    function saveLogin() {
+        const name = document.getElementById('login-name').value;
+        if(name.trim() !== "") {
+            localStorage.setItem('kinoUser', name);
+            updateUI();
+            toggleModal();
+        }
+    }
 
-      const form = document.getElementById('registration-form');
-      if (form) {
-        form.onsubmit = () => {
-          const jmeno = document.getElementById('user-name-input').value;
-          localStorage.setItem('prihlaseneJmeno', jmeno);
-        };
-      }
-    });
+    function updateUI() {
+        const user = localStorage.getItem('kinoUser');
+        const authBtn = document.getElementById('nav-auth-btn');
+        const kinoidBox = document.getElementById('kinoid-status');
+        const resNameInput = document.getElementById('res-name');
 
-    function odhlasit() {
-      localStorage.removeItem('prihlaseneJmeno');
-      location.reload();
+        if(user) {
+            authBtn.innerText = user + " (Odhlásit)";
+            authBtn.onclick = function() {
+                localStorage.removeItem('kinoUser');
+                location.reload();
+            };
+            if(kinoidBox) {
+                kinoidBox.innerHTML = `<h2>Ahoj, ${user}!</h2><p>Tvé KinoID je aktivní. Máš u nás 10% slevu.</p>`;
+            }
+            if(resNameInput) resNameInput.value = user;
+        } else {
+            authBtn.innerText = "Přihlásit se";
+            authBtn.onclick = toggleModal;
+        }
+    }
+
+    function syncName(form) {
+        const name = form.querySelector('input[name="Jméno"]').value;
+        localStorage.setItem('kinoUser', name);
+        return true; 
     }
 
     // Menu toggle pro mobil
@@ -382,8 +441,9 @@
       }
     }
 
-    // Mapa
+    // Mapa a inicializace
     window.onload = function () {
+      updateUI();
       var map = L.map("map").setView([49.0239, 16.2558], 16);
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution: '&copy; OpenStreetMap'
