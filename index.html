@@ -266,6 +266,8 @@
       <span class="close-modal" onclick="toggleModal()">&times;</span>
       <h2 style="color:#d4af37; margin-bottom:20px;">Přihlášení</h2>
       <input type="text" id="login-name" placeholder="Vaše jméno" style="width:100%; padding:12px; margin-bottom:15px; background:#222; border:1px solid #333; color:white; border-radius:10px;">
+      <input type="text" id="login-id" placeholder="Unikátní ID" style="width:100%; padding:12px; margin-bottom:15px; background:#222; border:1px solid #333; color:white; border-radius:10px;">
+      <input type="password" id="login-password" placeholder="Heslo" style="width:100%; padding:12px; margin-bottom:15px; background:#222; border:1px solid #333; color:white; border-radius:10px;">
       <button onclick="saveLogin()" style="width:100%; padding:12px; background:#d4af37; color:#111; border:none; border-radius:10px; font-weight:700; cursor:pointer;">PŘIHLÁSIT</button>
     </div>
   </div>
@@ -398,8 +400,12 @@
 
     function saveLogin() {
         const name = document.getElementById('login-name').value;
-        if(name.trim() !== "") {
+        const userId = document.getElementById('login-id').value;
+        const password = document.getElementById('login-password').value;
+        if(name.trim() !== "" && userId.trim() !== "" && password.trim() !== "") {
             localStorage.setItem('kinoUser', name);
+            localStorage.setItem('kinoUserId', userId);
+            localStorage.setItem('kinoUserPassword', password);
             updateUI();
             toggleModal();
         }
@@ -407,6 +413,7 @@
 
     function updateUI() {
         const user = localStorage.getItem('kinoUser');
+        const userId = localStorage.getItem('kinoUserId');
         const authBtn = document.getElementById('nav-auth-btn');
         const kinoidBox = document.getElementById('kinoid-status');
         const resNameInput = document.getElementById('res-name');
@@ -415,10 +422,12 @@
             authBtn.innerText = user + " (Odhlásit)";
             authBtn.onclick = function() {
                 localStorage.removeItem('kinoUser');
+                localStorage.removeItem('kinoUserId');
+                localStorage.removeItem('kinoUserPassword');
                 location.reload();
             };
             if(kinoidBox) {
-                kinoidBox.innerHTML = `<h2>Ahoj, ${user}!</h2><p>Tvé KinoID je aktivní. Máš u nás 10% slevu.</p>`;
+                kinoidBox.innerHTML = `<h2>Ahoj, ${user}!</h2><p>Tvé KinoID: <strong>${userId}</strong> je aktivní. Máš u nás 10% slevu.</p>`;
             }
             if(resNameInput) resNameInput.value = user;
         } else {
