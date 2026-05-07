@@ -270,17 +270,25 @@
   <section id="kinoid">
     <div class="overlay"></div>
     <div class="glass-card">
-      <h2>KinoID Registrace</h2>
-      <p style="margin-bottom: 25px;">Získejte 10% slevu na první vstupenku a další exkluzivní výhody zdarma!</p>
-      <form action="https://formsubmit.co/kinovemlyne@seznam.cz" method="POST">
-        <input type="text" name="Jméno" placeholder="Jméno" required>
-        <input type="text" name="Příjmení" placeholder="Příjmení" required>
-        <input type="email" name="Email" placeholder="E-mail" required>
-        <button type="submit">Vytvořit KinoID</button>
-        <input type="hidden" name="_next" value="https://jakubhitl.github.io/kinoveml-n-/diky.html">
-        <input type="hidden" name="_captcha" value="false">
-      </form>
-      <p style="font-size:12px; color:#aaa; margin-top:10px;">🔒 Vaše údaje jsou u nás v bezpečí.</p>
+      <div id="logged-out-view">
+        <h2>KinoID Registrace</h2>
+        <p style="margin-bottom: 25px;">Získejte 10% slevu na první vstupenku a další exkluzivní výhody zdarma!</p>
+        <form id="registration-form" action="https://formsubmit.co/kinovemlyne@seznam.cz" method="POST">
+          <input type="text" id="user-name-input" name="Jméno" placeholder="Jméno" required>
+          <input type="text" name="Příjmení" placeholder="Příjmení" required>
+          <input type="email" name="Email" placeholder="E-mail" required>
+          <button type="submit">Vytvořit KinoID</button>
+          <input type="hidden" name="_next" value="https://jakubhitl.github.io/kinoveml-n-/diky.html">
+          <input type="hidden" name="_captcha" value="false">
+        </form>
+        <p style="font-size:12px; color:#aaa; margin-top:10px;">🔒 Vaše údaje jsou u nás v bezpečí.</p>
+      </div>
+
+      <div id="logged-in-view" style="display: none;">
+        <h2 id="welcome-message">Vítejte!</h2>
+        <p style="margin-bottom: 25px;">Vaše KinoID je aktivní. Máte nárok na 10% slevu na první vstupenku.</p>
+        <button onclick="odhlasit()" style="background:#555; width: auto; padding: 10px 25px;">Odhlásit se</button>
+      </div>
     </div>
   </section>
 
@@ -339,6 +347,33 @@
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script>
+    // Logika přihlášení a pamatování si uživatele
+    document.addEventListener('DOMContentLoaded', () => {
+      const ulozeneJmeno = localStorage.getItem('prihlaseneJmeno');
+      const neregistrovanyDiv = document.getElementById('logged-out-view');
+      const registrovanyDiv = document.getElementById('logged-in-view');
+      const zprava = document.getElementById('welcome-message');
+
+      if (ulozeneJmeno) {
+        neregistrovanyDiv.style.display = 'none';
+        registrovanyDiv.style.display = 'block';
+        zprava.innerText = 'Vítejte zpět, ' + ulozeneJmeno + '!';
+      }
+
+      const form = document.getElementById('registration-form');
+      if (form) {
+        form.onsubmit = () => {
+          const jmeno = document.getElementById('user-name-input').value;
+          localStorage.setItem('prihlaseneJmeno', jmeno);
+        };
+      }
+    });
+
+    function odhlasit() {
+      localStorage.removeItem('prihlaseneJmeno');
+      location.reload();
+    }
+
     // Menu toggle pro mobil
     function toggleMenu() {
       const navList = document.getElementById("nav-list");
