@@ -21,7 +21,7 @@
       position: relative;
     }
     
-    /* AMBIENTNÍ SVĚTLO NA POZADÍ (Verze 1000) */
+    /* AMBIENTNÍ SVĚTLO */
     body::before {
       content: ''; position: fixed; top: -50%; left: -50%; width: 200%; height: 200%;
       background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.03) 0%, transparent 60%);
@@ -29,12 +29,11 @@
     }
     @keyframes ambientPulse { 0% { transform: scale(1); } 100% { transform: scale(1.2); } }
 
-    /* SCROLLBAR */
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-track { background: #050505; }
     ::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 4px; }
 
-    /* VLASTNÍ KURZOR (Jen pro počítače) */
+    /* VLASTNÍ KURZOR */
     @media (pointer: fine) {
       body { cursor: none; }
       a, button, input, select { cursor: none; }
@@ -50,9 +49,6 @@
         pointer-events: none; z-index: 9998; transform: translate(-50%, -50%);
         transition: width 0.2s, height 0.2s, background 0.2s;
       }
-      a:hover ~ .cursor-outline, button:hover ~ .cursor-outline {
-        width: 60px; height: 60px; background: rgba(212, 175, 55, 0.1);
-      }
     }
 
     /* NAVIGACE */
@@ -63,7 +59,6 @@
       z-index:1000; transition: all 0.4s ease; border-bottom: 1px solid rgba(212, 175, 55, 0.05);
     }
     nav.scrolled { padding: 15px 60px; background: rgba(5, 5, 5, 0.95); box-shadow: 0 10px 30px rgba(0,0,0,0.8); border-bottom: 1px solid rgba(212, 175, 55, 0.2); }
-    .nav-left { display: flex; align-items: center; }
     .nav-center { flex-grow: 1; display: flex; justify-content: center; }
     nav ul { list-style:none; display:flex; gap:30px; }
     nav a {
@@ -71,23 +66,18 @@
       text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; position: relative;
     }
     nav a:hover { color:#d4af37; }
-    nav a::after {
-      content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px;
-      background: #d4af37; transition: 0.3s ease-out;
-    }
-    nav a:hover::after { width: 100%; }
-
+    
     #nav-auth-btn {
       color: #d4af37; border: 1px solid #d4af37; padding: 8px 20px;
-      border-radius: 25px; font-size: 0.85rem; font-weight: 700; transition: 0.4s;
+      border-radius: 25px; font-size: 0.85rem; font-weight: 700; transition: 0.4s; cursor: pointer;
     }
-    #nav-auth-btn:hover { background: #d4af37; color: #111; box-shadow: 0 0 20px rgba(212, 175, 55, 0.5); }
 
     /* MOBILNÍ MENU */
-    .menu-btn { display: none; flex-direction: column; gap: 6px; z-index: 1001; }
+    .menu-btn { display: none; flex-direction: column; gap: 6px; z-index: 1001; cursor: pointer; }
     .menu-btn span { width: 30px; height: 2px; background: #d4af37; transition: 0.4s; }
+
     @media (max-width: 900px) {
-      nav { padding: 15px 25px; }
+      nav { padding: 15px 20px; }
       .menu-btn { display: flex; }
       .nav-center ul {
         position: fixed; right: -100%; top: 0; height: 100vh; width: 100%;
@@ -101,54 +91,59 @@
 
     /* HERO SEKCE */
     header {
-      height:100vh;
+      min-height:100vh;
       background: url('https://static.vecteezy.com/system/resources/previews/028/541/542/non_2x/popcorn-stand-cinema-shot-movie-theatre-popcorn-free-photo.jpg') center/cover no-repeat;
       display:flex; align-items:center; justify-content:center;
-      position:relative; text-align:center;
-      background-attachment: fixed;
+      position:relative; text-align:center; padding: 100px 20px;
     }
     header::after {
       content:""; position:absolute; top:0; left:0; width:100%; height:100%;
       background: radial-gradient(circle, rgba(0,0,0,0.5) 0%, rgba(5,5,5,0.95) 100%);
     }
-    header .content { position:relative; z-index:1; padding: 0 20px; }
+    header .content { position:relative; z-index:1; width: 100%; max-width: 1200px; }
     header h1 {
-      font-size:clamp(3rem, 10vw, 5.5rem); font-weight: 800; margin-bottom:15px;
+      font-size:clamp(2.5rem, 8vw, 5.5rem); font-weight: 800; margin-bottom:15px;
       background: linear-gradient(to right, #fff, #d4af37, #fff);
-      background-size: 200% auto;
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      animation: shine 5s linear infinite; text-shadow: 0 10px 40px rgba(212,175,55,0.3);
+      background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      animation: shine 5s linear infinite;
     }
     @keyframes shine { to { background-position: 200% center; } }
-    header p { font-size:1.2rem; max-width:700px; margin: 0 auto 30px auto; line-height: 1.8; opacity: 0.9; }
+    header p { font-size:clamp(1rem, 4vw, 1.2rem); max-width:700px; margin: 0 auto 30px auto; line-height: 1.8; opacity: 0.9; }
 
-    /* ODPOČET V HERO */
-    .countdown-wrapper { display: flex; gap: 15px; justify-content: center; margin-top: 30px; }
+    /* ODPOČET */
+    .countdown-wrapper { 
+        display: flex; 
+        gap: 10px; 
+        justify-content: center; 
+        margin-top: 30px; 
+        flex-wrap: wrap; /* Zalomí se na malém mobilu */
+    }
     .time-box {
       background: rgba(255,255,255,0.03); border: 1px solid rgba(212, 175, 55, 0.2);
-      padding: 15px 20px; border-radius: 12px; backdrop-filter: blur(10px); min-width: 90px;
+      padding: 10px; border-radius: 12px; backdrop-filter: blur(10px); min-width: 75px; flex: 0 1 80px;
     }
-    .time-box span { display: block; font-size: 2.2rem; font-weight: 700; color: #d4af37; }
-    .time-box p { font-size: 0.75rem; margin: 0; color: #f1f1f1; text-transform: uppercase; letter-spacing: 1px;}
+    .time-box span { display: block; font-size: clamp(1.5rem, 5vw, 2.2rem); font-weight: 700; color: #d4af37; }
+    .time-box p { font-size: 0.65rem; margin: 0; color: #f1f1f1; text-transform: uppercase; }
 
-    /* OBECNÉ SEKCE */
-    section { padding:100px 10%; position: relative; }
-    section h2 { font-size:2.5rem; color:#d4af37; margin-bottom:40px; text-align:center; position: relative; font-weight: 800; }
+    /* SEKCE */
+    section { padding:80px 5%; position: relative; overflow: hidden; }
+    @media (min-width: 768px) { section { padding: 100px 10%; } }
+    
+    section h2 { font-size:clamp(1.8rem, 5vw, 2.5rem); color:#d4af37; margin-bottom:40px; text-align:center; font-weight: 800; }
     section h2::after { content: ""; display: block; width: 60px; height: 3px; background: #d4af37; margin: 15px auto; box-shadow: 0 0 10px #d4af37; }
 
-    /* O KINĚ & MAPA (Opravená viditelnost) */
-    #kino { display:flex; gap:60px; flex-wrap:wrap; align-items:center; }
-    #kino .text { flex:1; min-width:300px; line-height: 1.8; font-size: 1.05rem; }
-    #kino strong { color: #d4af37; }
+    /* O KINĚ */
+    #kino { display:flex; gap:40px; flex-wrap:wrap; align-items:center; }
+    #kino .text { flex:1; min-width:300px; line-height: 1.8; }
     #map-wrapper { 
-      flex:1; min-width:300px; height:450px; 
-      padding: 5px; background: linear-gradient(45deg, #d4af37, transparent);
+      flex:1; min-width:300px; height:350px; padding: 5px; 
+      background: linear-gradient(45deg, #d4af37, transparent);
       border-radius: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.5);
     }
+    @media (min-width: 768px) { #map-wrapper { height: 450px; } }
     #map { height:100%; width: 100%; border-radius: 20px; z-index: 1; }
 
-    /* REKONSTRUKCE TIMELINE */
-    #rekonstrukce { background: #0a0a0a; border-top: 1px solid rgba(255,255,255,0.05); border-bottom: 1px solid rgba(255,255,255,0.05); }
+    /* TIMELINE */
     .timeline { position:relative; max-width:800px; margin:auto; }
     .timeline::before {
       content:""; position:absolute; top:0; bottom:0; left:50%; width:2px;
@@ -159,109 +154,84 @@
     .event:nth-child(even) { left:50%; }
     .event::before {
       content:""; position:absolute; top:35px; width:16px; height:16px;
-      border-radius:50%; background:#d4af37; border:4px solid #050505; z-index:1; box-shadow: 0 0 15px #d4af37;
+      border-radius:50%; background:#d4af37; border:4px solid #050505; z-index:1;
     }
     .event:nth-child(odd)::before { right:-10px; }
     .event:nth-child(even)::before { left:-10px; }
     .event p {
-      background: rgba(255,255,255,0.03); padding:25px; border-radius:20px;
+      background: rgba(255,255,255,0.03); padding:20px; border-radius:20px;
       border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(10px);
-      transition: transform 0.3s, border-color 0.3s; line-height: 1.6;
     }
-    .event p:hover { transform: translateY(-5px); border-color: rgba(212, 175, 55, 0.4); }
     @media(max-width: 768px) {
       .timeline::before { left: 20px; }
-      .event { width: 100%; left: 0 !important; text-align: left !important; padding: 20px 0 20px 60px; }
+      .event { width: 100%; left: 0 !important; text-align: left !important; padding: 10px 0 10px 50px; }
       .event::before { left: 12px !important; right: auto !important; }
     }
 
-    /* KARTY - KINOID, VSTUPENKY, PODPORA (3D Tilt & Glassmorphism) */
-    .card-section { display: flex; justify-content: center; background-position: center; background-size: cover; background-attachment: fixed; position: relative; padding: 120px 10%;}
+    /* KARTY */
+    .card-section { display: flex; justify-content: center; background-position: center; background-size: cover; background-attachment: scroll; position: relative; padding: 80px 5%;}
+    @media (min-width: 768px) { .card-section { background-attachment: fixed; padding: 120px 10%; } }
+    
     .card-section::before { content:''; position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(5,5,5,0.85); }
-    #kinoid { background-image: url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=1500&q=80'); }
-    #vstupenky { background-image: url('https://media.istockphoto.com/id/1494642262/cs/fotografie/lid%C3%A9-v-hledi%C5%A1ti-kina-s-pr%C3%A1zdnou-b%C3%ADlou-obrazovkou.jpg?s=612x612&w=0&k=20&c=EKSqFF6wySFvBBocFSqANEq8SOlBlxYXcfWfuPOh-c4='); }
-    #podpora { background: #050505; }
 
     .glass-card {
       position:relative; z-index:1;
       background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
       backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      padding:50px 40px; border-radius:30px;
+      padding:30px 20px; border-radius:30px;
       border: 1px solid rgba(255,255,255,0.1);
-      box-shadow: 0 30px 60px rgba(0,0,0,0.6);
       max-width:550px; width:100%; text-align:center;
-      transform-style: preserve-3d;
-      transition: border-color 0.4s;
     }
-    .glass-card:hover { border-color: rgba(212, 175, 55, 0.4); }
-    .glass-card-content { transform: translateZ(40px); } /* Tilt efekt vytažení textu */
+    @media (min-width: 768px) { .glass-card { padding: 50px 40px; } }
 
-    /* FORMULÁŘE PREMIUM */
+    /* FORMULÁŘE */
     form input, form select {
       width:100%; padding:15px; margin-bottom:15px;
       border-radius:12px; border: 1px solid rgba(255,255,255,0.1);
       background: rgba(0,0,0,0.4); color:white; font-family: 'Poppins', sans-serif;
-      font-size:15px; outline: none; transition: 0.3s;
     }
-    form input:focus, form select:focus { background: rgba(0,0,0,0.8); border-color: #d4af37; box-shadow: 0 0 15px rgba(212,175,55,0.2); }
     form button {
-      width: 100%; padding: 15px; margin-bottom: 15px; border-radius: 12px; border: none;
-      background: #d4af37; color: #111; font-weight: 700; font-family: 'Poppins', sans-serif;
-      font-size: 15px; text-transform: uppercase; cursor: pointer; transition: 0.3s;
+      width: 100%; padding: 15px; border-radius: 12px; border: none;
+      background: #d4af37; color: #111; font-weight: 700; text-transform: uppercase; cursor: pointer;
     }
-    form button:hover { background: #fff; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(212,175,55,0.3); }
 
     /* LOGIN MODAL */
     #login-modal {
       display:none; position:fixed; top:0; left:0; width:100%; height:100%;
       background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
-      z-index:2000; justify-content:center; align-items:center; opacity: 0; transition: opacity 0.3s;
+      z-index:2000; justify-content:center; align-items:center; padding: 20px;
     }
     #login-modal.active { display:flex; opacity: 1; }
     .modal-content {
       background: rgba(15,15,15,0.95); border: 1px solid #d4af37;
-      padding: 40px; border-radius: 20px; width: 320px;
-      text-align: center; position: relative; transform: scale(0.9); transition: transform 0.3s;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+      padding: 30px; border-radius: 20px; width: 100%; max-width: 350px;
+      text-align: center; position: relative;
     }
-    #login-modal.active .modal-content { transform: scale(1); }
-    .close-modal { position: absolute; top: 10px; right: 15px; font-size: 24px; color: #aaa; cursor: pointer; transition: 0.3s; }
-    .close-modal:hover { color: #d4af37; }
-    .modal-content input { background: #222; border: 1px solid #333; margin-bottom: 15px; }
+    .close-modal { position: absolute; top: 10px; right: 15px; font-size: 24px; color: #aaa; cursor: pointer; }
 
-    /* VISION AI (JARVIN) */
+    /* JARVIN */
     #jarvin-button {
-      position: fixed; right: 30px; bottom: 30px; width: 65px; height: 65px; border-radius: 50%;
+      position: fixed; right: 20px; bottom: 20px; width: 55px; height: 55px; border-radius: 50%;
       border: 2px solid #d4af37; background: #0c0c0c;
-      display: flex; align-items: center; justify-content: center; z-index: 1001;
-      cursor: pointer; box-shadow: 0 8px 25px rgba(0,0,0,0.6); transition: 0.3s;
+      display: flex; align-items: center; justify-content: center; z-index: 1001; cursor: pointer;
     }
-    #jarvin-button:hover { transform: rotate(15deg) scale(1.1); background: #d4af37; }
-    #jarvin-button:hover svg path { fill: #111; }
-
     #jarvin-window {
-      display:none; position:fixed; bottom:110px; right:30px; width:350px;
+      display:none; position:fixed; bottom:90px; right:20px; width:calc(100% - 40px); max-width:350px;
       background: rgba(15,15,15,0.98); backdrop-filter: blur(20px); border-radius:20px;
-      border: 1px solid rgba(212,175,55,0.3); box-shadow: 0 15px 40px rgba(0,0,0,0.6);
-      padding:25px; z-index:1001; transform-origin: bottom right;
+      border: 1px solid rgba(212,175,55,0.3); padding:20px; z-index:1001;
     }
-    #jarvin-window.active { display:block; animation: slideIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-    @keyframes slideIn { from {opacity:0; transform:scale(0.8);} to {opacity:1; transform:scale(1);} }
-
-    #chat-log { height:200px; overflow-y:auto; margin-bottom:15px; padding-right: 5px; display: flex; flex-direction: column; gap: 10px;}
-    .bubble { padding:12px 16px; border-radius:15px; font-size:14px; line-height: 1.5; max-width: 85%; animation: fadeIn 0.3s;}
-    @keyframes fadeIn { from {opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
-    .user { background:#d4af37; color:#111; align-self: flex-end; border-bottom-right-radius: 4px; }
-    .jarvin { background:#252525; color:#eee; align-self: flex-start; border-bottom-left-radius: 4px; border: 1px solid rgba(255,255,255,0.05); }
+    #jarvin-window.active { display:block; }
+    #chat-log { height:200px; overflow-y:auto; margin-bottom:15px; display: flex; flex-direction: column; gap: 10px;}
+    .bubble { padding:10px 14px; border-radius:15px; font-size:14px; max-width: 85%; }
+    .user { background:#d4af37; color:#111; align-self: flex-end; }
+    .jarvin { background:#252525; color:#eee; align-self: flex-start; border: 1px solid rgba(255,255,255,0.05); }
 
     .chat-input-row { display:flex; gap:10px; }
-    .chat-input-row input { margin-bottom: 0; padding: 10px; border-radius: 10px; }
-    .chat-input-row button { margin-bottom: 0; padding: 0; width: 50px; border-radius: 10px; display:flex; align-items:center; justify-content:center; }
+    .chat-input-row input { margin-bottom: 0; }
+    .chat-input-row button { width: 50px; padding: 0; flex-shrink: 0; }
 
     /* FOOTER */
-    footer { text-align:center; padding:50px; background:#080808; border-top: 1px solid #1a1a1a; }
-    footer a { color:#d4af37; text-decoration:none; font-weight: 500; transition: 0.3s; }
-    footer a:hover { text-shadow: 0 0 10px rgba(212,175,55,0.5); }
+    footer { text-align:center; padding:40px 20px; background:#080808; border-top: 1px solid #1a1a1a; }
   </style>
 </head>
 <body>
@@ -272,7 +242,7 @@
   <div id="login-modal">
     <div class="modal-content">
       <span class="close-modal" onclick="toggleModal()">&times;</span>
-      <h2 style="color:#d4af37; margin-bottom:20px;">Přihlášení</h2>
+      <h2 style="color:#d4af37; margin-bottom:20px; font-size: 1.5rem;">Přihlášení</h2>
       <input type="text" id="login-name" placeholder="Vaše jméno">
       <input type="text" id="login-id" placeholder="E-mail">
       <input type="password" id="login-password" placeholder="Unikátní ID">
@@ -302,7 +272,7 @@
   <header id="uvod">
     <div class="content" data-aos="zoom-in" data-aos-duration="1500">
       <h1>Kino ve mlýně</h1>
-      <p>Oficiální web kina ve mlýně. Soukromé kino ve Vémyslicích – právě v rekonstrukci. Velká premiéra kina 20. června 2026.</p>
+      <p>Soukromé kino ve Vémyslicích – právě v rekonstrukci. Velká premiéra kina 20. června 2026.</p>
       
       <div class="countdown-wrapper">
         <div class="time-box"><span id="days">00</span><p>Dní</p></div>
@@ -316,48 +286,46 @@
   <section id="kino">
     <div class="text" data-aos="fade-right">
       <h2>O našem kině</h2>
-      <p>Kino ve mlýně je nové soukromé kino ve Steinmetzově (Drochytkově mlýně), které po rekonstrukci nabídne moderní technologie a komorní atmosféru pro 8–12 diváků. Vedle filmových novinek plánujeme také tematické večery pro opravdové nadšence.</p>
+      <p>Kino ve mlýně je nové soukromé kino ve Steinmetzově mlýně, které po rekonstrukci nabídne moderní technologie a komorní atmosféru pro 8–12 diváků.</p>
       <br>
-      <p>Historicky první otevření kina proběhne 20. června 2026, kdy na velkém plátně uvedeme film <strong>Mlynář</strong> a oblíbenou komedii <strong>Simpsonovi ve filmu</strong>. O občerstvení i pohodlí bude postaráno.</p>
+      <p>První otevření proběhne <strong>20. června 2026</strong> s filmy <strong>Mlynář</strong> a <strong>Simpsonovi ve filmu</strong>.</p>
     </div>
     <div id="map-wrapper" data-aos="fade-left">
       <div id="map"></div>
     </div>
   </section>
 
-  <section id="rekonstrukce">
+  <section id="rekonstrukce" style="background: #0a0a0a;">
     <h2 data-aos="fade-up">Cesta k otevření</h2>
     <div class="timeline">
-      <div class="event" data-aos="fade-up"><p>Začátek prací – uklízení starého prostoru mlýna.</p></div>
+      <div class="event" data-aos="fade-up"><p>Začátek prací – uklízení prostoru.</p></div>
       <div class="event" data-aos="fade-up" data-aos-delay="100"><p>Instalace nové podlahy.</p></div>
-      <div class="event" data-aos="fade-up" data-aos-delay="200"><p><strong>Aktuální stav: 57% dokončeno</strong>. Probíhá montáž ozvučení.</p></div>
-      <div class="event" data-aos="fade-up" data-aos-delay="300"><p>Plánované otevření: 20. června 2026</p></div>
+      <div class="event" data-aos="fade-up" data-aos-delay="200"><p><strong>Stav: 57% hotovo</strong>. Montáž ozvučení.</p></div>
+      <div class="event" data-aos="fade-up" data-aos-delay="300"><p>Otevření: 20. 6. 2026</p></div>
     </div>
   </section>
 
-  <section id="kinoid" class="card-section">
-    <div class="glass-card" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2" data-aos="zoom-in">
+  <section id="kinoid" class="card-section" style="background-image: url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?w=1500&q=80');">
+    <div class="glass-card" data-aos="zoom-in">
       <div class="glass-card-content" id="kinoid-status">
         <h2>KinoID Registrace</h2>
-        <p style="margin-bottom: 25px;">Získejte 10% slevu na první vstupenku a další exkluzivní výhody zdarma!</p>
+        <p style="margin-bottom: 25px;">Získejte 10% slevu na první vstupenku.</p>
         <form action="https://formsubmit.co/kinovemlyne@seznam.cz" method="POST" onsubmit="return syncName(this)">
-          <input type="text" name="Jméno" id="form-name" placeholder="Jméno" required>
+          <input type="text" name="Jméno" placeholder="Jméno" required>
           <input type="text" name="Příjmení" placeholder="Příjmení" required>
           <input type="email" name="Email" placeholder="E-mail" required>
           <button type="submit">Vytvořit KinoID</button>
-          <input type="hidden" name="_next" value="https://jakubhitl.github.io/kinoveml-n-/diky.html">
           <input type="hidden" name="_captcha" value="false">
         </form>
-        <p style="font-size:12px; color:#aaa; margin-top:15px;">🔒 Vaše údaje jsou u nás v bezpečí.</p>
       </div>
     </div>
   </section>
 
-  <section id="vstupenky" class="card-section">
-    <div class="glass-card" data-tilt data-tilt-max="5" data-tilt-speed="400" data-tilt-glare="true" data-tilt-max-glare="0.2" data-aos="zoom-in" data-aos-delay="100">
+  <section id="vstupenky" class="card-section" style="background-image: url('https://media.istockphoto.com/id/1494642262/cs/fotografie/lid%C3%A9-v-hledi%C5%A1ti-kina-s-pr%C3%A1zdnou-b%C3%ADlou-obrazovkou.jpg?s=612x612&w=0&k=20&c=EKSqFF6wySFvBBocFSqANEq8SOlBlxYXcfWfuPOh-c4=');">
+    <div class="glass-card" data-aos="zoom-in">
       <div class="glass-card-content">
         <h2>Rezervace</h2>
-        <p style="margin-bottom: 25px;">Objednejte si vstupenku na premiéru kina ještě dnes. Cena vstupenky je <strong>50 Kč</strong>.</p>
+        <p style="margin-bottom: 25px;">Cena vstupenky je <strong>50 Kč</strong>.</p>
         <form action="https://formsubmit.co/kinovemlyne@seznam.cz" method="POST">
           <input type="text" name="Jméno" id="res-name" placeholder="Vaše jméno" required>
           <input type="email" name="Email" placeholder="Váš e-mail" required>
@@ -366,40 +334,35 @@
             <option>QR kód (předem)</option>
             <option>Na místě</option>
           </select>
-          <button type="submit">Rezervovat vstupenku</button>
-          <input type="hidden" name="_subject" value="Nová rezervace vstupenky">
-          <input type="hidden" name="_next" value="https://jakubhitl.github.io/kinoveml-n-/diky.html">
+          <button type="submit">Rezervovat</button>
         </form>
       </div>
     </div>
   </section>
 
-  <section id="podpora" style="background:#0a0a0a; display:flex; justify-content:center;">
-    <div class="glass-card" style="border: none; background: transparent; box-shadow: none;" data-aos="fade-up">
-      <div class="glass-card-content">
-        <h2>Podpořte nás</h2>
-        <p>Líbí se vám náš projekt soukromého kina? Budeme vděční za jakoukoli podporu, ať už formou příspěvku na technické vybavení nebo sdílením našich stránek.</p>
-        <p style="margin-top:20px; color:#d4af37; font-weight:bold; font-size: 1.2rem;">Číslo účtu pro dary: 5581029073/0800</p>
-        <p style="font-size: 14px; margin-top: 15px; opacity: 0.8;">Všichni dárci budou zapsáni na čestné tabuli v předsálí kina.</p>
-      </div>
+  <section id="podpora" style="background:#050505; text-align: center;">
+    <div data-aos="fade-up">
+      <h2>Podpořte nás</h2>
+      <p>Číslo účtu pro dary: <strong>5581029073/0800</strong></p>
+      <p style="font-size: 14px; margin-top: 15px; opacity: 0.6;">Dárci budou zapsáni na čestné tabuli.</p>
     </div>
   </section>
 
   <footer>
-    <p>Kontaktujte nás: <a href="mailto:kinovemlyne@seznam.cz">kinovemlyne@seznam.cz</a></p>
+    <p><a href="mailto:kinovemlyne@seznam.cz">kinovemlyne@seznam.cz</a></p>
     <p style="margin-top: 10px; font-size: 12px; opacity: 0.5;">&copy; 2026 Kino ve mlýně | Vémyslice 36</p>
   </footer>
 
   <button id="jarvin-button" onclick="toggleJarvin()">
-    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M12 2C6.477 2 2 6.477 2 12C2 13.591 2.375 15.094 3.039 16.422L2 22L7.578 20.961C8.906 21.625 10.409 22 12 22C17.523 22 22 17.523 22 12C22 6.477 17.523 2 12 2Z" fill="#d4af37"/>
     </svg>
   </button>
 
   <div id="jarvin-window">
-    <h3 style="color:#d4af37; margin-bottom:15px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:10px;">Vision AI</h3>
+    <h3 style="color:#d4af37; margin-bottom:10px; font-size: 1rem;">Vision AI</h3>
     <div id="chat-log">
-      <div class="bubble jarvin">Dobrý den! Jsem Vision. Jak vám mohu pomoci s návštěvou našeho kina?</div>
+      <div class="bubble jarvin">Dobrý den! Jak vám mohu pomoci?</div>
     </div>
     <div class="chat-input-row">
       <input type="text" id="user-input" placeholder="Zeptejte se..." onkeydown="if(event.key==='Enter') jarvinReply()">
@@ -412,131 +375,75 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
   
   <script>
-    // VLASTNÍ KURZOR
+    // Kurzor pouze pro PC
     const cursorDot = document.querySelector('.cursor-dot');
     const cursorOutline = document.querySelector('.cursor-outline');
-    window.addEventListener('mousemove', function(e) {
-      if(cursorDot && cursorOutline) {
-        cursorDot.style.left = e.clientX + 'px';
-        cursorDot.style.top = e.clientY + 'px';
-        cursorOutline.animate({ left: e.clientX + 'px', top: e.clientY + 'px' }, { duration: 500, fill: "forwards" });
-      }
-    });
+    if (window.matchMedia("(pointer: fine)").matches) {
+        window.addEventListener('mousemove', e => {
+            cursorDot.style.left = e.clientX + 'px';
+            cursorDot.style.top = e.clientY + 'px';
+            cursorOutline.animate({ left: e.clientX + 'px', top: e.clientY + 'px' }, { duration: 500, fill: "forwards" });
+        });
+    }
 
-    // NAVIGACE SCROLL EFEKT
+    // Scroll Nav
     window.addEventListener("scroll", () => {
       const nav = document.getElementById("navbar");
-      if(window.scrollY > 50) nav.classList.add("scrolled");
-      else nav.classList.remove("scrolled");
+      nav.classList.toggle("scrolled", window.scrollY > 50);
     });
 
-    // INICIALIZACE AOS (Animace při scrollu)
-    AOS.init({ duration: 1000, once: true, offset: 100 });
+    AOS.init({ duration: 1000, once: true });
 
-    // ODPOČET (COUNTDOWN)
+    // Odpočet
     const countDownDate = new Date("Jun 20, 2026 19:00:00").getTime();
-    setInterval(function() {
-      const now = new Date().getTime();
-      const distance = countDownDate - now;
-      
-      let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-      let hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      let minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      let seconds = Math.floor((distance % (1000 * 60)) / 1000);
-      
-      document.getElementById("days").innerText = days < 10 ? "0" + days : days;
-      document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
-      document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
-      document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+    setInterval(() => {
+      const distance = countDownDate - new Date().getTime();
+      document.getElementById("days").innerText = Math.floor(distance / 86400000).toString().padStart(2, '0');
+      document.getElementById("hours").innerText = Math.floor((distance % 86400000) / 3600000).toString().padStart(2, '0');
+      document.getElementById("minutes").innerText = Math.floor((distance % 3600000) / 60000).toString().padStart(2, '0');
+      document.getElementById("seconds").innerText = Math.floor((distance % 60000) / 1000).toString().padStart(2, '0');
     }, 1000);
 
-    // LOGIN & LOCALSTORAGE (Tvoje logika)
+    // Menu
+    function toggleMenu() {
+      if (window.innerWidth <= 900) document.getElementById("nav-list").classList.toggle("active");
+    }
+
+    // Login logic
     function toggleModal() { document.getElementById('login-modal').classList.toggle('active'); }
     function saveLogin() {
       const name = document.getElementById('login-name').value;
-      const userId = document.getElementById('login-id').value;
-      const password = document.getElementById('login-password').value;
-      if(name.trim() !== "" && userId.trim() !== "" && password.trim() !== "") {
-          localStorage.setItem('kinoUser', name);
-          localStorage.setItem('kinoUserId', userId);
-          localStorage.setItem('kinoUserPassword', password);
-          updateUI();
-          toggleModal();
-      }
+      if(name) { localStorage.setItem('kinoUser', name); updateUI(); toggleModal(); }
     }
     function updateUI() {
       const user = localStorage.getItem('kinoUser');
-      const userId = localStorage.getItem('kinoUserId');
-      const authBtn = document.getElementById('nav-auth-btn');
-      const kinoidBox = document.getElementById('kinoid-status');
-      const resNameInput = document.getElementById('res-name');
-
       if(user) {
-          authBtn.innerText = user + " (Odhlásit)";
-          authBtn.onclick = function() {
-              localStorage.removeItem('kinoUser');
-              localStorage.removeItem('kinoUserId');
-              localStorage.removeItem('kinoUserPassword');
-              location.reload();
-          };
-          if(kinoidBox) {
-              kinoidBox.innerHTML = `<h2>Ahoj, ${user}!</h2><p style="margin-top:15px; font-size:1.1rem;">Tvé KinoID: <strong style="color:#d4af37;">${userId}</strong> je aktivní.</p><p style="margin-top:10px;">Máš u nás 10% slevu.</p>`;
-          }
-          if(resNameInput) resNameInput.value = user;
-      } else {
-          authBtn.innerText = "Přihlásit se";
-          authBtn.onclick = toggleModal;
+          document.getElementById('nav-auth-btn').innerText = user + " (Odhlásit)";
+          document.getElementById('nav-auth-btn').onclick = () => { localStorage.clear(); location.reload(); };
+          if(document.getElementById('res-name')) document.getElementById('res-name').value = user;
       }
     }
-    function syncName(form) {
-      localStorage.setItem('kinoUser', form.querySelector('input[name="Jméno"]').value);
-      return true; 
-    }
+    function syncName(form) { localStorage.setItem('kinoUser', form.querySelector('input').value); return true; }
 
-    function toggleMenu() {
-      const navList = document.getElementById("nav-list");
-      if (window.innerWidth <= 900) navList.classList.toggle("active");
-    }
-
-    // MAPA (Standartní dlaždice pro jasnou viditelnost)
-    window.onload = function () {
+    // Mapa
+    window.onload = () => {
       updateUI();
       var map = L.map("map").setView([49.0239, 16.2558], 16);
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: '&copy; OpenStreetMap'
-      }).addTo(map);
-      
-      // Zvýrazněný marker
-      var icon = L.icon({
-        iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-gold.png',
-        iconSize: [25, 41], iconAnchor: [12, 41], popupAnchor: [1, -34]
-      });
-      L.marker([49.0239, 16.2558], {icon: icon}).addTo(map).bindPopup("<b style='color:#000; font-family:Poppins;'>Kino ve mlýně</b><br>Vémyslice 36").openPopup();
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+      L.marker([49.0239, 16.2558]).addTo(map).bindPopup("<b>Kino ve mlýně</b>").openPopup();
     };
 
-    // VISION AI (JARVIN) - Tvoje přesná array struktura textů
+    // Jarvin
     function toggleJarvin() { document.getElementById("jarvin-window").classList.toggle("active"); }
-
     function jarvinReply() {
-      const inputElem = document.getElementById("user-input");
-      const input = inputElem.value.trim();
-      if (!input) return;
-      
+      const input = document.getElementById("user-input");
+      if (!input.value.trim()) return;
       const chat = document.getElementById("chat-log");
-      chat.innerHTML += `<div class="bubble user">${input}</div>`;
-      inputElem.value = "";
-      chat.scrollTop = chat.scrollHeight;
-
+      chat.innerHTML += `<div class="bubble user">${input.value}</div>`;
+      const val = input.value; input.value = "";
       setTimeout(() => {
-        const res = [
-          "Otevíráme 20. června 2026! Rezervujte si lístky včas.",
-          "Kapacita sálu je komorní, cca 15 osob, pro maximální zážitek.",
-          "Na premiéře se můžete těšit na popcorn a nápoje v ceně.",
-          "Máte zájem o soukromý pronájem? Napište nám na e-mail!"
-        ];
-        const randomReply = res[Math.floor(Math.random() * res.length)];
-        
-        chat.innerHTML += `<div class="bubble jarvin">${randomReply}</div>`;
+        const replies = ["Otevíráme 20. června 2026!", "Kapacita je 8-12 osob.", "Těšíme se na vás!"];
+        chat.innerHTML += `<div class="bubble jarvin">${replies[Math.floor(Math.random()*replies.length)]}</div>`;
         chat.scrollTop = chat.scrollHeight;
       }, 600);
     }
