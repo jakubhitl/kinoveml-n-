@@ -2,7 +2,8 @@
 <html lang="cs">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#050505">
   <title>Kino ve mlýně</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700;800&display=swap" rel="stylesheet">
@@ -11,7 +12,7 @@
 
   <style>
     /* ZÁKLAD A SCROLLBAR */
-    * { margin:0; padding:0; box-sizing:border-box; }
+    * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
     html { scroll-behavior: smooth; }
     body {
       font-family: 'Poppins', sans-serif;
@@ -24,19 +25,18 @@
     /* AMBIENTNÍ SVĚTLO */
     body::before {
       content: ''; position: fixed; top: -50%; left: -50%; width: 200%; height: 200%;
-      background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.03) 0%, transparent 60%);
+      background: radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.04) 0%, transparent 60%);
       animation: ambientPulse 15s infinite alternate; z-index: -1; pointer-events: none;
     }
     @keyframes ambientPulse { 0% { transform: scale(1); } 100% { transform: scale(1.2); } }
 
-    ::-webkit-scrollbar { width: 8px; }
+    ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: #050505; }
-    ::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 10px; }
 
-    /* VLASTNÍ KURZOR */
+    /* VLASTNÍ KURZOR (pouze pro desktop) */
     @media (pointer: fine) {
-      body { cursor: none; }
-      a, button, input, select { cursor: none; }
+      body, a, button, input, select { cursor: none; }
       .cursor-dot {
         width: 8px; height: 8px; background: #d4af37;
         position: fixed; top: 0; left: 0; border-radius: 50%;
@@ -53,12 +53,12 @@
 
     /* NAVIGACE */
     nav {
-      position: fixed; top:0; left:0; width:100%; padding:20px 60px;
+      position: fixed; top:0; left:0; width:100%; padding:20px 5%;
       display:flex; justify-content:space-between; align-items:center;
       background: rgba(5, 5, 5, 0.6); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
       z-index:1000; transition: all 0.4s ease; border-bottom: 1px solid rgba(212, 175, 55, 0.05);
     }
-    nav.scrolled { padding: 15px 60px; background: rgba(5, 5, 5, 0.95); box-shadow: 0 10px 30px rgba(0,0,0,0.8); border-bottom: 1px solid rgba(212, 175, 55, 0.2); }
+    nav.scrolled { padding: 12px 5%; background: rgba(5, 5, 5, 0.95); box-shadow: 0 10px 30px rgba(0,0,0,0.8); border-bottom: 1px solid rgba(212, 175, 55, 0.2); }
     .nav-center { flex-grow: 1; display: flex; justify-content: center; }
     nav ul { list-style:none; display:flex; gap:30px; }
     nav a {
@@ -68,41 +68,47 @@
     nav a:hover { color:#d4af37; }
     
     #nav-auth-btn {
-      color: #d4af37; border: 1px solid #d4af37; padding: 8px 20px;
-      border-radius: 25px; font-size: 0.85rem; font-weight: 700; transition: 0.4s; cursor: pointer;
+      color: #d4af37; border: 1px solid #d4af37; padding: 10px 24px;
+      border-radius: 30px; font-size: 0.85rem; font-weight: 700; transition: 0.4s; cursor: pointer;
+      display: inline-block; text-align: center;
     }
+    #nav-auth-btn:hover { background: rgba(212, 175, 55, 0.1); box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); }
 
     /* MOBILNÍ MENU */
-    .menu-btn { display: none; flex-direction: column; gap: 6px; z-index: 1001; cursor: pointer; }
-    .menu-btn span { width: 30px; height: 2px; background: #d4af37; transition: 0.4s; }
+    .menu-btn { display: none; flex-direction: column; gap: 6px; z-index: 1002; cursor: pointer; padding: 10px; margin-right: -10px; }
+    .menu-btn span { width: 30px; height: 2px; background: #d4af37; transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); border-radius: 2px; }
+    
+    /* Animace Hamburgeru na Křížek */
+    .menu-btn.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .menu-btn.open span:nth-child(2) { opacity: 0; }
+    .menu-btn.open span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
     @media (max-width: 900px) {
-      nav { padding: 15px 20px; }
       .menu-btn { display: flex; }
       .nav-center ul {
         position: fixed; right: -100%; top: 0; height: 100vh; width: 100%;
-        background: rgba(5, 5, 5, 0.98); backdrop-filter: blur(15px);
-        flex-direction: column; justify-content: center; align-items: center; gap: 30px;
-        transition: 0.5s cubic-bezier(0.77, 0, 0.175, 1);
+        background: rgba(5, 5, 5, 0.98); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+        flex-direction: column; justify-content: center; align-items: center; gap: 40px;
+        transition: right 0.5s cubic-bezier(0.77, 0, 0.175, 1); z-index: 1001;
       }
       .nav-center ul.active { right: 0; }
-      nav a { font-size: 1.2rem; }
+      nav a { font-size: 1.5rem; display: block; padding: 10px; }
     }
 
     /* HERO SEKCE */
     header {
-      min-height:100vh;
+      min-height:100vh; min-height: 100svh; /* Optimalizace pro mobilní prohlížeče */
       background: url('https://static.vecteezy.com/system/resources/previews/028/541/542/non_2x/popcorn-stand-cinema-shot-movie-theatre-popcorn-free-photo.jpg') center/cover no-repeat;
       display:flex; align-items:center; justify-content:center;
-      position:relative; text-align:center; padding: 100px 20px;
+      position:relative; text-align:center; padding: 100px 20px 60px;
     }
     header::after {
       content:""; position:absolute; top:0; left:0; width:100%; height:100%;
-      background: radial-gradient(circle, rgba(0,0,0,0.5) 0%, rgba(5,5,5,0.95) 100%);
+      background: radial-gradient(circle, rgba(0,0,0,0.4) 0%, rgba(5,5,5,0.98) 100%);
     }
     header .content { position:relative; z-index:1; width: 100%; max-width: 1200px; }
     header h1 {
-      font-size:clamp(2.5rem, 8vw, 5.5rem); font-weight: 800; margin-bottom:15px;
+      font-size:clamp(2.5rem, 10vw, 6rem); font-weight: 800; margin-bottom:15px; line-height: 1.1;
       background: linear-gradient(to right, #fff, #d4af37, #fff);
       background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       animation: shine 5s linear infinite;
@@ -112,36 +118,34 @@
 
     /* ODPOČET */
     .countdown-wrapper { 
-        display: flex; 
-        gap: 10px; 
-        justify-content: center; 
-        margin-top: 30px; 
-        flex-wrap: wrap; /* Zalomí se na malém mobilu */
+        display: flex; gap: 15px; justify-content: center; margin-top: 40px; flex-wrap: wrap; 
     }
     .time-box {
-      background: rgba(255,255,255,0.03); border: 1px solid rgba(212, 175, 55, 0.2);
-      padding: 10px; border-radius: 12px; backdrop-filter: blur(10px); min-width: 75px; flex: 0 1 80px;
+      background: rgba(255,255,255,0.02); border: 1px solid rgba(212, 175, 55, 0.3);
+      padding: 15px 10px; border-radius: 16px; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      min-width: 80px; flex: 1 1 80px; max-width: 120px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 0 15px rgba(212, 175, 55, 0.05);
     }
-    .time-box span { display: block; font-size: clamp(1.5rem, 5vw, 2.2rem); font-weight: 700; color: #d4af37; }
-    .time-box p { font-size: 0.65rem; margin: 0; color: #f1f1f1; text-transform: uppercase; }
+    .time-box span { display: block; font-size: clamp(1.8rem, 6vw, 2.5rem); font-weight: 800; color: #d4af37; line-height: 1; }
+    .time-box p { font-size: 0.75rem; margin-top: 5px; color: #f1f1f1; text-transform: uppercase; letter-spacing: 1px; }
 
-    /* SEKCE */
-    section { padding:80px 5%; position: relative; overflow: hidden; }
-    @media (min-width: 768px) { section { padding: 100px 10%; } }
+    /* SEKCE OBECNĚ */
+    section { padding: 100px 5%; position: relative; overflow: hidden; }
+    @media (min-width: 768px) { section { padding: 120px 10%; } }
     
-    section h2 { font-size:clamp(1.8rem, 5vw, 2.5rem); color:#d4af37; margin-bottom:40px; text-align:center; font-weight: 800; }
-    section h2::after { content: ""; display: block; width: 60px; height: 3px; background: #d4af37; margin: 15px auto; box-shadow: 0 0 10px #d4af37; }
+    section h2 { font-size:clamp(2rem, 6vw, 2.8rem); color:#d4af37; margin-bottom:40px; text-align:center; font-weight: 800; line-height: 1.2; }
+    section h2::after { content: ""; display: block; width: 60px; height: 4px; background: #d4af37; margin: 20px auto 0; box-shadow: 0 0 15px rgba(212, 175, 55, 0.6); border-radius: 2px; }
 
     /* O KINĚ */
-    #kino { display:flex; gap:40px; flex-wrap:wrap; align-items:center; }
-    #kino .text { flex:1; min-width:300px; line-height: 1.8; }
+    #kino { display:flex; gap:50px; flex-wrap:wrap; align-items:center; }
+    #kino .text { flex:1; min-width:300px; line-height: 1.8; font-size: 1.05rem; }
     #map-wrapper { 
-      flex:1; min-width:300px; height:350px; padding: 5px; 
-      background: linear-gradient(45deg, #d4af37, transparent);
-      border-radius: 25px; box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+      flex:1; min-width:100%; height:350px; padding: 4px; 
+      background: linear-gradient(135deg, #d4af37, #332800);
+      border-radius: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.6);
     }
-    @media (min-width: 768px) { #map-wrapper { height: 450px; } }
-    #map { height:100%; width: 100%; border-radius: 20px; z-index: 1; }
+    @media (min-width: 768px) { #map-wrapper { min-width: 300px; height: 450px; } }
+    #map { height:100%; width: 100%; border-radius: 26px; z-index: 1; }
 
     /* TIMELINE */
     .timeline { position:relative; max-width:800px; margin:auto; }
@@ -153,85 +157,108 @@
     .event:nth-child(odd) { left:0; text-align:right; }
     .event:nth-child(even) { left:50%; }
     .event::before {
-      content:""; position:absolute; top:35px; width:16px; height:16px;
+      content:""; position:absolute; top:35px; width:20px; height:20px;
       border-radius:50%; background:#d4af37; border:4px solid #050505; z-index:1;
+      box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
     }
-    .event:nth-child(odd)::before { right:-10px; }
-    .event:nth-child(even)::before { left:-10px; }
+    .event:nth-child(odd)::before { right:-12px; }
+    .event:nth-child(even)::before { left:-12px; }
     .event p {
-      background: rgba(255,255,255,0.03); padding:20px; border-radius:20px;
-      border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(10px);
+      background: rgba(255,255,255,0.02); padding:25px; border-radius:20px;
+      border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3); font-size: 1.05rem;
     }
     @media(max-width: 768px) {
       .timeline::before { left: 20px; }
-      .event { width: 100%; left: 0 !important; text-align: left !important; padding: 10px 0 10px 50px; }
-      .event::before { left: 12px !important; right: auto !important; }
+      .event { width: 100%; left: 0 !important; text-align: left !important; padding: 15px 0 15px 60px; }
+      .event::before { left: 10px !important; right: auto !important; top: 38px; }
     }
 
-    /* KARTY */
-    .card-section { display: flex; justify-content: center; background-position: center; background-size: cover; background-attachment: scroll; position: relative; padding: 80px 5%;}
+    /* KARTY (FORMULÁŘE) */
+    .card-section { display: flex; justify-content: center; background-position: center; background-size: cover; background-attachment: scroll; position: relative; padding: 100px 5%;}
     @media (min-width: 768px) { .card-section { background-attachment: fixed; padding: 120px 10%; } }
     
     .card-section::before { content:''; position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(5,5,5,0.85); }
 
     .glass-card {
       position:relative; z-index:1;
-      background: linear-gradient(135deg, rgba(255,255,255,0.05), rgba(255,255,255,0.01));
-      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      padding:30px 20px; border-radius:30px;
-      border: 1px solid rgba(255,255,255,0.1);
+      background: linear-gradient(135deg, rgba(25,25,25,0.6), rgba(10,10,10,0.8));
+      backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
+      padding:40px 25px; border-radius:30px;
+      border: 1px solid rgba(212, 175, 55, 0.15);
       max-width:550px; width:100%; text-align:center;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.7);
     }
     @media (min-width: 768px) { .glass-card { padding: 50px 40px; } }
 
-    /* FORMULÁŘE */
+    /* VYLEPŠENÉ FORMULÁŘE (MOBILE FRIENDLY) */
     form input, form select {
-      width:100%; padding:15px; margin-bottom:15px;
-      border-radius:12px; border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(0,0,0,0.4); color:white; font-family: 'Poppins', sans-serif;
+      width:100%; padding:18px; margin-bottom:20px;
+      border-radius:15px; border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(0,0,0,0.6); color:white; font-family: 'Poppins', sans-serif;
+      font-size: 1rem; -webkit-appearance: none; transition: all 0.3s ease;
+    }
+    form input:focus, form select:focus {
+      outline: none; border-color: #d4af37; box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); background: rgba(0,0,0,0.8);
     }
     form button {
-      width: 100%; padding: 15px; border-radius: 12px; border: none;
-      background: #d4af37; color: #111; font-weight: 700; text-transform: uppercase; cursor: pointer;
+      width: 100%; padding: 18px; border-radius: 15px; border: none;
+      background: linear-gradient(135deg, #e8c655, #d4af37); color: #050505; 
+      font-weight: 800; text-transform: uppercase; font-size: 1.1rem; cursor: pointer;
+      transition: all 0.3s ease; box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
     }
+    form button:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(212, 175, 55, 0.4); }
+    form button:active { transform: translateY(0); }
 
     /* LOGIN MODAL */
     #login-modal {
       display:none; position:fixed; top:0; left:0; width:100%; height:100%;
-      background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
+      background: rgba(0,0,0,0.9); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
       z-index:2000; justify-content:center; align-items:center; padding: 20px;
+      opacity: 0; transition: opacity 0.4s ease;
     }
     #login-modal.active { display:flex; opacity: 1; }
     .modal-content {
-      background: rgba(15,15,15,0.95); border: 1px solid #d4af37;
-      padding: 30px; border-radius: 20px; width: 100%; max-width: 350px;
-      text-align: center; position: relative;
+      background: linear-gradient(135deg, #151515, #0a0a0a); border: 1px solid rgba(212, 175, 55, 0.3);
+      padding: 40px 30px; border-radius: 25px; width: 100%; max-width: 400px;
+      text-align: center; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.8);
     }
-    .close-modal { position: absolute; top: 10px; right: 15px; font-size: 24px; color: #aaa; cursor: pointer; }
+    .close-modal { 
+      position: absolute; top: 15px; right: 20px; font-size: 30px; color: #aaa; 
+      cursor: pointer; transition: 0.3s; padding: 5px; line-height: 1; 
+    }
+    .close-modal:hover { color: #d4af37; }
 
-    /* JARVIN */
+    /* JARVIN CHATBOT */
     #jarvin-button {
-      position: fixed; right: 20px; bottom: 20px; width: 55px; height: 55px; border-radius: 50%;
+      position: fixed; right: 20px; bottom: 20px; width: 60px; height: 60px; border-radius: 50%;
       border: 2px solid #d4af37; background: #0c0c0c;
       display: flex; align-items: center; justify-content: center; z-index: 1001; cursor: pointer;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.8), 0 0 15px rgba(212, 175, 55, 0.3);
+      transition: transform 0.3s ease;
     }
+    #jarvin-button:hover { transform: scale(1.1); }
     #jarvin-window {
-      display:none; position:fixed; bottom:90px; right:20px; width:calc(100% - 40px); max-width:350px;
-      background: rgba(15,15,15,0.98); backdrop-filter: blur(20px); border-radius:20px;
-      border: 1px solid rgba(212,175,55,0.3); padding:20px; z-index:1001;
+      display:none; position:fixed; bottom:95px; right:20px; width:calc(100% - 40px); max-width:380px;
+      background: rgba(15,15,15,0.95); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); 
+      border-radius:25px; border: 1px solid rgba(212,175,55,0.3); padding:20px; z-index:1001;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.8);
     }
-    #jarvin-window.active { display:block; }
-    #chat-log { height:200px; overflow-y:auto; margin-bottom:15px; display: flex; flex-direction: column; gap: 10px;}
-    .bubble { padding:10px 14px; border-radius:15px; font-size:14px; max-width: 85%; }
-    .user { background:#d4af37; color:#111; align-self: flex-end; }
-    .jarvin { background:#252525; color:#eee; align-self: flex-start; border: 1px solid rgba(255,255,255,0.05); }
+    #jarvin-window.active { display:block; animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+    
+    #chat-log { height:250px; overflow-y:auto; margin-bottom:15px; display: flex; flex-direction: column; gap: 12px; padding-right: 5px; }
+    .bubble { padding:12px 16px; border-radius:18px; font-size:0.95rem; max-width: 85%; line-height: 1.4; }
+    .user { background: linear-gradient(135deg, #e8c655, #d4af37); color:#111; align-self: flex-end; font-weight: 500; border-bottom-right-radius: 4px; }
+    .jarvin { background:#252525; color:#eee; align-self: flex-start; border: 1px solid rgba(255,255,255,0.08); border-bottom-left-radius: 4px; }
 
     .chat-input-row { display:flex; gap:10px; }
-    .chat-input-row input { margin-bottom: 0; }
-    .chat-input-row button { width: 50px; padding: 0; flex-shrink: 0; }
+    .chat-input-row input { margin-bottom: 0; padding: 15px; border-radius: 12px; }
+    .chat-input-row button { width: 55px; padding: 0; flex-shrink: 0; border-radius: 12px; }
 
     /* FOOTER */
-    footer { text-align:center; padding:40px 20px; background:#080808; border-top: 1px solid #1a1a1a; }
+    footer { text-align:center; padding:50px 20px; background:#050505; border-top: 1px solid rgba(212, 175, 55, 0.1); }
+    footer a { color: #d4af37; text-decoration: none; font-size: 1.1rem; font-weight: 500; }
   </style>
 </head>
 <body>
@@ -242,11 +269,11 @@
   <div id="login-modal">
     <div class="modal-content">
       <span class="close-modal" onclick="toggleModal()">&times;</span>
-      <h2 style="color:#d4af37; margin-bottom:20px; font-size: 1.5rem;">Přihlášení</h2>
+      <h2 style="color:#d4af37; margin-bottom:25px; font-size: 1.8rem; font-weight: 800;">Přihlášení</h2>
       <input type="text" id="login-name" placeholder="Vaše jméno">
       <input type="text" id="login-id" placeholder="E-mail">
       <input type="password" id="login-password" placeholder="Unikátní ID">
-      <button onclick="saveLogin()">PŘIHLÁSIT</button>
+      <button onclick="saveLogin()">Přihlásit</button>
     </div>
   </div>
 
@@ -256,12 +283,12 @@
     </div>
     <div class="nav-center">
       <ul id="nav-list">
-        <li><a href="#uvod" onclick="toggleMenu()">Domov</a></li>
-        <li><a href="#kino" onclick="toggleMenu()">O kině</a></li>
-        <li><a href="#rekonstrukce" onclick="toggleMenu()">Rekonstrukce</a></li>
-        <li><a href="#kinoid" onclick="toggleMenu()">KinoID</a></li>
-        <li><a href="#vstupenky" onclick="toggleMenu()">Vstupenky</a></li>
-        <li><a href="#podpora" onclick="toggleMenu()">Podpora</a></li>
+        <li><a href="#uvod" onclick="closeMenu()">Domov</a></li>
+        <li><a href="#kino" onclick="closeMenu()">O kině</a></li>
+        <li><a href="#rekonstrukce" onclick="closeMenu()">Rekonstrukce</a></li>
+        <li><a href="#kinoid" onclick="closeMenu()">KinoID</a></li>
+        <li><a href="#vstupenky" onclick="closeMenu()">Vstupenky</a></li>
+        <li><a href="#podpora" onclick="closeMenu()">Podpora</a></li>
       </ul>
     </div>
     <div class="menu-btn" onclick="toggleMenu()">
@@ -288,19 +315,19 @@
       <h2>O našem kině</h2>
       <p>Kino ve mlýně je nové soukromé kino ve Steinmetzově mlýně, které po rekonstrukci nabídne moderní technologie a komorní atmosféru pro 8–12 diváků.</p>
       <br>
-      <p>První otevření proběhne <strong>20. června 2026</strong> s filmy <strong>Mlynář</strong> a <strong>Simpsonovi ve filmu</strong>.</p>
+      <p>První otevření proběhne <strong style="color:#d4af37;">20. června 2026</strong> s filmy <strong style="color:#d4af37;">Mlynář</strong> a <strong style="color:#d4af37;">Simpsonovi ve filmu</strong>.</p>
     </div>
     <div id="map-wrapper" data-aos="fade-left">
       <div id="map"></div>
     </div>
   </section>
 
-  <section id="rekonstrukce" style="background: #0a0a0a;">
+  <section id="rekonstrukce" style="background: #080808;">
     <h2 data-aos="fade-up">Cesta k otevření</h2>
     <div class="timeline">
       <div class="event" data-aos="fade-up"><p>Začátek prací – uklízení prostoru.</p></div>
       <div class="event" data-aos="fade-up" data-aos-delay="100"><p>Instalace nové podlahy.</p></div>
-      <div class="event" data-aos="fade-up" data-aos-delay="200"><p><strong>Stav: 57% hotovo</strong>. Montáž ozvučení.</p></div>
+      <div class="event" data-aos="fade-up" data-aos-delay="200"><p><strong style="color:#d4af37;">Stav: 57% hotovo</strong>. Montáž ozvučení.</p></div>
       <div class="event" data-aos="fade-up" data-aos-delay="300"><p>Otevření: 20. 6. 2026</p></div>
     </div>
   </section>
@@ -309,7 +336,7 @@
     <div class="glass-card" data-aos="zoom-in">
       <div class="glass-card-content" id="kinoid-status">
         <h2>KinoID Registrace</h2>
-        <p style="margin-bottom: 25px;">Získejte 10% slevu na první vstupenku.</p>
+        <p style="margin-bottom: 30px; font-size: 1.1rem;">Získejte 10% slevu na první vstupenku.</p>
         <form action="https://formsubmit.co/kinovemlyne@seznam.cz" method="POST" onsubmit="return syncName(this)">
           <input type="text" name="Jméno" placeholder="Jméno" required>
           <input type="text" name="Příjmení" placeholder="Příjmení" required>
@@ -325,7 +352,7 @@
     <div class="glass-card" data-aos="zoom-in">
       <div class="glass-card-content">
         <h2>Rezervace</h2>
-        <p style="margin-bottom: 25px;">Cena vstupenky je <strong>50 Kč</strong>.</p>
+        <p style="margin-bottom: 30px; font-size: 1.1rem;">Cena vstupenky je <strong style="color:#d4af37; font-size: 1.3rem;">50 Kč</strong>.</p>
         <form action="https://formsubmit.co/kinovemlyne@seznam.cz" method="POST">
           <input type="text" name="Jméno" id="res-name" placeholder="Vaše jméno" required>
           <input type="email" name="Email" placeholder="Váš e-mail" required>
@@ -343,24 +370,24 @@
   <section id="podpora" style="background:#050505; text-align: center;">
     <div data-aos="fade-up">
       <h2>Podpořte nás</h2>
-      <p>Číslo účtu pro dary: <strong>5581029073/0800</strong></p>
-      <p style="font-size: 14px; margin-top: 15px; opacity: 0.6;">Dárci budou zapsáni na čestné tabuli.</p>
+      <p style="font-size: 1.1rem;">Číslo účtu pro dary: <strong style="color:#d4af37; font-size: 1.3rem; display: block; margin-top: 10px;">5581029073/0800</strong></p>
+      <p style="font-size: 0.9rem; margin-top: 20px; opacity: 0.6;">Dárci budou zapsáni na čestné tabuli.</p>
     </div>
   </section>
 
   <footer>
     <p><a href="mailto:kinovemlyne@seznam.cz">kinovemlyne@seznam.cz</a></p>
-    <p style="margin-top: 10px; font-size: 12px; opacity: 0.5;">&copy; 2026 Kino ve mlýně | Vémyslice 36</p>
+    <p style="margin-top: 15px; font-size: 0.85rem; opacity: 0.5;">&copy; 2026 Kino ve mlýně | Vémyslice 36</p>
   </footer>
 
   <button id="jarvin-button" onclick="toggleJarvin()">
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M12 2C6.477 2 2 6.477 2 12C2 13.591 2.375 15.094 3.039 16.422L2 22L7.578 20.961C8.906 21.625 10.409 22 12 22C17.523 22 22 17.523 22 12C22 6.477 17.523 2 12 2Z" fill="#d4af37"/>
     </svg>
   </button>
 
   <div id="jarvin-window">
-    <h3 style="color:#d4af37; margin-bottom:10px; font-size: 1rem;">Vision AI</h3>
+    <h3 style="color:#d4af37; margin-bottom:15px; font-size: 1.2rem; font-weight: 700;">Vision AI</h3>
     <div id="chat-log">
       <div class="bubble jarvin">Dobrý den! Jak vám mohu pomoci?</div>
     </div>
@@ -372,7 +399,6 @@
 
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
   
   <script>
     // Kurzor pouze pro PC
@@ -392,7 +418,7 @@
       nav.classList.toggle("scrolled", window.scrollY > 50);
     });
 
-    AOS.init({ duration: 1000, once: true });
+    AOS.init({ duration: 1000, once: true, offset: 100 });
 
     // Odpočet
     const countDownDate = new Date("Jun 20, 2026 19:00:00").getTime();
@@ -404,9 +430,18 @@
       document.getElementById("seconds").innerText = Math.floor((distance % 60000) / 1000).toString().padStart(2, '0');
     }, 1000);
 
-    // Menu
+    // Menu Logic
     function toggleMenu() {
-      if (window.innerWidth <= 900) document.getElementById("nav-list").classList.toggle("active");
+      if (window.innerWidth <= 900) {
+        document.getElementById("nav-list").classList.toggle("active");
+        document.querySelector(".menu-btn").classList.toggle("open");
+      }
+    }
+    function closeMenu() {
+      if (window.innerWidth <= 900) {
+        document.getElementById("nav-list").classList.remove("active");
+        document.querySelector(".menu-btn").classList.remove("open");
+      }
     }
 
     // Login logic
@@ -425,12 +460,14 @@
     }
     function syncName(form) { localStorage.setItem('kinoUser', form.querySelector('input').value); return true; }
 
-    // Mapa
+    // Mapa (upravená inicializace proti rozbití UI)
     window.onload = () => {
       updateUI();
-      var map = L.map("map").setView([49.0239, 16.2558], 16);
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
-      L.marker([49.0239, 16.2558]).addTo(map).bindPopup("<b>Kino ve mlýně</b>").openPopup();
+      setTimeout(() => {
+        var map = L.map("map").setView([49.0239, 16.2558], 16);
+        L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
+        L.marker([49.0239, 16.2558]).addTo(map).bindPopup("<b>Kino ve mlýně</b>").openPopup();
+      }, 500);
     };
 
     // Jarvin
