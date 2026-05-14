@@ -97,7 +97,7 @@
 
     /* HERO SEKCE */
     header {
-      min-height:100vh; min-height: 100svh; /* Optimalizace pro mobilní prohlížeče */
+      min-height:100vh; min-height: 100svh;
       background: url('https://static.vecteezy.com/system/resources/previews/028/541/542/non_2x/popcorn-stand-cinema-shot-movie-theatre-popcorn-free-photo.jpg') center/cover no-repeat;
       display:flex; align-items:center; justify-content:center;
       position:relative; text-align:center; padding: 100px 20px 60px;
@@ -168,10 +168,25 @@
       border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
       box-shadow: 0 10px 30px rgba(0,0,0,0.3); font-size: 1.05rem;
     }
+    
+    /* VYLEPŠENÁ MOBILNÍ VERZE PRO TIMELINE */
     @media(max-width: 768px) {
-      .timeline::before { left: 20px; }
-      .event { width: 100%; left: 0 !important; text-align: left !important; padding: 15px 0 15px 60px; }
-      .event::before { left: 10px !important; right: auto !important; top: 38px; }
+      .timeline::before { 
+        left: 20px; 
+        transform: none; /* Odstraněno centrování z desktopu */
+      }
+      .event { 
+        width: 100%; 
+        left: 0 !important; 
+        text-align: left !important; 
+        padding: 15px 0 15px 60px; /* Dostatečný prostor od osy pro boxy */
+      }
+      .event::before { 
+        /* Přesné matematické vycentrování kroužku na svislou osu */
+        left: 7px !important; 
+        right: auto !important; 
+        top: 38px; 
+      }
     }
 
     /* KARTY (FORMULÁŘE) */
