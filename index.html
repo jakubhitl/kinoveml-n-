@@ -13,12 +13,11 @@
   <style>
     /* ZÁKLAD A SCROLLBAR */
     * { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color: transparent; }
-    html { scroll-behavior: smooth; }
+    html, body { overflow-x: hidden; scroll-behavior: smooth; }
     body {
       font-family: 'Poppins', sans-serif;
       background: #050505;
       color: #f1f1f1;
-      overflow-x: hidden;
       position: relative;
     }
     
@@ -70,7 +69,7 @@
     #nav-auth-btn {
       color: #d4af37; border: 1px solid #d4af37; padding: 10px 24px;
       border-radius: 30px; font-size: 0.85rem; font-weight: 700; transition: 0.4s; cursor: pointer;
-      display: inline-block; text-align: center;
+      display: inline-block; text-align: center; white-space: nowrap;
     }
     #nav-auth-btn:hover { background: rgba(212, 175, 55, 0.1); box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); }
 
@@ -128,6 +127,12 @@
     }
     .time-box span { display: block; font-size: clamp(1.8rem, 6vw, 2.5rem); font-weight: 800; color: #d4af37; line-height: 1; }
     .time-box p { font-size: 0.75rem; margin-top: 5px; color: #f1f1f1; text-transform: uppercase; letter-spacing: 1px; }
+    
+    /* Vylepšení odpočtu pro telefony - mřížka 2x2 */
+    @media (max-width: 480px) {
+      .countdown-wrapper { gap: 10px; }
+      .time-box { flex: 1 1 40%; max-width: none; padding: 12px; }
+    }
 
     /* SEKCE OBECNĚ */
     section { padding: 100px 5%; position: relative; overflow: hidden; }
@@ -138,7 +143,9 @@
 
     /* O KINĚ */
     #kino { display:flex; gap:50px; flex-wrap:wrap; align-items:center; }
-    #kino .text { flex:1; min-width:300px; line-height: 1.8; font-size: 1.05rem; }
+    #kino .text { flex:1; min-width:100%; line-height: 1.8; font-size: 1.05rem; }
+    @media (min-width: 768px) { #kino .text { min-width: 300px; } }
+    
     #map-wrapper { 
       flex:1; min-width:100%; height:350px; padding: 4px; 
       background: linear-gradient(135deg, #d4af37, #332800);
@@ -148,7 +155,7 @@
     #map { height:100%; width: 100%; border-radius: 26px; z-index: 1; }
 
     /* TIMELINE */
-    .timeline { position:relative; max-width:800px; margin:auto; }
+    .timeline { position:relative; max-width:800px; margin:auto; padding: 20px 0; }
     .timeline::before {
       content:""; position:absolute; top:0; bottom:0; left:50%; width:2px;
       background: linear-gradient(to bottom, transparent, #d4af37, transparent); transform:translateX(-50%);
@@ -157,7 +164,7 @@
     .event:nth-child(odd) { left:0; text-align:right; }
     .event:nth-child(even) { left:50%; }
     .event::before {
-      content:""; position:absolute; top:35px; width:20px; height:20px;
+      content:""; position:absolute; top:40px; width:20px; height:20px;
       border-radius:50%; background:#d4af37; border:4px solid #050505; z-index:1;
       box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
     }
@@ -166,31 +173,35 @@
     .event p {
       background: rgba(255,255,255,0.02); padding:25px; border-radius:20px;
       border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3); font-size: 1.05rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3); font-size: 1.05rem; margin: 0;
     }
     
     /* VYLEPŠENÁ MOBILNÍ VERZE PRO TIMELINE */
     @media(max-width: 768px) {
       .timeline::before { 
         left: 20px; 
-        transform: none; /* Odstraněno centrování z desktopu */
+        transform: translateX(0); /* Odstraněno centrování z desktopu */
       }
       .event { 
         width: 100%; 
         left: 0 !important; 
         text-align: left !important; 
-        padding: 15px 0 15px 60px; /* Dostatečný prostor od osy pro boxy */
+        padding: 15px 0 15px 55px; /* Perfektní zarovnání prostoru pro text */
       }
       .event::before { 
-        /* Přesné matematické vycentrování kroužku na svislou osu */
-        left: 7px !important; 
+        /* Přesné matematické vycentrování kroužku (šířka 20px + okraj) na svislou osu (20px) */
+        left: 11px !important; 
         right: auto !important; 
-        top: 38px; 
+        top: 35px; 
       }
     }
 
     /* KARTY (FORMULÁŘE) */
-    .card-section { display: flex; justify-content: center; background-position: center; background-size: cover; background-attachment: scroll; position: relative; padding: 100px 5%;}
+    .card-section { 
+      display: flex; justify-content: center; 
+      background-position: center; background-size: cover; 
+      background-attachment: scroll; position: relative; padding: 80px 5%;
+    }
     @media (min-width: 768px) { .card-section { background-attachment: fixed; padding: 120px 10%; } }
     
     .card-section::before { content:''; position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(5,5,5,0.85); }
@@ -199,29 +210,32 @@
       position:relative; z-index:1;
       background: linear-gradient(135deg, rgba(25,25,25,0.6), rgba(10,10,10,0.8));
       backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-      padding:40px 25px; border-radius:30px;
+      padding: 35px 20px; border-radius: 24px;
       border: 1px solid rgba(212, 175, 55, 0.15);
       max-width:550px; width:100%; text-align:center;
       box-shadow: 0 20px 50px rgba(0,0,0,0.7);
     }
-    @media (min-width: 768px) { .glass-card { padding: 50px 40px; } }
+    @media (min-width: 768px) { .glass-card { padding: 50px 40px; border-radius: 30px; } }
 
     /* VYLEPŠENÉ FORMULÁŘE (MOBILE FRIENDLY) */
     form input, form select {
-      width:100%; padding:18px; margin-bottom:20px;
+      width:100%; padding:16px; margin-bottom:15px;
       border-radius:15px; border: 1px solid rgba(255,255,255,0.1);
       background: rgba(0,0,0,0.6); color:white; font-family: 'Poppins', sans-serif;
       font-size: 1rem; -webkit-appearance: none; transition: all 0.3s ease;
     }
+    @media (min-width: 768px) { form input, form select { padding: 18px; margin-bottom: 20px; } }
+    
     form input:focus, form select:focus {
       outline: none; border-color: #d4af37; box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); background: rgba(0,0,0,0.8);
     }
     form button {
-      width: 100%; padding: 18px; border-radius: 15px; border: none;
+      width: 100%; padding: 16px; border-radius: 15px; border: none;
       background: linear-gradient(135deg, #e8c655, #d4af37); color: #050505; 
       font-weight: 800; text-transform: uppercase; font-size: 1.1rem; cursor: pointer;
-      transition: all 0.3s ease; box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+      transition: all 0.3s ease; box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2); margin-top: 5px;
     }
+    @media (min-width: 768px) { form button { padding: 18px; } }
     form button:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(212, 175, 55, 0.4); }
     form button:active { transform: translateY(0); }
 
@@ -235,30 +249,34 @@
     #login-modal.active { display:flex; opacity: 1; }
     .modal-content {
       background: linear-gradient(135deg, #151515, #0a0a0a); border: 1px solid rgba(212, 175, 55, 0.3);
-      padding: 40px 30px; border-radius: 25px; width: 100%; max-width: 400px;
+      padding: 35px 25px; border-radius: 25px; width: 100%; max-width: 400px;
       text-align: center; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.8);
     }
     .close-modal { 
-      position: absolute; top: 15px; right: 20px; font-size: 30px; color: #aaa; 
+      position: absolute; top: 12px; right: 15px; font-size: 30px; color: #aaa; 
       cursor: pointer; transition: 0.3s; padding: 5px; line-height: 1; 
     }
     .close-modal:hover { color: #d4af37; }
 
     /* JARVIN CHATBOT */
     #jarvin-button {
-      position: fixed; right: 20px; bottom: 20px; width: 60px; height: 60px; border-radius: 50%;
+      position: fixed; right: 20px; bottom: 20px; width: 55px; height: 55px; border-radius: 50%;
       border: 2px solid #d4af37; background: #0c0c0c;
       display: flex; align-items: center; justify-content: center; z-index: 1001; cursor: pointer;
       box-shadow: 0 10px 25px rgba(0,0,0,0.8), 0 0 15px rgba(212, 175, 55, 0.3);
       transition: transform 0.3s ease;
     }
+    @media (min-width: 768px) { #jarvin-button { width: 60px; height: 60px; } }
     #jarvin-button:hover { transform: scale(1.1); }
+    
     #jarvin-window {
-      display:none; position:fixed; bottom:95px; right:20px; width:calc(100% - 40px); max-width:380px;
+      display:none; position:fixed; bottom:85px; right:20px; width:calc(100% - 40px); max-width:380px;
       background: rgba(15,15,15,0.95); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); 
-      border-radius:25px; border: 1px solid rgba(212,175,55,0.3); padding:20px; z-index:1001;
+      border-radius:20px; border: 1px solid rgba(212,175,55,0.3); padding:15px; z-index:1001;
       box-shadow: 0 15px 40px rgba(0,0,0,0.8);
     }
+    @media (min-width: 768px) { #jarvin-window { bottom: 95px; border-radius: 25px; padding: 20px; } }
+    
     #jarvin-window.active { display:block; animation: slideUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
     @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     
@@ -268,8 +286,8 @@
     .jarvin { background:#252525; color:#eee; align-self: flex-start; border: 1px solid rgba(255,255,255,0.08); border-bottom-left-radius: 4px; }
 
     .chat-input-row { display:flex; gap:10px; }
-    .chat-input-row input { margin-bottom: 0; padding: 15px; border-radius: 12px; }
-    .chat-input-row button { width: 55px; padding: 0; flex-shrink: 0; border-radius: 12px; }
+    .chat-input-row input { margin-bottom: 0; padding: 12px; border-radius: 12px; font-size: 0.95rem; }
+    .chat-input-row button { width: 50px; padding: 0; flex-shrink: 0; border-radius: 12px; font-size: 1.2rem;}
 
     /* FOOTER */
     footer { text-align:center; padding:50px 20px; background:#050505; border-top: 1px solid rgba(212, 175, 55, 0.1); }
