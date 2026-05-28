@@ -141,7 +141,7 @@
     @media (min-width: 768px) { section h2 { margin-bottom:40px; } }
     section h2::after { content: ""; display: block; width: 60px; height: 4px; background: #d4af37; margin: 20px auto 0; box-shadow: 0 0 15px rgba(212, 175, 55, 0.6); border-radius: 2px; }
 
-    /* VYLEPŠENÁ SEKCE: O KINĚ (GRID & MOBILNÍ OPTIMALIZACE) */
+    /* O KINĚ (GRID & MOBILNÍ OPTIMALIZACE) */
     .kino-container {
       display: grid;
       grid-template-columns: 1fr;
@@ -201,37 +201,39 @@
     #map { height:100%; width: 100%; border-radius: 20px; z-index: 1; }
     @media (min-width: 768px) { #map { border-radius: 26px; } }
 
-    /* VYLEPŠENÁ SEKCE: TIMELINE (VÝRAZNĚ ČITELNĚJŠÍ NA MOBILU) */
+    /* CESTA K OTEVŘENÍ - ZACHOVÁNÍ CIK-CAK VZHLEDU I NA MOBILU (DLE IMAGE.PNG) */
     .timeline { position:relative; max-width:800px; margin:auto; padding: 20px 0; }
     .timeline::before {
       content:""; position:absolute; top:0; bottom:0; left:50%; width:2px;
       background: linear-gradient(to bottom, transparent, #d4af37, transparent); transform:translateX(-50%);
     }
-    .event { position:relative; width:50%; padding:20px 40px; }
+    .event { position:relative; width:50%; padding:20px 20px; }
     .event:nth-child(odd) { left:0; text-align:right; }
-    .event:nth-child(even) { left:50%; }
+    .event:nth-child(even) { left:50%; text-align:left; }
+    
     .event::before {
       content:""; position:absolute; top:35px; width:16px; height:16px;
       border-radius:50%; background:#d4af37; border:3px solid #050505; z-index:2;
       box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
     }
+    /* Body uprostřed čáry */
     .event:nth-child(odd)::before { right:-8px; }
     .event:nth-child(even)::before { left:-8px; }
     
     .event-content {
-      background: rgba(255,255,255,0.02); padding:20px; border-radius:16px;
+      background: rgba(255,255,255,0.02); padding:15px; border-radius:16px;
       border: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
       box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: border-color 0.3s;
     }
     .event:hover .event-content { border-color: rgba(212, 175, 55, 0.2); }
-    .event-date { display: inline-block; font-size: 0.8rem; font-weight: 700; color: #d4af37; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
-    .event-text { font-size: 0.95rem; line-height: 1.6; margin: 0; opacity: 0.9; }
+    .event-date { display: inline-block; font-size: 0.75rem; font-weight: 700; color: #d4af37; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
+    .event-text { font-size: 0.85rem; line-height: 1.5; margin: 0; opacity: 0.9; }
 
-    @media(max-width: 768px) {
-      .timeline::before { left: 20px; transform: translateX(0); }
-      .event { width: 100%; left: 0 !important; text-align: left !important; padding: 15px 0 15px 45px; }
-      .event::before { left: 12px !important; right: auto !important; top: 26px; }
-      .event-content { padding: 18px; }
+    @media (min-width: 768px) {
+        .event { padding: 20px 40px; }
+        .event-content { padding: 20px; }
+        .event-date { font-size: 0.8rem; }
+        .event-text { font-size: 0.95rem; line-height: 1.6; }
     }
 
     /* KARTY (FORMULÁŘE) */
@@ -517,7 +519,6 @@
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   
   <script>
-    // Kurzor pouze pro PC
     const cursorDot = document.querySelector('.cursor-dot');
     const cursorOutline = document.querySelector('.cursor-outline');
     if (window.matchMedia("(pointer: fine)").matches) {
@@ -528,7 +529,6 @@
         });
     }
 
-    // Scroll Nav
     window.addEventListener("scroll", () => {
       const nav = document.getElementById("navbar");
       nav.classList.toggle("scrolled", window.scrollY > 50);
@@ -536,7 +536,6 @@
 
     AOS.init({ duration: 1000, once: true, offset: 50 });
 
-    // Odpočet
     const countDownDate = new Date("Jun 27, 2026 19:00:00").getTime();
     setInterval(() => {
       const distance = countDownDate - new Date().getTime();
@@ -546,7 +545,6 @@
       document.getElementById("seconds").innerText = Math.floor((distance % 60000) / 1000).toString().padStart(2, '0');
     }, 1000);
 
-    // Menu Logic
     function toggleMenu() {
       if (window.innerWidth <= 900) {
         document.getElementById("nav-list").classList.toggle("active");
@@ -560,7 +558,6 @@
       }
     }
 
-    // Login logic
     function toggleModal() { document.getElementById('login-modal').classList.toggle('active'); }
     function saveLogin() {
       const name = document.getElementById('login-name').value;
@@ -576,7 +573,6 @@
     }
     function syncName(form) { localStorage.setItem('kinoUser', form.querySelector('input').value); return true; }
 
-    // Mapa
     window.onload = () => {
       updateUI();
       setTimeout(() => {
@@ -586,7 +582,6 @@
       }, 500);
     };
 
-    // Jarvin
     function toggleJarvin() { document.getElementById("jarvin-window").classList.toggle("active"); }
     function jarvinReply() {
       const input = document.getElementById("user-input");
@@ -603,3 +598,7 @@
   </script>
 </body>
 </html>
+
+
+
+  
