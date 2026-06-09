@@ -4,7 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#050505">
-  <title>Kino ve mlýně</title>
+  <meta name="description" content="Kino ve mlýně – exkluzivní soukromé kino v historických prostorech Steinmetzova mlýna ve Vémyslicích.">
+  
+  <!-- Open Graph pro sociální sítě -->
+  <meta property="og:title" content="Kino ve mlýně">
+  <meta property="og:description" content="Soukromé komorní kino ve Vémyslicích. Zažijte filmovou atmosféru v historickém mlýně.">
+  <meta property="og:type" content="website">
+
+  <title>Kino ve mlýně | Oficiální stránky</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700;800&display=swap" rel="stylesheet">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -33,20 +40,24 @@
     ::-webkit-scrollbar-track { background: #050505; }
     ::-webkit-scrollbar-thumb { background: #d4af37; border-radius: 10px; }
 
-    /* VLASTNÍ KURZOR (pouze pro desktop) */
+    /* VLASTNÍ KURZOR (Optimalizovaný) */
     @media (pointer: fine) {
-      body, a, button, input, select { cursor: none; }
+      body { cursor: none; }
+      a, button, select, input, .menu-btn, .close-modal { cursor: none; }
       .cursor-dot {
         width: 8px; height: 8px; background: #d4af37;
         position: fixed; top: 0; left: 0; border-radius: 50%;
         pointer-events: none; z-index: 9999; transform: translate(-50%, -50%);
-        box-shadow: 0 0 10px #d4af37;
+        box-shadow: 0 0 10px #d4af37; transition: transform 0.1s ease;
       }
       .cursor-outline {
         width: 40px; height: 40px; border: 1px solid rgba(212, 175, 55, 0.5);
         position: fixed; top: 0; left: 0; border-radius: 50%;
         pointer-events: none; z-index: 9998; transform: translate(-50%, -50%);
-        transition: width 0.2s, height 0.2s, background 0.2s;
+        transition: width 0.2s, height 0.2s, background 0.2s, top 0.1s ease, left 0.1s ease;
+      }
+      .cursor-hover .cursor-outline {
+        width: 60px; height: 60px; background: rgba(212, 175, 55, 0.05); border-color: #d4af37;
       }
     }
 
@@ -68,13 +79,13 @@
     
     #nav-auth-btn {
       color: #d4af37; border: 1px solid #d4af37; padding: 10px 24px;
-      border-radius: 30px; font-size: 0.85rem; font-weight: 700; transition: 0.4s; cursor: pointer;
+      border-radius: 30px; font-size: 0.85rem; font-weight: 700; transition: 0.4s;
       display: inline-block; text-align: center; white-space: nowrap;
     }
     #nav-auth-btn:hover { background: rgba(212, 175, 55, 0.1); box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); }
 
     /* MOBILNÍ MENU */
-    .menu-btn { display: none; flex-direction: column; gap: 6px; z-index: 1002; cursor: pointer; padding: 10px; margin-right: -10px; }
+    .menu-btn { display: none; flex-direction: column; gap: 6px; z-index: 1002; padding: 10px; margin-right: -10px; }
     .menu-btn span { width: 30px; height: 2px; background: #d4af37; transition: 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55); border-radius: 2px; }
     
     .menu-btn.open span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
@@ -141,7 +152,7 @@
     @media (min-width: 768px) { section h2 { margin-bottom:40px; } }
     section h2::after { content: ""; display: block; width: 60px; height: 4px; background: #d4af37; margin: 20px auto 0; box-shadow: 0 0 15px rgba(212, 175, 55, 0.6); border-radius: 2px; }
 
-    /* O KINĚ (GRID & MOBILNÍ OPTIMALIZACE) */
+    /* O KINĚ */
     .kino-container {
       display: grid;
       grid-template-columns: 1fr;
@@ -201,7 +212,7 @@
     #map { height:100%; width: 100%; border-radius: 20px; z-index: 1; }
     @media (min-width: 768px) { #map { border-radius: 26px; } }
 
-    /* CESTA K OTEVŘENÍ - ZACHOVÁNÍ CIK-CAK VZHLEDU I NA MOBILU (DLE IMAGE.PNG) */
+    /* CESTA K OTEVŘENÍ */
     .timeline { position:relative; max-width:800px; margin:auto; padding: 20px 0; }
     .timeline::before {
       content:""; position:absolute; top:0; bottom:0; left:50%; width:2px;
@@ -216,7 +227,6 @@
       border-radius:50%; background:#d4af37; border:3px solid #050505; z-index:2;
       box-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
     }
-    /* Body uprostřed čáry */
     .event:nth-child(odd)::before { right:-8px; }
     .event:nth-child(even)::before { left:-8px; }
     
@@ -236,7 +246,7 @@
         .event-text { font-size: 0.95rem; line-height: 1.6; }
     }
 
-    /* KARTY (FORMULÁŘE) */
+    /* KARTY / FORMULÁŘE */
     .card-section { 
       display: flex; justify-content: center; 
       background-position: center; background-size: cover; 
@@ -271,7 +281,7 @@
     form button {
       width: 100%; padding: 15px; border-radius: 12px; border: none;
       background: linear-gradient(135deg, #e8c655, #d4af37); color: #050505; 
-      font-weight: 800; text-transform: uppercase; font-size: 1.05rem; cursor: pointer;
+      font-weight: 800; text-transform: uppercase; font-size: 1.05rem;
       transition: all 0.3s ease; box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2); margin-top: 5px;
     }
     @media (min-width: 768px) { form button { padding: 18px; border-radius: 15px; font-size: 1.1rem; } }
@@ -295,15 +305,15 @@
     @media (min-width: 768px) { .modal-content { padding: 35px 25px; border-radius: 25px; } }
     .close-modal { 
       position: absolute; top: 12px; right: 15px; font-size: 30px; color: #aaa; 
-      cursor: pointer; transition: 0.3s; padding: 5px; line-height: 1; 
+      transition: 0.3s; padding: 5px; line-height: 1; 
     }
     .close-modal:hover { color: #d4af37; }
 
-    /* JARVIN CHATBOT */
+    /* CHATBOT */
     #jarvin-button {
       position: fixed; right: 15px; bottom: 15px; width: 45px; height: 45px; border-radius: 50%;
       border: 2px solid #d4af37; background: #0c0c0c;
-      display: flex; align-items: center; justify-content: center; z-index: 1001; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; z-index: 1001;
       box-shadow: 0 10px 25px rgba(0,0,0,0.8), 0 0 15px rgba(212, 175, 55, 0.3);
       transition: transform 0.3s ease;
     }
@@ -369,7 +379,7 @@
     </div>
     <div class="nav-center">
       <ul id="nav-list">
-        <li><a href="#uvod" onclick="closeMenu()">Domov</a></li>
+        <li><a href="#uvod" onclick="closeMenu()">Domů</a></li>
         <li><a href="#kino" onclick="closeMenu()">O kině</a></li>
         <li><a href="#rekonstrukce" onclick="closeMenu()">Rekonstrukce</a></li>
         <li><a href="#kinoid" onclick="closeMenu()">KinoID</a></li>
@@ -495,7 +505,7 @@
 
   <footer>
     <p><a href="mailto:kinovemlyne@seznam.cz">kinovemlyne@seznam.cz</a></p>
-    <p style="margin-top: 15px; font-size: 0.85rem; opacity: 0.5;">Kino OS 26 Beta</p>
+    <p style="margin-top: 15px; font-size: 0.85rem; opacity: 0.5;">&copy; 2026 Kino ve mlýně. Všechna práva vyhrazena.</p>
   </footer>
 
   <button id="jarvin-button" onclick="toggleJarvin()">
@@ -519,32 +529,50 @@
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   
   <script>
+    // Optimalizovaný vlastní kurzor s detekcí hover stavů
     const cursorDot = document.querySelector('.cursor-dot');
     const cursorOutline = document.querySelector('.cursor-outline');
+    
     if (window.matchMedia("(pointer: fine)").matches) {
         window.addEventListener('mousemove', e => {
             cursorDot.style.left = e.clientX + 'px';
             cursorDot.style.top = e.clientY + 'px';
-            cursorOutline.animate({ left: e.clientX + 'px', top: e.clientY + 'px' }, { duration: 500, fill: "forwards" });
+            cursorOutline.style.left = e.clientX + 'px';
+            cursorOutline.style.top = e.clientY + 'px';
+        });
+
+        // Efekt zvětšení na interaktivních prvcích
+        const interactiveElements = document.querySelectorAll('a, button, select, input, .menu-btn, .close-modal');
+        interactiveElements.forEach(el => {
+            el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+            el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
         });
     }
 
+    // Scroll efekt navigace
     window.addEventListener("scroll", () => {
       const nav = document.getElementById("navbar");
       nav.classList.toggle("scrolled", window.scrollY > 50);
     });
 
+    // Inicializace AOS animací
     AOS.init({ duration: 1000, once: true, offset: 50 });
 
+    // Odpočet času
     const countDownDate = new Date("Jun 27, 2026 19:00:00").getTime();
-    setInterval(() => {
+    const countdownInterval = setInterval(() => {
       const distance = countDownDate - new Date().getTime();
+      if (distance < 0) {
+        clearInterval(countdownInterval);
+        return;
+      }
       document.getElementById("days").innerText = Math.floor(distance / 86400000).toString().padStart(2, '0');
       document.getElementById("hours").innerText = Math.floor((distance % 86400000) / 3600000).toString().padStart(2, '0');
       document.getElementById("minutes").innerText = Math.floor((distance % 3600000) / 60000).toString().padStart(2, '0');
       document.getElementById("seconds").innerText = Math.floor((distance % 60000) / 1000).toString().padStart(2, '0');
     }, 1000);
 
+    // Mobilní menu lokální funkce
     function toggleMenu() {
       if (window.innerWidth <= 900) {
         document.getElementById("nav-list").classList.toggle("active");
@@ -558,10 +586,11 @@
       }
     }
 
+    // Autentizační modal systém
     function toggleModal() { document.getElementById('login-modal').classList.toggle('active'); }
     function saveLogin() {
       const name = document.getElementById('login-name').value;
-      if(name) { localStorage.setItem('kinoUser', name); updateUI(); toggleModal(); }
+      if(name.trim()) { localStorage.setItem('kinoUser', name); updateUI(); toggleModal(); }
     }
     function updateUI() {
       const user = localStorage.getItem('kinoUser');
@@ -573,24 +602,31 @@
     }
     function syncName(form) { localStorage.setItem('kinoUser', form.querySelector('input').value); return true; }
 
+    // Mapový engine Leaflet + Fix renderu na flexu/gridu
     window.onload = () => {
       updateUI();
       setTimeout(() => {
         var map = L.map("map").setView([49.0239, 16.2558], 16);
         L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png").addTo(map);
         L.marker([49.0239, 16.2558]).addTo(map).bindPopup("<b>Kino ve mlýně</b>").openPopup();
-      }, 500);
+        
+        // Oprava chybného zobrazení dlaždic mapy v CSS gridu
+        setTimeout(() => { map.invalidateSize(); }, 400);
+      }, 200);
     };
 
+    // Chatbot Jarvin / Vision AI logic
     function toggleJarvin() { document.getElementById("jarvin-window").classList.toggle("active"); }
     function jarvinReply() {
       const input = document.getElementById("user-input");
       if (!input.value.trim()) return;
       const chat = document.getElementById("chat-log");
       chat.innerHTML += `<div class="bubble user">${input.value}</div>`;
-      const val = input.value; input.value = "";
+      input.value = "";
+      chat.scrollTop = chat.scrollHeight;
+
       setTimeout(() => {
-        const replies = ["Otevíráme 27. června 2026!", "Kapacita je 8-12 osob.", "Těšíme se na vás!"];
+        const replies = ["Otevíráme slavnostně 27. června 2026!", "Kapacita sálu je komorních 8 až 12 osob.", "Těšíme se na vaši návštěvu!", "Vstupenky je možné rezervovat online s platbou na místě či QR kódem."];
         chat.innerHTML += `<div class="bubble jarvin">${replies[Math.floor(Math.random()*replies.length)]}</div>`;
         chat.scrollTop = chat.scrollHeight;
       }, 600);
@@ -598,7 +634,3 @@
   </script>
 </body>
 </html>
-
-
-
-  
