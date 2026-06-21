@@ -212,6 +212,61 @@
     #map { height:100%; width: 100%; border-radius: 20px; z-index: 1; }
     @media (min-width: 768px) { #map { border-radius: 26px; } }
 
+    /* ORIGINALS SEKCE */
+    .originals-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 30px;
+      align-items: center;
+      max-width: 1000px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(212, 175, 55, 0.15);
+      padding: 30px;
+      border-radius: 24px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+    }
+    @media (min-width: 768px) {
+      .originals-container { grid-template-columns: 1fr 1.5fr; gap: 50px; padding: 40px; }
+    }
+    .originals-img-box {
+      text-align: center;
+      width: 100%;
+    }
+    .originals-img-box img {
+      max-width: 100%;
+      height: auto;
+      max-height: 350px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+      border: 1px solid rgba(212, 175, 55, 0.2);
+    }
+    .originals-badge {
+      display: inline-block;
+      background: rgba(212, 175, 55, 0.1);
+      color: #d4af37;
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 15px;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+    }
+    .originals-info h3 {
+      font-size: 2rem;
+      color: #fff;
+      margin-bottom: 5px;
+      font-weight: 800;
+    }
+    .originals-info p {
+      font-size: 0.95rem;
+      line-height: 1.7;
+      opacity: 0.85;
+    }
+
     /* CESTA K OTEVŘENÍ */
     .timeline { position:relative; max-width:800px; margin:auto; padding: 20px 0; }
     .timeline::before {
@@ -384,6 +439,7 @@
         <li><a href="#rekonstrukce" onclick="closeMenu()">Rekonstrukce</a></li>
         <li><a href="#kinoid" onclick="closeMenu()">KinoID</a></li>
         <li><a href="#vstupenky" onclick="closeMenu()">Vstupenky</a></li>
+        <li><a href="#originals" onclick="closeMenu()">Originals</a></li>
         <li><a href="#podpora" onclick="closeMenu()">Podpora</a></li>
       </ul>
     </div>
@@ -454,7 +510,7 @@
       <div class="event" data-aos="fade-up" data-aos-delay="300">
         <div class="event-content">
           <span class="event-date">?.8. 2026</span>
-          <p class="event-text">Velké finále. Slavnostní otevření a první oficiální promítání pro veřejnost.</p>
+          <p class="event-text">Velké finále. Slavnostní otevření and první oficiální promítání pro veřejnost.</p>
         </div>
       </div>
     </div>
@@ -495,6 +551,21 @@
     </div>
   </section>
 
+  <section id="originals" style="background: #080808;">
+    <h2 data-aos="fade-up">Kino ve mlýně Originals</h2>
+    <div class="originals-container" data-aos="zoom-in">
+      <div class="originals-img-box">
+        <https://ibb.co/67Nh3477>
+        <img src="mlynar.png" alt="Logo filmu Mlynář">
+      </div>
+      <div class="originals-info">
+        <span class="originals-badge">🎬 V PRODUKCI (8 min)</span>
+        <h3>MLYNÁŘ</h3>
+        <p>Jakub nade vše miluje svůj klid a historický rodinný mlýn. Když jeho žena odjíždí na pár dní pryč, těší se na zaslouženou pohodu a samotu. Idylu ale drsně naruší příchod arogantního Vagena, který chce pozemek získat za každou cenu pro stavbu továrny. Jakub odmítá, jenže Vagen nebere „ne“ jako odpověď a rozjíždí nebezpečnou hru, která se všem rychle vymkne z rukou...</p>
+      </div>
+    </div>
+  </section>
+
   <section id="podpora" style="background:#050505; text-align: center;">
     <div data-aos="fade-up">
       <h2>Podpořte nás</h2>
@@ -505,7 +576,7 @@
 
   <footer>
     <p><a href="mailto:kinovemlyne@seznam.cz">kinovemlyne@seznam.cz</a></p>
-    <p style="margin-top: 15px; font-size: 0.85rem; opacity: 0.5;">Kino OS 26.</p>
+    <p style="margin-top: 15px; font-size: 0.85rem; opacity: 0.5;">Kino OS 26.1</p>
   </footer>
 
   <button id="jarvin-button" onclick="toggleJarvin()">
