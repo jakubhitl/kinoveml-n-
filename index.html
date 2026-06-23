@@ -587,7 +587,7 @@
 
   <footer>
     <p><a href="mailto:kinovemlyne@seznam.cz">kinovemlyne@seznam.cz</a></p>
-    <p style="margin-top: 15px; font-size: 0.85rem; opacity: 0.5;">Kino OS 26.1.5</p>  
+    <p style="margin-top: 15px; font-size: 0.85rem; opacity: 0.5;">Kino OS 26.2</p>  
   </footer>
 
   <button id="jarvin-button" onclick="toggleJarvin()">
@@ -641,7 +641,7 @@
     AOS.init({ duration: 1000, once: true, offset: 50 });
 
     // Odpočet času
-    const countDownDate = new Date("Jun 27, 2026 19:00:00").getTime();
+    const countDownDate = new Date("Aug 1, 2026 18:00:00"). getTime();
     const countdownInterval = setInterval(() => {
       const distance = countDownDate - new Date().getTime();
       if (distance < 0) {
@@ -708,7 +708,7 @@
       chat.scrollTop = chat.scrollHeight;
 
       setTimeout(() => {
-        const replies = ["Otevíráme slavnostně 27. června 2026!", "Kapacita sálu je komorních 8 až 12 osob.", "Těšíme se na vaši návštěvu!", "Vstupenky je možné rezervovat online s platbou na místě či QR kódem."];
+        const replies = ["Otevíráme slavnostně ?. srpna 2026!", "Kapacita sálu je komorních 8 až 12 osob.", "Těšíme se na vaši návštěvu!", "Vstupenky je možné rezervovat online s platbou na místě či QR kódem."];
         chat.innerHTML += `<div class="bubble jarvin">${replies[Math.floor(Math.random()*replies.length)]}</div>`;
         chat.scrollTop = chat.scrollHeight;
       }, 600);
