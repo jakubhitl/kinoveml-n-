@@ -322,26 +322,28 @@
     }
     @media (min-width: 768px) { .glass-card { padding: 50px 40px; border-radius: 30px; } }
 
-    form input, form select {
+    form input, form select, .modal-content input {
       width:100%; padding:14px; margin-bottom:12px;
       border-radius:12px; border: 1px solid rgba(255,255,255,0.1);
       background: rgba(0,0,0,0.6); color:white; font-family: 'Poppins', sans-serif;
       font-size: 0.95rem; -webkit-appearance: none; transition: all 0.3s ease;
+      display: block;
     }
-    @media (min-width: 768px) { form input, form select { padding: 18px; margin-bottom: 20px; border-radius:15px; font-size: 1rem; } }
+    @media (min-width: 768px) { form input, form select, .modal-content input { padding: 18px; margin-bottom: 20px; border-radius:15px; font-size: 1rem; } }
     
-    form input:focus, form select:focus {
+    form input:focus, form select:focus, .modal-content input:focus {
       outline: none; border-color: #d4af37; box-shadow: 0 0 15px rgba(212, 175, 55, 0.2); background: rgba(0,0,0,0.8);
     }
-    form button {
+    form button, .modal-content button {
       width: 100%; padding: 15px; border-radius: 12px; border: none;
       background: linear-gradient(135deg, #e8c655, #d4af37); color: #050505; 
       font-weight: 800; text-transform: uppercase; font-size: 1.05rem;
       transition: all 0.3s ease; box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2); margin-top: 5px;
+      display: block;
     }
-    @media (min-width: 768px) { form button { padding: 18px; border-radius: 15px; font-size: 1.1rem; } }
-    form button:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(212, 175, 55, 0.4); }
-    form button:active { transform: translateY(0); }
+    @media (min-width: 768px) { form button, .modal-content button { padding: 18px; border-radius: 15px; font-size: 1.1rem; } }
+    form button:hover, .modal-content button:hover { transform: translateY(-3px); box-shadow: 0 15px 25px rgba(212, 175, 55, 0.4); }
+    form button:active, .modal-content button:active { transform: translateY(0); }
 
     /* LOGIN MODAL */
     #login-modal {
@@ -353,11 +355,11 @@
     #login-modal.active { display:flex; opacity: 1; }
     .modal-content {
       background: linear-gradient(135deg, #151515, #0a0a0a); border: 1px solid rgba(212, 175, 55, 0.3);
-      padding: 30px 20px; border-radius: 20px; width: 100%; max-width: 400px;
+      padding: 35px 20px; border-radius: 20px; width: 100%; max-width: 420px;
       text-align: center; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.8);
       max-height: 90vh; overflow-y: auto;
     }
-    @media (min-width: 768px) { .modal-content { padding: 35px 25px; border-radius: 25px; } }
+    @media (min-width: 768px) { .modal-content { padding: 45px 35px; border-radius: 25px; } }
     .close-modal { 
       position: absolute; top: 12px; right: 15px; font-size: 30px; color: #aaa; 
       transition: 0.3s; padding: 5px; line-height: 1; 
@@ -492,7 +494,7 @@
       <div class="event" data-aos="fade-up">
         <div class="event-content">
           <span class="event-date">Fáze 1</span>
-          <p class="event-text">Začátek prací, vyklízení historického prostoru a první hrubé úpravy.</p>
+          <p class="event-text">Začátek prací, vyklízení historického prostoru and první hrubé úpravy.</p>
         </div>
       </div>
       <div class="event" data-aos="fade-up" data-aos-delay="100">
@@ -585,7 +587,7 @@
 
   <footer>
     <p><a href="mailto:kinovemlyne@seznam.cz">kinovemlyne@seznam.cz</a></p>
-    <p style="margin-top: 15px; font-size: 0.85rem; opacity: 0.5;">Kino OS 26.1</p>
+    <p style="margin-top: 15px; font-size: 0.85rem; opacity: 0.5;">Kino OS 26.1.5</p>  
   </footer>
 
   <button id="jarvin-button" onclick="toggleJarvin()">
