@@ -2,13 +2,12 @@
 <html lang="cs">
 <head>
   <meta charset="UTF-8" />
-  <!-- TADY JE TVOJE ZNAČKA OD GOOGLU -->
+  <!-- Ověření pro Google Search Console -->
   <meta name="google-site-verification" content="oRwdVFgd0x_dI-rTIbsnG1TN0KkX5m2UyOzJxkYy-aA" />
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#050505">
   <meta name="description" content="Kino ve mlýně – exkluzivní soukromé kino v historických prostorech Steinmetzova mlýna ve Vémyslicích.">
-
   
   <!-- Open Graph pro sociální sítě -->
   <meta property="og:title" content="Kino ve mlýně">
@@ -20,6 +19,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700;800&display=swap" rel="stylesheet">
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
 
   <style>
     /* ZÁKLAD A SCROLLBAR */
@@ -412,26 +412,6 @@
       .chat-input-row button { width: 50px; border-radius: 12px; font-size: 1.2rem;}
     }
 
-    /* CHYBA FIX A OPTIMALIZACE PRO MOBILY (Kino OS 26.5) */
-    @media (max-width: 768px) {
-      section { padding: 50px 4% !important; }
-      nav { padding: 15px 4% !important; }
-      nav.scrolled { padding: 10px 4% !important; }
-      nav ul { gap: 15px !important; }
-      #nav-auth-btn { padding: 8px 16px !important; font-size: 0.8rem !important; }
-      .kino-container { gap: 25px !important; }
-      #map-wrapper { height: 260px !important; border-radius: 16px !important; }
-      #map { border-radius: 14px !important; }
-      .glass-card { padding: 30px 15px !important; border-radius: 16px !important; }
-      form input, form select { padding: 14px !important; font-size: 0.95rem !important; border-radius: 10px !important; }
-      form button { padding: 15px !important; font-size: 1rem !important; border-radius: 10px !important; width: 100% !important; }
-      .timeline::before { left: 15px !important; }
-      .event { width: 100% !important; left: 0 !important; padding-left: 35px !important; padding-right: 0 !important; text-align: left !important; }
-      .event::before { left: 7px !important; top: 22px !important; }
-      .event:nth-child(even) { left: 0 !important; }
-      .event:nth-child(odd)::before { left: 7px !important; right: auto !important; }
-    }
-
     /* FOOTER */
     footer { text-align:center; padding:40px 20px 60px; background:#050505; border-top: 1px solid rgba(212, 175, 55, 0.1); }
     @media (min-width: 768px) { footer { padding:50px 20px; } }
@@ -462,7 +442,6 @@
       <ul id="nav-list">
         <li><a href="#uvod" onclick="closeMenu()">Domů</a></li>
         <li><a href="#kino" onclick="closeMenu()">O kině</a></li>
-        <li><a href="#pribeh" onclick="closeMenu()">Příběh mlýna</a></li>
         <li><a href="#rekonstrukce" onclick="closeMenu()">Rekonstrukce</a></li>
         <li><a href="#kinoid" onclick="closeMenu()">KinoID</a></li>
         <li><a href="#vstupenky" onclick="closeMenu()">Vstupenky</a></li>
@@ -509,27 +488,6 @@
       
       <div id="map-wrapper" data-aos="fade-left">
         <div id="map"></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- NOVÁ SEKCE: PŘÍBĚH MLÝNA -->
-  <section id="pribeh" style="background: #0c0c0c;">
-    <h2 data-aos="fade-up">Příběh mlýna</h2>
-    <div style="max-width: 800px; margin: 0 auto; text-align: center;" data-aos="zoom-in">
-      <!-- TADY ZAČÍNÁ TEXT, KTERÝ SI MŮŽEŠ SMAZAT A PŘEPSAT PODLE SEBE -->
-      <p style="font-size: 1.05rem; line-height: 1.8; opacity: 0.9; margin-bottom: 20px;">
-        Naše soukromé kino nevzniká v obyčejné budově, ale vdechuje nový život historickým prostorám starého Steinmetzova mlýna, jehož historie sahá hluboko do minulosti. Tento objekt po staletí patřil mlynářskému rodu a dodnes zůstává cenným rodinným dědictvím.
-      </p>
-      <p style="font-size: 1.05rem; line-height: 1.8; opacity: 0.9; margin-bottom: 30px;">
-        Rozhodli jsme se zachovat historického ducha tohoto jedinečného místa a spojit ho s moderní technologií a filmovou kulturou. Rekonstrukce promítacího sálu probíhá velmi citlivě, abyste si už brzy mohli vychutnat skvělé filmy v naprosto neopakovatelné, komorní atmosféře.
-      </p>
-      <!-- TADY KONČÍ TEXT K PŘEPSÁNÍ -->
-      
-      <!-- Box pro fotku z rekonstrukce -->
-      <div style="margin-top: 20px;">
-        <img src="images/rekonstrukce.jpg" alt="Rekonstrukce kina" style="max-width: 100%; height: auto; max-height: 350px; border-radius: 16px; border: 1px solid rgba(212, 175, 55, 0.3); box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-        <p style="font-size: 0.85rem; opacity: 0.5; margin-top: 10px; font-style: italic;">Pohled na probíhající úpravy v interiéru mlýna</p>
       </div>
     </div>
   </section>
@@ -606,7 +564,7 @@
     <!-- Úvodní text o projektu KVM Originals -->
     <div class="originals-intro-text" style="text-align: center; margin-bottom: 40px; border-bottom: 1px solid rgba(212, 175, 55, 0.2); padding-bottom: 25px;">
       <p style="font-size: 1.1rem; line-height: 1.8; opacity: 0.9;">
-        Projekt <strong>KVM Originals</strong> přináší exkluzivní autorské filmy, které vznikají přímo v autentických prostorech našeho mlýna. Necháváme ožít jedinečną atmosféru tohoto místa, jeho bohatou historii a propojujeme je s napínavými příběhy. Každý snímek z této produkce je stvořen speciálně pro plátno Kina ve mlýně a nikde jinde ho neuvidíte.
+        Projekt <strong>KVM Originals</strong> přináší exkluzivní autorské filmy, které vznikají přímo v autentických prostorech našeho mlýna. Necháváme ožít jedinečnou atmosféru tohoto místa, jeho bohatou historii a propojujeme je s napínavými příběhy. Každý snímek z této produkce je stvořen speciálně pro plátno Kina ve mlýně a nikde jinde ho neuvidíte.
       </p>
     </div>
 
@@ -622,25 +580,18 @@
   </div>
 </section>
 
-  <!-- VYLEPŠENÁ SEKCE: PODPORA -->
-  <section id="podpora" style="background:#050505; text-align: center;">
-    <div data-aos="fade-up" style="max-width: 600px; margin: 0 auto;">
-      <h2>Podpořte nás</h2>
-      <p style="font-size: 1.05rem;">Číslo účtu pro dary: <strong style="color:#d4af37; font-size: 1.4rem; display: block; margin-top: 10px; letter-spacing: 1px;">5581029073/0800</strong></p>
-      
-      <!-- Nový blok pro mobilní QR kód platby -->
-      <div style="margin: 30px auto; max-width: 180px; background: #ffffff; padding: 12px; border-radius: 12px; border: 2px solid #d4af37; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
-        <img src="images/qr-kod.png" alt="QR platba pro podporu" style="width: 100%; display: block;">
-        <p style="color: #111111; font-size: 0.75rem; font-weight: 700; margin-top: 8px; text-transform: uppercase; letter-spacing: 0.5px;">QR Kód pro mobil</p>
-      </div>
 
-      <p style="font-size: 1rem; margin-top: 20px; color: #d4af37; font-weight: 500;">Všichni dárci budou zapsáni na naší čestné tabuli v kině.</p>
+  <section id="podpora" style="background:#050505; text-align: center;">
+    <div data-aos="fade-up">
+      <h2>Podpořte nás</h2>
+      <p style="font-size: 1.05rem;">Číslo účtu pro dary: <strong style="color:#d4af37; font-size: 1.2rem; display: block; margin-top: 10px;">5581029073/0800</strong></p>
+      <p style="font-size: 0.9rem; margin-top: 20px; opacity: 0.6;">Dárci budou zapsáni na čestné tabuli.</p>
     </div>
   </section>
 
   <footer>
     <p><a href="mailto:kinovemlyne@seznam.cz">kinovemlyne@seznam.cz</a></p>
-    <p style="margin-top: 15px; font-size: 0.85rem; opacity: 0.5;">Kino OS 26.5</p>  
+    <p style="margin-top: 15px; font-size: 0.85rem; opacity: 0.5;">Kino OS 26.2</p>  
   </footer>
 
   <button id="jarvin-button" onclick="toggleJarvin()">
